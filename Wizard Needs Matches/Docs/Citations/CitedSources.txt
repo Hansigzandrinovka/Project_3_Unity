@@ -4,3 +4,4 @@ http://answers.unity3d.com/questions/31775/how-get-object-if-i-know-coordinates.
 https://www.youtube.com/watch?v=KuW4IEqEptA - use for A* Pathfinding with Tiles by AI Controllers
 http://answers.unity3d.com/questions/8715/how-do-i-use-layermasks.html - used for making Layer Masks for Entities, Tiles, to ensure we grab correct object in collision search
 https://docs.unity3d.com/ScriptReference/LayerMask.html - helped me figure out Layer Masks a bit
+http://answers.unity3d.com/questions/225729/gameobject-positionset-not-working.html - explained how to move objects
