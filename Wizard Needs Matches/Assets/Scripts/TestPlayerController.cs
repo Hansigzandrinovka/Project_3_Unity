@@ -1,9 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
-public class TestPlayerController : MonoBehaviour {
-    private Entity puppetEntity;
-    public float debug_input_value = 0;
+public class TestPlayerController : EntityController {
+    
+    public Slider playerHealthSlider; //the Slider that will store Player's current health
     private float clock = 0; //used to prevent input flooding by slowing user input processing
     public float inputTime = 2; //how many seconds must pass before input can be processed again
 
@@ -21,12 +22,22 @@ public class TestPlayerController : MonoBehaviour {
             enabled = false;
             Debug.Log("Error! Player Controller could not find Entity!");
         }
+        else if(playerHealthSlider != null)
+        {
+            playerHealthSlider.value = puppetEntity.SetUIHealthChangeListener(UpdateDisplayHealth);
+            playerHealthSlider.maxValue = puppetEntity.maxHealth;
+        }
             
 	}
+
+    void UpdateDisplayHealth(int newHealth)
+    {
+        if (playerHealthSlider != null)
+            playerHealthSlider.value = newHealth;
+    }
 	
 	// Update is called once per frame
 	void Update () {
-        debug_input_value = Input.GetAxis("Horizontal");
         if (clock >= inputTime)
         {
             float xAxis = Input.GetAxis("Horizontal");

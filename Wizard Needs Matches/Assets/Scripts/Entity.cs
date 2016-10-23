@@ -2,7 +2,16 @@
 using System.Collections;
 
 public class Entity : MonoBehaviour { //testtest
-    public int health = 10;
+
+    public delegate void HealthChangeListener(int newHealth);
+    //delegates define Method Type variables, ie the "return void, take int x" type
+    //if a variable is used of the Delegate's type, you can store a method in the variable to call some class's method through this class
+    //in this case, I can store a delegate variable as a listener for when this Entity's health changes (as part of TakeDamage()), and whatever method is in the delegate will be called
+    private HealthChangeListener uiHealthChangeListener; //the listener associated with the UI, that will notify UI displays for health to update properly
+
+    public delegate void TurnReadyListener(); //the listener associated with Turn Order and deciding what to do, Controllers will 
+    public int maxHealth = 10;
+    public int currentHealth = 7;
     public int speed = 1; //number of actions entity can perform on a given turn
     protected int remainingSpeed = 1; //number of remaining actions entity can take
     public int delay = 0; //number of turns entity must forfeit after an action before resuming action
@@ -16,6 +25,12 @@ public class Entity : MonoBehaviour { //testtest
     public void EndTurn()
     { }
 
+    public int SetUIHealthChangeListener(HealthChangeListener x)
+    {
+        uiHealthChangeListener = x;
+        return currentHealth;
+    }
+
     //by default, generic entities do not know any spells
     public virtual bool CastSpell(int spellIndex)
     {
@@ -24,8 +39,11 @@ public class Entity : MonoBehaviour { //testtest
 
     public bool TakeDamage(int amount, DamageType type)
     {
-        health -= amount;
-        if (health <= 0)
+        currentHealth -= amount;
+        if (uiHealthChangeListener != null)
+            uiHealthChangeListener(currentHealth);
+        //uiHealthChangeListener?.Invoke(health); //if Listener defined, call it, passing in health
+        if (currentHealth <= 0)
         {
             //TODO: make entity explode into money, candy, fireworks, etc.
             return true;
