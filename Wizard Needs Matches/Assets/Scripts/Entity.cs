@@ -31,6 +31,25 @@ public class Entity : MonoBehaviour { //testtest
         return currentHealth;
     }
 
+    //refresh updates anything that happens at the beginning of the turn for an Entity:
+    //ie remaining speed = speed, remainingDelay--, switch sprite to "Awake" state, etc.
+    //returns false if Entity cannot act this turn, ie remainingDelay >= 1, Entity is Frozen or otherwise incapable of action
+    public bool OnRefresh()
+    {
+        remainingDelay--;
+        if (remainingDelay >= 1)
+            return false;
+        remainingSpeed = speed;
+        return true;
+    }
+
+    //updates anything that happens at the end of an Entity's turn: (including when they are unable to act)
+    //ie remaining speed = 0, switch sprite to "Asleep" state, deal "Standing in Fire" damage, decrease remaining time on "Shield" buff
+    public void OnDeplete()
+    {
+        remainingSpeed = 0;
+    }
+
     //by default, generic entities do not know any spells
     public virtual bool CastSpell(int spellIndex)
     {

@@ -8,8 +8,9 @@ public class TestPlayerController : EntityController {
     private float clock = 0; //used to prevent input flooding by slowing user input processing
     public float inputTime = 2; //how many seconds must pass before input can be processed again
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    //overrides virtual Start() in EntityController
+    protected override void Start () {
         if (inputTime <= 0)
         {
             Debug.Log("Player Controller Input Time initialized to bad value " + inputTime);
@@ -27,7 +28,7 @@ public class TestPlayerController : EntityController {
             playerHealthSlider.value = puppetEntity.SetUIHealthChangeListener(UpdateDisplayHealth);
             playerHealthSlider.maxValue = puppetEntity.maxHealth;
         }
-            
+        base.Start();
 	}
 
     void UpdateDisplayHealth(int newHealth)
