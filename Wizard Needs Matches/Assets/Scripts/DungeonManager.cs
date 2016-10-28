@@ -4,26 +4,30 @@ using System.Collections;
 public class DungeonManager : MonoBehaviour {
 
     //public GameObject[] tileset; //holds Prefabs used to tile room
-    public static Queue turnOrder; //holds all EntityControllers that can act
+    public static LinkedList<EntityController> turnOrder; //holds all EntityControllers that can act
     //when a controller finishes acting, it tells DungeonManager that its turn is finished, and DungeonManager grabs next actor in Queue and calls its StartTurn method
-    private static int typicalQueueCapacity = 20;
+    //private static int typicalListCapacity = 20;
     private EntityController someController;
-    public int queueSize = -1;
+    public int turnOrderSize = -1;
 
     // Use this for initialization
 	void Start () {
         if(turnOrder == null)
-            turnOrder = new Queue(typicalQueueCapacity);
+            turnOrder = new LinkedList<EntityController>();
         //turnOrder.Enqueue(someController);
 	}
 
     //initializes Queue and adds a Controller to it
-    public static void AddToTurnOrder(EntityController entityToAdd)
+    public static void AddToTurnOrder(EntityController controllerToAdd)
     {
         //TODO: fancy Turn Order Logic
-        if (turnOrder == null)
-            turnOrder = new Queue(typicalQueueCapacity);
-        turnOrder.Enqueue(entityToAdd);
+        if (turnOrder == null) //handles cases where other Objects call "Start()" before this script's Object does
+            turnOrder = new LinkedList();
+			
+		if(controllerToAdd.GoesFirst())
+			turnOrder.AddFirst(controllerToAdd);
+		else
+			turnOrder.AddLast(controllerToAdd);
     }
 
     //precondition: turnEnder is a Queue of EntityControllers, no other objects exist in Queue

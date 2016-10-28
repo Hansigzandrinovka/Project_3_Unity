@@ -8,6 +8,11 @@ public class TestPlayerController : EntityController {
     private float clock = 0; //used to prevent input flooding by slowing user input processing
     public float inputTime = 2; //how many seconds must pass before input can be processed again
 
+	public override bool GoesFirst() //Players have higher priority when placed into Turn Order
+	{
+		return true;
+	}
+	
     // Use this for initialization
     //overrides virtual Start() in EntityController
     protected override void Start () {

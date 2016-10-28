@@ -7,6 +7,13 @@ public class EntityController : MonoBehaviour {
 
     protected Entity puppetEntity;
     protected bool canAct = false;
+	//public int initiative = 1;
+	
+	//tells DungeonManager if this Controller has priority when being placed into Turn Order (IE is player)
+	public virtual bool GoesFirst()
+	{
+		return false;
+	}
 
     //called when 
     protected virtual void EndTurn()
@@ -21,6 +28,12 @@ public class EntityController : MonoBehaviour {
             DungeonManager.EndTurn();
         }
     }
+	
+	public int getInitiative()
+	{
+		return this.initiative;
+	}
+	
     protected virtual void StartTurn()
     {
         canAct = true;
