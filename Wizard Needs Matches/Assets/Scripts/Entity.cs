@@ -25,6 +25,11 @@ public class Entity : MonoBehaviour { //testtest
     public void EndTurn()
     { }
 
+	public int GetRemainingSpeed()
+	{
+		return remainingSpeed;
+	}
+
     public int SetUIHealthChangeListener(HealthChangeListener x)
     {
         uiHealthChangeListener = x;
@@ -108,6 +113,7 @@ public class Entity : MonoBehaviour { //testtest
         if (!targetTile.IsOccupied() & targetTile.IsWalkable())
         {
             goToTile(targetTile);
+			remainingSpeed --;
             return true;
         }
         else
