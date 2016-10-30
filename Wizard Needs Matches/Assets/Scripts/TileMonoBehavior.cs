@@ -80,8 +80,8 @@ public class TileMonoBehavior : MonoBehaviour {
     }
 
     //Layer Mask values are integer equivalent of binary arrays, so (1000)v2 is (8)v10, represents true for layer 8, false for all other layers
-    private static int tileLayerMask = 1 << 8; //this Layer Mask evaluates on Tiles Layer
-    private static int entitiesLayerMask = 1 << 9; //this Layer Mask evaluates on Entities Layer
+    public readonly static int tileLayerMask = 1 << 8; //this Layer Mask evaluates on Tiles Layer
+    public readonly static int entitiesLayerMask = 1 << 9; //this Layer Mask evaluates on Entities Layer
 
     public enum TileType { empty, wall };
     public TileType tileType = TileType.empty;

@@ -1,8 +1,10 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace />
-  <MonoDevelop.Ide.Workbench ActiveDocument="..\Bejeweled2\Assets\Resources\Scripts\Gem.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Feeler.cs">
     <Files>
-      <File FileName="..\Bejeweled2\Assets\Resources\Scripts\Gem.cs" Line="13" Column="77" />
+      <File FileName="Assets\Scripts\Board.cs" Line="26" Column="2" />
+      <File FileName="Assets\Scripts\Feeler.cs" Line="27" Column="4" />
+      <File FileName="Assets\Scripts\Gem.cs" Line="39" Column="82" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

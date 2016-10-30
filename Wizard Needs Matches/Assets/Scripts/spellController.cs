@@ -23,7 +23,7 @@ public class spellController : MonoBehaviour {
 				else if(tileBeneathUs.IsOccupied())
 				{
 					tileBeneathUs.occupyingEntity.TakeDamage(damageCaused,Entity.DamageType.poking);
-					Destroy(this.gameObject):
+					Destroy(this.gameObject);
 				}
 				else
 				{

@@ -10,17 +10,17 @@ public class Gem : MonoBehaviour {
 
 	public GameObject sphere;
 	public GameObject selector;
-	string[] gemMats ={"Red","Blue","Green","Orange","Yellow","Pink","Purple"};
+	string[] gemMats ={"Red","Blue","Green","Orange","Yellow","Pink","Purple"}; //the different gem colors this gem can exist in
 	string color="";
-	public List<Gem> Neighbors = new List<Gem>();
-	public bool isSelected = false;
+	public List<Gem> Neighbors = new List<Gem>(); //all bordering Gems that are above, below, left, or right of this Gem
+	public bool isSelected = false; //whether or not gem is selected for matching
 
 
 	// Use this for initialization
 
 	void Start () {
 
-		CreateGem();
+		CreateGem(); //on creation, give this gem a type
 	
 	}
 
@@ -36,7 +36,7 @@ public class Gem : MonoBehaviour {
 		isSelected  = !isSelected ;
 		selector.SetActive(isSelected);
 }
-	public void CreateGem(){
+	public void CreateGem(){ //fetches a random color and displays gem as that color
 		color = gemMats[Random.Range(0,gemMats.Length)];
 		Material m = Resources.Load("Materials/"+color)as Material;
 		sphere.GetComponent<Renderer>().material = m;
