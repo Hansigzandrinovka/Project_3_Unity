@@ -1,0 +1,18 @@
+on tile start, tile connects itself to nearby tiles only if L/R/U/D tile not defined, stores the entity on top of it
+dungeon manager has a count of existing tiles in dungeon, possibly 
+
+Tile tag for every sprite with a Tile script
+Dungeon Manager handles time, not tiles
+Dungeon Manager can create tiles at specific positions, tiles handle their connecting automatically
+Create special Layer Mask that only collides with Tiles
+Exit Tile inherits from Tile class maybe
+
+any Entity, when it attempts to move, will Move(direction) which will call its Tile's getTile(direction).IsWalkable(this), and if true, will move to that spot
+
+
+
+Documentation:
+https://docs.unity3d.com/ScriptReference/Physics.OverlapSphere.html - used by Tiles to find adjacent Tiles
+http://answers.unity3d.com/questions/35825/count-the-number-of-objects-with-a-certain-tag.html - not used to find # of Tiles in game
+http://answers.unity3d.com/questions/31775/how-get-object-if-i-know-coordinates.html#answer-31776 - recommended Physics.OverlapSphere for finding adjacent tiles
+https://www.youtube.com/watch?v=KuW4IEqEptA - use for A* Pathfinding with Tiles by AI Controllers
