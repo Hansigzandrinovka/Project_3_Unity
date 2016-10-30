@@ -17,6 +17,7 @@ public class Entity : MonoBehaviour { //testtest
     public int delay = 0; //number of turns entity must forfeit after an action before resuming action
     protected int remainingDelay; //number of remaining turns before next action
     public TileMonoBehavior occupyingTile; //the tile this entity stands on, and its entry point into moving around on the board
+    public MoveDirection facing = MoveDirection.up; //direction Entity is facing
 
     public enum MoveDirection { up, down, left, right }; //the direction player wishes to move for the purpose of Move function
     public enum DamageType { poking }; //the types of damage that an entity can take for the purpose of the TakeDamage function
@@ -120,8 +121,7 @@ public class Entity : MonoBehaviour { //testtest
         {
             //Debug.Log("Was occupied or not walkable");
             return false;
-        }
-            
+        }  
     }
 
     //moves this Enity to the specified Tile and begins tracking it

@@ -76,7 +76,7 @@ public class DungeonManager : MonoBehaviour {
 		Debug.Log ("Starting Turn");
 		if(turnOrder.Count > 0)
 		{
-			Debug.Log("It is now " + turnOrder.First.Value + "'s turn");
+			//Debug.Log("Turn order starts with " + turnOrder.First.Value);
 			turnOrder.First.Value.StartTurn(); //after entity starts its turn, it will eventually tell Dungeon Manager to end turn
 		}
 		else

@@ -21,6 +21,7 @@ public class EntityController : MonoBehaviour {
     {
         if(canAct == true) //only allow currently acting Controllers to end the turn
         {
+            Debug.Log("Ending " + this + "'s turn");
             //do cleanup stuff
             canAct = false;
             puppetEntity.OnDeplete();

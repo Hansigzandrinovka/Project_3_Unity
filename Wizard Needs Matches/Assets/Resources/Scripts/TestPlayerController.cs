@@ -38,7 +38,6 @@ public class TestPlayerController : EntityController {
 				playerEnergySlider.maxValue = maxEnergy;
 			}
         }
-        base.Start();
 	}
 
     void UpdateDisplayHealth(int newHealth)
@@ -99,7 +98,7 @@ public class TestPlayerController : EntityController {
             }
 			if(puppetEntity.GetRemainingSpeed() == 0) //if Entity can't act anymore
 			{
-				Debug.Log("Player Entity finished Turn");
+				//Debug.Log("Player Entity finished Turn");
 				EndTurn();
 			}
         }
