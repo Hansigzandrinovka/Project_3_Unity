@@ -21,6 +21,8 @@ public class Entity : MonoBehaviour { //testtest
     public GameObject spriteForFacing;
     public int damageAmount = 1;
     public DamageType attackType = DamageType.poking;
+    public GameObject Spell; //the prefab associated with casting a particular spell
+    public float castSpeed = 1; //speed with which a projectile travels through the dungeon
 
     public enum MoveDirection { up, down, left, right }; //the direction player wishes to move for the purpose of Move function
     public enum DamageType { poking }; //the types of damage that an entity can take for the purpose of the TakeDamage function
@@ -62,6 +64,27 @@ public class Entity : MonoBehaviour { //testtest
     //by default, generic entities do not know any spells
     public virtual bool CastSpell(int spellIndex)
     {
+        Rigidbody2D clone;
+        switch (facing)
+        {
+            case (MoveDirection.up):
+                clone = (Rigidbody2D)Instantiate(Spell, transform.position - transform.up, transform.rotation);
+                clone.velocity = transform.up * -1 * castSpeed;
+                break;
+            case (MoveDirection.right):
+                clone = (Rigidbody2D)Instantiate(Spell, transform.position + transform.right, transform.rotation);
+                clone.velocity = transform.right * castSpeed;
+                break;
+            case (MoveDirection.left):
+                clone = (Rigidbody2D)Instantiate(Spell, transform.position - transform.right, transform.rotation);
+                clone.velocity = transform.right * -1 * castSpeed;
+                break;
+            default:
+                clone = (Rigidbody2D)Instantiate(Spell, transform.position + transform.up, transform.rotation);
+                clone.velocity = transform.up * castSpeed;
+                break;
+        }
+        remainingSpeed--; //casting a spell takes an action
         return false;
     }
 

@@ -75,6 +75,7 @@ public class TestPlayerController : EntityController {
             float yAxis = Input.GetAxis("Vertical");
             bool turnLeftButton = Input.GetButton("RotateLeft");
             bool turnRightButton = Input.GetButton("RotateRight");
+            bool castSpellButton = Input.GetButton("Fire1");
 
             if (xAxis > 0.5) //user wants to go Right
             {
@@ -109,6 +110,10 @@ public class TestPlayerController : EntityController {
 //                Debug.Log("Turning right");
                 puppetEntity.Rotate(false);
                 clock = 0;
+            }
+            else if(castSpellButton)
+            {
+                puppetEntity.CastSpell(0);
             }
 
 			if(puppetEntity.GetRemainingSpeed() == 0) //if Entity can't act anymore
