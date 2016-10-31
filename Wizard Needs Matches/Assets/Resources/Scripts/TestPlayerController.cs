@@ -73,6 +73,8 @@ public class TestPlayerController : EntityController {
         {
             float xAxis = Input.GetAxis("Horizontal");
             float yAxis = Input.GetAxis("Vertical");
+            bool turnLeftButton = Input.GetButton("RotateLeft");
+            bool turnRightButton = Input.GetButton("RotateRight");
 
             if (xAxis > 0.5) //user wants to go Right
             {
@@ -96,6 +98,19 @@ public class TestPlayerController : EntityController {
                 puppetEntity.Move(Entity.MoveDirection.down);
                 clock = 0;
             }
+            else if(turnLeftButton) //user rotating left to face a new direction
+            {
+                Debug.Log("Turning left");
+                puppetEntity.Rotate(true);
+                clock = 0;
+            }
+            else if(turnRightButton) //user rotating right to face a new direction
+            {
+//                Debug.Log("Turning right");
+                puppetEntity.Rotate(false);
+                clock = 0;
+            }
+
 			if(puppetEntity.GetRemainingSpeed() == 0) //if Entity can't act anymore
 			{
 				//Debug.Log("Player Entity finished Turn");
@@ -105,4 +120,8 @@ public class TestPlayerController : EntityController {
         else if(canAct)
             clock += Time.deltaTime;
 	}
+    override protected void OnDestroy()
+    {
+        base.OnDestroy();
+    }
 }

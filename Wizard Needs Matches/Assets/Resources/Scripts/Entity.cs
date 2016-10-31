@@ -18,6 +18,9 @@ public class Entity : MonoBehaviour { //testtest
     protected int remainingDelay; //number of remaining turns before next action
     public TileMonoBehavior occupyingTile; //the tile this entity stands on, and its entry point into moving around on the board
     public MoveDirection facing = MoveDirection.up; //direction Entity is facing
+    public GameObject spriteForFacing;
+    public int damageAmount = 1;
+    public DamageType attackType = DamageType.poking;
 
     public enum MoveDirection { up, down, left, right }; //the direction player wishes to move for the purpose of Move function
     public enum DamageType { poking }; //the types of damage that an entity can take for the purpose of the TakeDamage function
@@ -64,13 +67,16 @@ public class Entity : MonoBehaviour { //testtest
 
     public bool TakeDamage(int amount, DamageType type)
     {
+        Debug.Log(this + " takes " + amount + " " + type + " damage");
         currentHealth -= amount;
         if (uiHealthChangeListener != null)
             uiHealthChangeListener(currentHealth);
         //uiHealthChangeListener?.Invoke(health); //if Listener defined, call it, passing in health
         if (currentHealth <= 0)
         {
+            Debug.Log(this + " dies");
             //TODO: make entity explode into money, candy, fireworks, etc.
+            Destroy(this.gameObject);
             return true;
         }
         return false;
@@ -83,7 +89,7 @@ public class Entity : MonoBehaviour { //testtest
     {
         if (remainingSpeed == 0 || remainingDelay > 0)
         {
-            Debug.Log("Entity speed is depleted");
+            Debug.Log("Entity speed is depleted, can't move");
             return false;
         }
             
@@ -105,23 +111,97 @@ public class Entity : MonoBehaviour { //testtest
         }
         if (targetTile == null)
         {
-            //Debug.Log("No Tile Found to move to");
             return false;
         }
-            
-        //if is occupied, return false, if is not walkable return false
-        //otherwise return true
-        if (!targetTile.IsOccupied() & targetTile.IsWalkable())
+        if (targetTile.IsWalkable())
         {
-            goToTile(targetTile);
-			remainingSpeed --;
+            if(!targetTile.IsOccupied())
+            {
+                goToTile(targetTile);
+            }
+            else
+            {
+                targetTile.occupyingEntity.TakeDamage(damageAmount,attackType);
+            }
+            remainingSpeed--;
             return true;
         }
         else
         {
-            //Debug.Log("Was occupied or not walkable");
             return false;
         }  
+    }
+
+    //attempts to rotate Entity to face a new direction specified as input
+    //returns true if command was successful, false if unable to (ie not enough move)
+    public virtual bool Rotate(MoveDirection direction)
+    {
+        if(remainingSpeed== 0 || remainingDelay > 0)
+        {
+            Debug.Log("Entity speed is depleted, can't rotate");
+            return false;
+        }
+        else if(spriteForFacing == null)
+        {
+            Debug.LogError("Missing sprite, can't rotate nonexistent sprite");
+            return false;
+        }
+        else
+        {
+            switch(direction)
+            {
+                case (MoveDirection.up):
+                    {
+                        spriteForFacing.transform.eulerAngles = new Vector3(0, 0, 0);
+                        break;
+                    }
+                case (MoveDirection.left):
+                    {
+                        spriteForFacing.transform.eulerAngles = new Vector3(0, 0, 90);
+                        break;
+                    }
+                case (MoveDirection.down):
+                    {
+                        spriteForFacing.transform.eulerAngles = new Vector3(0, 0, 180);
+                        break;
+                    }
+                default:
+                    {
+                        Debug.Log("Facing Right");
+                        spriteForFacing.transform.eulerAngles = new Vector3(0, 0, -90);
+                        break;
+                    }
+            }
+            facing = direction;
+            //remainingSpeed--; //should turning consume your turn?
+            return true;
+        }
+    }
+    public virtual bool Rotate(bool turnLeft)
+    {
+        switch(facing)
+        {
+            case (MoveDirection.up):
+                {
+                    if (turnLeft)
+                        return Rotate(MoveDirection.left);
+                    return Rotate(MoveDirection.right);
+                }
+            case (MoveDirection.left):
+                {
+                    if (turnLeft)
+                        return Rotate(MoveDirection.down);
+                    return Rotate(MoveDirection.up);
+                }
+            case (MoveDirection.down):
+                if (turnLeft)
+                    return Rotate(MoveDirection.right);
+                return Rotate(MoveDirection.left);
+            default:
+                if (turnLeft)
+                    return Rotate(MoveDirection.up);
+                return Rotate(MoveDirection.down);
+        }
     }
 
     //moves this Enity to the specified Tile and begins tracking it

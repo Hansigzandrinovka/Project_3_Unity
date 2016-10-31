@@ -21,7 +21,7 @@ public class EntityController : MonoBehaviour {
     {
         if(canAct == true) //only allow currently acting Controllers to end the turn
         {
-            Debug.Log("Ending " + this + "'s turn");
+//            Debug.Log("Ending " + this + "'s turn");
             //do cleanup stuff
             canAct = false;
             puppetEntity.OnDeplete();
@@ -33,7 +33,7 @@ public class EntityController : MonoBehaviour {
 	
     public virtual void StartTurn()
     {
-		Debug.Log ("Starting turn for " + this);
+//		Debug.Log ("Starting turn for " + this);
         canAct = true;
         if(!puppetEntity.OnRefresh()) //try to awaken the Entity. If it can't be wakened, end current turn
             EndTurn();
@@ -50,9 +50,11 @@ public class EntityController : MonoBehaviour {
 		}
     }
 	//cleans up other references to this Object in Turn Order, etc.
-	void OnDestroy()
+	virtual protected void OnDestroy()
 	{
+        Debug.Log(this + " destroyed");
 		canAct = false;
 		DungeonManager.RemoveFromTurnOrder (this);
+        DungeonManager.EndTurn();
 	}
 }

@@ -50,6 +50,7 @@ public class DungeonManager : MonoBehaviour {
         if(turnOrder.Count > 0) //if there is a next Controller that can act
         {
             currentTurnHolder = (EntityController)turnOrder.First.Value; //doesn't remove Controller from Queue, just notifies it
+            Debug.Log("Starting turn for " + currentTurnHolder);
 			currentTurnHolder.StartTurn();
         }
     }
