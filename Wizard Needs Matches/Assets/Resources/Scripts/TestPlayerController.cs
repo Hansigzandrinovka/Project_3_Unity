@@ -15,7 +15,13 @@ public class TestPlayerController : EntityController {
 	{
 		return true;
 	}
-	
+
+    public override void StartTurn()
+    {
+        base.StartTurn();
+        clock = 0;
+    }
+
     // Use this for initialization
     //overrides virtual Start() in EntityController
     protected override void Start () {
@@ -114,6 +120,7 @@ public class TestPlayerController : EntityController {
             else if(castSpellButton)
             {
                 puppetEntity.CastSpell(0);
+                clock = 0;
             }
 
 			if(puppetEntity.GetRemainingSpeed() == 0) //if Entity can't act anymore

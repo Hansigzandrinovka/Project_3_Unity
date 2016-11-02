@@ -64,24 +64,24 @@ public class Entity : MonoBehaviour { //testtest
     //by default, generic entities do not know any spells
     public virtual bool CastSpell(int spellIndex)
     {
-        Rigidbody2D clone;
+        GameObject clone;
         switch (facing)
         {
             case (MoveDirection.up):
-                clone = (Rigidbody2D)Instantiate(Spell, transform.position - transform.up, transform.rotation);
-                clone.velocity = transform.up * -1 * castSpeed;
+                clone = (GameObject)Instantiate(Spell, transform.position + transform.up, transform.rotation);
+                clone.GetComponent<Rigidbody2D>().velocity = transform.up * castSpeed;
                 break;
             case (MoveDirection.right):
-                clone = (Rigidbody2D)Instantiate(Spell, transform.position + transform.right, transform.rotation);
-                clone.velocity = transform.right * castSpeed;
+                clone = (GameObject)Instantiate(Spell, transform.position + transform.right, transform.rotation);
+                clone.GetComponent<Rigidbody2D>().velocity = transform.right * castSpeed;
                 break;
             case (MoveDirection.left):
-                clone = (Rigidbody2D)Instantiate(Spell, transform.position - transform.right, transform.rotation);
-                clone.velocity = transform.right * -1 * castSpeed;
+                clone = (GameObject)Instantiate(Spell, transform.position - transform.right, transform.rotation);
+                clone.GetComponent<Rigidbody2D>().velocity = transform.right * -1 * castSpeed;
                 break;
             default:
-                clone = (Rigidbody2D)Instantiate(Spell, transform.position + transform.up, transform.rotation);
-                clone.velocity = transform.up * castSpeed;
+                clone = (GameObject)Instantiate(Spell, transform.position - transform.up, transform.rotation);
+                clone.GetComponent<Rigidbody2D>().velocity = transform.up * -1 * castSpeed;
                 break;
         }
         remainingSpeed--; //casting a spell takes an action

@@ -10,9 +10,10 @@ public class spellController : MonoBehaviour {
 	void Update () {
 		Vector2 topRightLoc = new Vector2(transform.position.x + 0.25f, transform.position.y + 0.25f);
 		Vector2 botLeftLoc = new Vector2(transform.position.x - 0.25f, transform.position.y - 0.25f);
-		Collider2D collider = Physics2D.OverlapArea(topRightLoc, botLeftLoc, TileMonoBehavior.tileLayerMask);
+		Collider2D collider = Physics2D.OverlapArea(topRightLoc, botLeftLoc, TileMonoBehavior.tileLayerMask); //test if a floor tile is under this tile, if so then grab it and check what occupies it
 		if(collider != null)
 		{
+            //Debug.Log("Testing floor collision");
 			TileMonoBehavior tileBeneathUs = collider.gameObject.GetComponent<TileMonoBehavior>();
 			if(tileBeneathUs != null)
 			{
@@ -32,8 +33,15 @@ public class spellController : MonoBehaviour {
 			}
 			else
 			{
+                //Debug.Log("Destroying spell by lack of Tile");
 				Destroy(this.gameObject);
 			}
 		}
+        else
+        {
+            //Debug.Log("Destroying spell by lack of Collider");
+            Destroy(this.gameObject);
+        }
+        Debug.Log("after collider check");
 	}
 }

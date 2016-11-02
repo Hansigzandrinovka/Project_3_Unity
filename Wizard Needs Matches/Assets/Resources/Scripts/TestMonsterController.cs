@@ -12,10 +12,14 @@ public class TestMonsterController : EntityController {
 		base.Start();
 	}
 
+    public override void StartTurn()
+    {
+        base.StartTurn();
+        clock = 0;
+    }
 
-	
-	// Update is called once per frame
-	void Update () {
+    // Update is called once per frame
+    void Update () {
         if(clock >= inputTime && canAct)
         {
             switch(currentLogicState)
