@@ -40,7 +40,21 @@ gameObject.transform.position = new Vector3(- 3.5f, -3.5f,0);
 
 	void Update () {
 
-		if (isSwapping){
+
+		if(isMatched ){
+
+			for( int i=0 ; i<gems.Count ; i++){
+				if(gems[i].isMatched){
+					gems[i].CreateGem();
+					gems[i].transform.position = new Vector3(
+						gems[i].transform.position.x,
+						gems[i].transform.position.y+6,
+						gems[i].transform.position.z);
+					}
+				}
+			isMatched  = false;
+			}
+		else if (isSwapping){
 			MoveGem(gem1  , gem1End, gem1Start);
 			MoveNegGem(gem2  , gem2End, gem2Start);
 			if( Vector3.Distance(gem1.transform.position,gem1End) < 0.1f || Vector3.Distance(gem2.transform.position,gem2End) < 0.1f ){
