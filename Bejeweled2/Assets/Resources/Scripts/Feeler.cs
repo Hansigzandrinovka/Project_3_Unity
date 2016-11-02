@@ -19,7 +19,7 @@ public class Feeler : MonoBehaviour {
 
 		if(c.tag == "Gem")
 		{
-		owner.AddNeighbor(c.GetComponent<Gem>());
+		owner.RemoveNeighbor(c.GetComponent<Gem>());
 		}
 
 		
