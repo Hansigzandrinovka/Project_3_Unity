@@ -1,8 +1,7 @@
-Wizard Needs Matches/Library/metadata/
+Wizard Needs Matches/Library/
 *.csproj
 *.dwlt
-Wizard Needs Matches/Library/InspectorExpandedItems.asset
+Bejeweled2/Library/
 *.mdb
-Wizard Needs Matches/Library/assetDatabase3
 *.sln
 *.userprefs
