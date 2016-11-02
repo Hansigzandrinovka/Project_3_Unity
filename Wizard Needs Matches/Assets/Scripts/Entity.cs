@@ -70,6 +70,7 @@ public class Entity : MonoBehaviour { //testtest
         if (currentHealth <= 0)
         {
             //TODO: make entity explode into money, candy, fireworks, etc.
+		Die();
             return true;
         }
         return false;
@@ -134,7 +135,12 @@ public class Entity : MonoBehaviour { //testtest
         occupyingTile.occupyingEntity = this;
         transform.position = new Vector3(occupyingTile.transform.position.x, occupyingTile.transform.position.y, transform.position.z);
     }
-
+	
+	public void Die()
+	{
+		Destroy(this.gameObject);
+	}
+	
     // Update is called once per frame
     void Update () {
 	
