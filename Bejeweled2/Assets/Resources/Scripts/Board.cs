@@ -41,40 +41,55 @@ gameObject.transform.position = new Vector3(- 3.5f, -3.5f,0);
 	void Update () {
 
 
-		if(isMatched ){
+		if (isMatched) {
 
-			for( int i=0 ; i<gems.Count ; i++){
-				if(gems[i].isMatched){
-					gems[i].CreateGem();
-					gems[i].transform.position = new Vector3(
-						gems[i].transform.position.x,
-						gems[i].transform.position.y+6,
-						gems[i].transform.position.z);
-					}
+			for (int i=0; i<gems.Count; i++) {
+				if (gems [i].isMatched) {
+					gems [i].CreateGem ();
+					gems [i].transform.position = new Vector3 (
+						gems [i].transform.position.x,
+						gems [i].transform.position.y + 6,
+						gems [i].transform.position.z);
 				}
-			isMatched  = false;
 			}
-		else if (isSwapping){
-			MoveGem(gem1  , gem1End, gem1Start);
-			MoveNegGem(gem2  , gem2End, gem2Start);
-			if( Vector3.Distance(gem1.transform.position,gem1End) < 0.1f || Vector3.Distance(gem2.transform.position,gem2End) < 0.1f ){
+			isMatched = false;
+		} else if (isSwapping) {
+			MoveGem (gem1, gem1End, gem1Start);
+			MoveNegGem (gem2, gem2End, gem2Start);
+			if (Vector3.Distance (gem1.transform.position, gem1End) < 0.1f || Vector3.Distance (gem2.transform.position, gem2End) < 0.1f) {
 				gem1.transform.position = gem1End;
 				gem2.transform.position = gem2End;
-				gem1.ToggleSelector();
-				gem2.ToggleSelector();
+				gem1.ToggleSelector ();
+				gem2.ToggleSelector ();
 				lastGem = null;
 
 				
 
 				isSwapping = false;
-				TogglePhysics( false );
-				CheckMatch();
+				TogglePhysics (false);
+				CheckMatch ();
 
-				}
 			}
+		} else if( DetermineBoardState() ){
+			for (int i=0; i<gems.Count; i++){
+				CheckForNearbyMatches( gems[i] );
+
+			}
+		}
 	
 	}
 
+
+	public bool DetermineBoardState()
+	{
+		for (int i=0; i < gems.Count; i++) {
+			if(gems[i].transform.localPosition.y > 8)
+				return true;
+			else if( gems[i].GetComponent<Rigidbody>().velocity.y > .1f)
+				return true;
+		}
+		return false;
+	}
 
 	public void CheckMatch(){
 		List<Gem> gem1List = new List<Gem>();
@@ -87,6 +102,14 @@ gameObject.transform.position = new Vector3(- 3.5f, -3.5f,0);
 		//print("Gem1"+ gem1List.Count);
 
 		}
+
+	public void CheckForNearbyMatches( Gem g)
+	{
+		List<Gem> gemList = new List<Gem> ();
+		ConstructMatchList (g.color, g , g.XCoord , g.YCoord , ref gemList);
+		FixMatchList ( g , gemList);
+	}
+
 
 	public void ConstructMatchList( string color, Gem gem, int XCoord, int YCoord, ref List<Gem> MatchList ){
 		
