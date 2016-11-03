@@ -47,11 +47,13 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\Resources\Scripts\Board.cs" />
+     <Compile Include="Assets\Resources\Scripts\DungeonGenerator.cs" />
      <Compile Include="Assets\Resources\Scripts\DungeonManager.cs" />
      <Compile Include="Assets\Resources\Scripts\Entity.cs" />
      <Compile Include="Assets\Resources\Scripts\EntityController.cs" />
      <Compile Include="Assets\Resources\Scripts\Feeler.cs" />
      <Compile Include="Assets\Resources\Scripts\Gem.cs" />
+     <Compile Include="Assets\Resources\Scripts\InEditor_SnapToGrid.cs" />
      <Compile Include="Assets\Resources\Scripts\TestMonsterController.cs" />
      <Compile Include="Assets\Resources\Scripts\TestPlayerController.cs" />
      <Compile Include="Assets\Resources\Scripts\TileMonoBehavior.cs" />
