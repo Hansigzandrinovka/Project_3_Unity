@@ -57,6 +57,7 @@
      <Compile Include="Assets\Resources\Scripts\TestMonsterController.cs" />
      <Compile Include="Assets\Resources\Scripts\TestPlayerController.cs" />
      <Compile Include="Assets\Resources\Scripts\TileMonoBehavior.cs" />
+     <Compile Include="Assets\Resources\Scripts\custom_objects\dungeon_room.cs" />
      <Compile Include="Assets\Resources\Scripts\spellController.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>

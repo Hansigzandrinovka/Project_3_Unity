@@ -86,10 +86,6 @@ public class TileMonoBehavior : MonoBehaviour {
     public enum TileType { empty, wall };
     public TileType tileType = TileType.empty;
 
-    void Awake()
-    {
-        //Debug.Log("awakened");
-    }
     void Start () {
         //Debug.Log("Started");
         transform.position.Set(transform.position.x, transform.position.y, tileZLayer);
