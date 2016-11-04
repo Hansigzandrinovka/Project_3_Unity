@@ -25,7 +25,7 @@ public class Entity : MonoBehaviour { //testtest
     public float castSpeed = 1; //speed with which a projectile travels through the dungeon
 
     public enum MoveDirection { up, down, left, right }; //the direction player wishes to move for the purpose of Move function
-    public enum DamageType { poking }; //the types of damage that an entity can take for the purpose of the TakeDamage function
+    public enum DamageType { poking, burn }; //the types of damage that an entity can take for the purpose of the TakeDamage function
 
     //tells the DungeonController this entity is done acting
     public void EndTurn()
@@ -236,6 +236,10 @@ public class Entity : MonoBehaviour { //testtest
         occupyingTile = newTile;
         occupyingTile.occupyingEntity = this;
         transform.position = new Vector3(occupyingTile.transform.position.x, occupyingTile.transform.position.y, transform.position.z);
+	    if(occupyingTile.GetComponent<SpriteRenderer>().sharedMaterial == Resources.Load("Materials/Red"))
+	    {
+		    this.TakeDamage(2,DamageType.burn);
+	    }
     }
 	
 	public void Die()
