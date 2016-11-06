@@ -3,19 +3,20 @@ using System.Collections;
 
 public class dungeon_room {
     //a container for a dungeon room's origin point, size, and connected dungeon rooms
-    dungeon_room above;
-    dungeon_room below;
-    dungeon_room left;
-    dungeon_room right;
+    dungeon_room previousRoom;
 
-
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+    private int size = 1;
+    private float xpos, ypos = 0;
+    public dungeon_room(float x, float y, int dimensions)
+    {
+        size = dimensions;
+        xpos = x;
+        ypos = y;
+    }
+    public int getSize()
+    { return size; }
+    public Vector3 getCoords()
+    {
+        return new Vector3(xpos, ypos, TileMonoBehavior.tileZLayer);
+    }
 }
