@@ -6,29 +6,25 @@ public class DungeonGenerator : MonoBehaviour {
 
     public static int testingSeed = 5; //the seed for the RNG system to predictably produce random tiles
     public GameObject floorTilePrefab; //the tile used to generate the floor of a given dungeon
+    public GameObject tileContainer; //the gameobject that every tile prefab will be a part of
     public int numberOfRooms = 1;
     public int minRoomSize = 3;
     public int maxRoomSize = 5;
     public int maxDisplacement = 3; //max distance any two rooms can be from each other
+    public bool testingMode = true; //determines if testing seed is used for RNG
 
     private int count = 0; //used for counting action sequence
-    private Stack createdRooms;
+    private Queue createdRoomsQueue; //rooms that have been created, but could be invalid to create bordering rooms around
+    private Stack tappedRoomsStack; //rooms that have been found invalid to create at
 
 	// Use this for initialization
 	void Start () {
-        createdRooms = new Stack(numberOfRooms);
-        if(floorTilePrefab == null)
-        {
-            Debug.LogError("Unrecoverable Error! Missing floor tile prefab, removing this gameobject");
-            Destroy(this.gameObject);
-        }
-        Random.seed = testingSeed;
         if (maxRoomSize == 0)
         {
             maxRoomSize = 3;
             Debug.LogError("Error! Max room size should not be zero, assuming value three");
         }
-        if(minRoomSize == 0)
+        if (minRoomSize == 0)
         {
             minRoomSize = 3;
             Debug.LogError("Error! Min room size should not be zero, assuming value three");
@@ -38,11 +34,32 @@ public class DungeonGenerator : MonoBehaviour {
             minRoomSize = maxRoomSize;
             Debug.LogError("Error! Min room size is less than max room size, assuming they are same value");
         }
+        if (tileContainer == null)
+            Debug.Log("Missing TileContainer object, Tiles will be cluttering normal hierarchy");
+        if(floorTilePrefab == null)
+        {
+            Debug.LogError("Unrecoverable Error! Missing floor tile prefab, removing this gameobject");
+            Destroy(this.gameObject);
+            return;
+        }
+        //hold off on data structure creation until after all validations occur (we don't want to waste processor time on structures that won't be used)
+        createdRoomsQueue = new Queue(numberOfRooms); //we won't have more than the given number of rooms to create in our Queue
+        tappedRoomsStack = new Stack(numberOfRooms);
+        if(testingMode)
+            Random.seed = testingSeed; //configure random seed for testing purposes
 	}
 
 
     //@precondition: attached object (this) doesn't have a messed up rotation
-    dungeon_room TryCreateRoom(Vector3 roomOrigin, int roomSize)
+    //@params:  roomOrigin -> location in 3d space for room origin (bottom left corner), 
+    //          roomSize -> number of tiles to extend right and up from origin, 
+    //          pathLength -> number of tiles to create path leading up
+    //          direction -> direction that old tile is relative to new tile
+    //          connectedRoom -> the room whose "direction" edge may be this room
+    //Checks for space occupation in area defined roomSize x roomSize right and up from specified origin position,
+    //then if un-occupied, creates tiles there
+    //returns a dungeon room representing the location and dimensions of the room, or null if Queue is empty
+    dungeon_room TryCreateRoom(Vector3 roomOrigin, int roomSize/*,int pathLength, Entity.MoveDirection direction, dungeon_room connectedRoom*/)
     {
         Debug.Log("Attempting to create room");
         for(int i = 0; i < roomSize; i++)
@@ -53,7 +70,7 @@ public class DungeonGenerator : MonoBehaviour {
                 Collider2D collider = Physics2D.OverlapArea(topRightLoc, botLeftLoc, TileMonoBehavior.tileLayerMask); //check if there is a tile there
                 if (collider != null) //if a tile already exists here, this whole room is a bust
                 {
-                    Debug.Log("Error! Found gameobject at " + collider.transform.position.ToString());
+                    Debug.Log("Found gameobject at " + collider.transform.position.ToString());
                     Debug.Log("Failed at coordinates " + (roomOrigin.x + i) + "," + (roomOrigin.y + j));
                     return null;
                 }
@@ -63,11 +80,36 @@ public class DungeonGenerator : MonoBehaviour {
         for(int i = 0; i < roomSize; i++) //populate room with Tiles
             for(int j = 0; j < roomSize; j++)
             {
-                Instantiate(floorTilePrefab, new Vector3(roomOrigin.x + i, roomOrigin.y + j, roomOrigin.z), transform.rotation);
+                GameObject tile = (GameObject)Instantiate(floorTilePrefab, new Vector3(roomOrigin.x + i, roomOrigin.y + j, roomOrigin.z), transform.rotation);
+                if (tileContainer != null)
+                    tile.transform.SetParent(tileContainer.transform);
             }
+        //build path from room
         return new dungeon_room(roomOrigin.x, roomOrigin.y, roomSize) ;
     }
+
+    //uses Random.Range to cycle the Queue (Enqueue the Dequeued value), then returns dungeon room at front of queue
+    public dungeon_room GetRandomRoomFromQueue()
+    {
+        int cycleCount = Random.Range(0,createdRoomsQueue.Count - 1); //gets a random room from the Queue
+        if (createdRoomsQueue.Peek() != null) //if Queue contains elements
+        {
+            for (int i = 0; i < cycleCount; i++)
+                createdRoomsQueue.Enqueue(createdRoomsQueue.Dequeue());
+            return (dungeon_room)createdRoomsQueue.Peek();
+        }
+        else
+            return null;
+    }
 	
+    //TODO: implement leaving and returning to main menu
+    //handles leaving current scene and returning to main menu, along with any potential cleanup needed
+    void GracefullyExit()
+    {
+        Destroy(this.gameObject);
+        return;
+    }
+
 	// Update is called once per frame
 	void Update ()
     {
@@ -83,23 +125,31 @@ public class DungeonGenerator : MonoBehaviour {
             if(count == 0) //creating very first room
             {
                 int newSize = Random.Range(minRoomSize, maxRoomSize + 1); //size of new room
-                dungeon_room newRoom = TryCreateRoom(new Vector3(transform.position.x - 10, transform.position.y, TileMonoBehavior.tileZLayer), newSize);
+                dungeon_room newRoom = TryCreateRoom(new Vector3(transform.position.x, transform.position.y, TileMonoBehavior.tileZLayer), newSize);
                 if (newRoom != null) //if room successfully created
                 {
                     Debug.Log("First room created");
-                    createdRooms.Push(newRoom);
+                    createdRoomsQueue.Enqueue(newRoom);
                     count++;
                 }
                 else
                 {
                     Debug.Log("Unable to create first room, so floor must be predefined.");
                     count = numberOfRooms; //forces Generator to stop generating
+                    GracefullyExit();
+                    return;
                 }
             }
-            else if(createdRooms.Peek() != null) //not first element, and there is a next element to grab
+            else if(createdRoomsQueue.Peek() != null) //not first element, and there is a next element to grab
             {
-                
-                dungeon_room oldRoom = (dungeon_room)createdRooms.Peek(); //use old room's position to find new room
+                dungeon_room oldRoom = GetRandomRoomFromQueue(); //picks an old room to generate new room relative to
+                if(oldRoom == null)
+                {
+                    Debug.LogError("Unhandled Error! Room queue is Empty! Aborting");
+                    count = numberOfRooms;
+                    return;
+                }
+                Debug.Log("Using room at " + oldRoom.getCoords().ToString());
                 dungeon_room newRoom = null; //the room we hope to create
                 int roomSize = Random.Range(minRoomSize, maxRoomSize + 1);
                 Debug.Log("new room size picked to be " + roomSize);
@@ -113,9 +163,8 @@ public class DungeonGenerator : MonoBehaviour {
                 Debug.Log("Picked direction " + direction);
                 int originalDirection = direction;
 
-                do //try to create room at given direction, if it fails, keep trying with new direction until 
+                do //try to create room at given direction, if it fails, keep trying with new direction until there are no more directions to pick
                 {
-                    
                     switch (direction)
                     {
                         case 1: //up
@@ -135,7 +184,7 @@ public class DungeonGenerator : MonoBehaviour {
                             }
                         case 4: //right
                             {
-                                newRoomLocation = new Vector3(oldRoomLocation.x, 0 + distance + roomSize);
+                                newRoomLocation = new Vector3(oldRoomLocation.x + distance + roomSize, oldRoomLocation.y);
                                 break;
                             }
                     }
@@ -146,7 +195,7 @@ public class DungeonGenerator : MonoBehaviour {
                     {
                         count++;
                         Debug.Log("New room created");
-                        createdRooms.Push(newRoom);
+                        createdRoomsQueue.Enqueue(newRoom);
                     }
                     else if (direction == 4)
                     {
@@ -157,21 +206,31 @@ public class DungeonGenerator : MonoBehaviour {
                     else
                     {
                         direction++;
-                        Debug.Log("Creation failed, might try next direction");
+                        Debug.Log("Creation failed, might try next direction" + direction);
                     }
                         
                 }
                 while (newRoom != null && direction != originalDirection);
-                if(newRoom == null) //we were unable to create a room with any direction, giving up
+                if(newRoom == null) //we were unable to create a room with any direction, so current old room is invalid, remove it from queue
                 {
                     Debug.Log("Failed to create room, finished with room generation");
+                    
                     count = numberOfRooms;
                 }
-                else
+                else //successfully created room, prepare for creating next room
                 {
                     Debug.Log("Successfully created room");
+                    while(tappedRoomsStack.Count != 0) //move all previously invalidated dungeon rooms back into queue again
+                    {
+                        createdRoomsQueue.Enqueue(tappedRoomsStack.Pop());
+                    }
                 }
-
+            }
+            //reaching here, this is not first room, so there exists at least one room, but we can't make any more rooms, so stop and cleanup
+            else //createdRooms.Peek() == 0, so no more rooms to pick from. We can't build dungeon, so give up.
+            {
+                Debug.Log("Unable to create any more rooms, so we'll have to deal with fewer rooms.");
+                count = numberOfRooms; //forces Generator to stop generating
             }
         }
         else //we are finished creating rooms
@@ -180,4 +239,12 @@ public class DungeonGenerator : MonoBehaviour {
             Destroy(this.gameObject);
         }
 	}
+
+    void OnDestroy()
+    {
+        while (createdRoomsQueue.Count != 0)
+            createdRoomsQueue.Dequeue();
+        while (tappedRoomsStack.Count != 0)
+            tappedRoomsStack.Pop();
+    }
 }
