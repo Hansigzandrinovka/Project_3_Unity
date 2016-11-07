@@ -18,11 +18,10 @@ public class spellController : MonoBehaviour {
 	void Start()
 	{
 		defaultMaterial = GetComponent<SpriteRenderer>().material;
-		if(type == spellType.regular)
-		{
-			GetComponent<SpriteRenderer>().color = Color.white;
-		}
-		else if(type == spellType.fire)
+	}
+	// Update is called once per frame
+	void Update () {
+		if(type == spellType.fire)
 		{
 			GetComponent<SpriteRenderer>().color = Color.red;
 		}
@@ -30,12 +29,14 @@ public class spellController : MonoBehaviour {
 		{
 			GetComponent<SpriteRenderer>().color = Color.blue;
 		}
-		else
+		else if(type == spellType.lightning)
 		{
 			GetComponent<SpriteRenderer>().color = Color.yellow;
 		}
-	// Update is called once per frame
-	void Update () {
+		else
+		{
+			GetComponent<SpriteRenderer>().color = Color.white;
+		}
 		Vector2 topRightLoc = new Vector2(transform.position.x + 0.25f, transform.position.y + 0.25f);
 		Vector2 botLeftLoc = new Vector2(transform.position.x - 0.25f, transform.position.y - 0.25f);
 		Collider2D collider = Physics2D.OverlapArea(topRightLoc, botLeftLoc, TileMonoBehavior.tileLayerMask); //test if a floor tile is under this tile, if so then grab it and check what occupies it
