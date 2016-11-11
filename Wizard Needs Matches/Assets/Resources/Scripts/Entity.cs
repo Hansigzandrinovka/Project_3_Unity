@@ -9,6 +9,9 @@ public class Entity : MonoBehaviour { //testtest
     //in this case, I can store a delegate variable as a listener for when this Entity's health changes (as part of TakeDamage()), and whatever method is in the delegate will be called
     private HealthChangeListener uiHealthChangeListener; //the listener associated with the UI, that will notify UI displays for health to update properly
 
+    public delegate void TileEnterListener(TileMonoBehavior tile);
+    private TileEnterListener tileEntryListener = null;
+
     public delegate void TurnReadyListener(); //the listener associated with Turn Order and deciding what to do, Controllers will 
     public int maxHealth = 10;
     public int currentHealth = 7;
@@ -41,6 +44,9 @@ public class Entity : MonoBehaviour { //testtest
         uiHealthChangeListener = x;
         return currentHealth;
     }
+
+    public void SetTileEnterListener(TileEnterListener newListener)
+    { tileEntryListener = newListener; }
 
     //refresh updates anything that happens at the beginning of the turn for an Entity:
     //ie remaining speed = speed, remainingDelay--, switch sprite to "Awake" state, etc.
@@ -147,6 +153,8 @@ public class Entity : MonoBehaviour { //testtest
                 targetTile.occupyingEntity.TakeDamage(damageAmount,attackType);
             }
             remainingSpeed--;
+            if (tileEntryListener != null)
+                tileEntryListener(targetTile);
             return true;
         }
         else

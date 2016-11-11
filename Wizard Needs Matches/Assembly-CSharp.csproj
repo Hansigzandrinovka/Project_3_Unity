@@ -49,6 +49,10 @@
      <Compile Include="Assets\Resources\Scripts\DungeonManager.cs" />
      <Compile Include="Assets\Resources\Scripts\Entity.cs" />
      <Compile Include="Assets\Resources\Scripts\EntityController.cs" />
+     <Compile Include="Assets\Resources\Scripts\Equipment\Armor.cs" />
+     <Compile Include="Assets\Resources\Scripts\Equipment\ChestArmor.cs" />
+     <Compile Include="Assets\Resources\Scripts\Equipment\Equipment.cs" />
+     <Compile Include="Assets\Resources\Scripts\Equipment\EquipmentOwner.cs" />
      <Compile Include="Assets\Resources\Scripts\Feeler.cs" />
      <Compile Include="Assets\Resources\Scripts\Gem.cs" />
      <Compile Include="Assets\Resources\Scripts\TestMonsterController.cs" />

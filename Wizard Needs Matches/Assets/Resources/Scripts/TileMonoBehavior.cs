@@ -18,6 +18,28 @@ public class TileMonoBehavior : MonoBehaviour {
     private TileMonoBehavior right;
     // Use this for GameObject initialization
 
+    private Equipment stuffOnTile;
+
+    public bool DropEquipmentOnTile(Equipment droppedStuff)
+    {
+        if (stuffOnTile != null)
+            return false;
+        stuffOnTile = droppedStuff;
+        return true;
+    }
+    public Equipment GrabEquipmentFromTile()
+    {
+        if(stuffOnTile != null)
+        {
+            Equipment tempVar = stuffOnTile;
+            stuffOnTile = null;
+            return tempVar;
+        }
+        return null;
+    }
+    public bool IsEquipmentOnTile()
+    { return (stuffOnTile != null); }
+
         //returns the Tile at location relative to this tile, or null if tile could not be found
         //DOES NOT physically move anything in a direction
     public TileMonoBehavior StepInDirection(int colAmount, int rowAmount)
