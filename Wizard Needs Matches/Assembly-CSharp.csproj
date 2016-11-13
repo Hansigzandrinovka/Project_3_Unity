@@ -59,6 +59,7 @@
      <Compile Include="Assets\Resources\Scripts\TileMonoBehavior.cs" />
      <Compile Include="Assets\Resources\Scripts\custom_objects\dungeon_room.cs" />
      <Compile Include="Assets\Resources\Scripts\spellController.cs" />
+     <Compile Include="Assets\Resources\Scripts\testing\pan_camera_simple.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>

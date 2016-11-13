@@ -24,7 +24,7 @@ public class Entity : MonoBehaviour { //testtest
     public GameObject Spell; //the prefab associated with casting a particular spell
     public float castSpeed = 1; //speed with which a projectile travels through the dungeon
 
-    public enum MoveDirection { up, down, left, right }; //the direction player wishes to move for the purpose of Move function
+    public enum MoveDirection { up = 0, down = 1, left = 2, right = 3 }; //the direction player wishes to move for the purpose of Move function
     public enum DamageType { poking }; //the types of damage that an entity can take for the purpose of the TakeDamage function
 
     //tells the DungeonController this entity is done acting

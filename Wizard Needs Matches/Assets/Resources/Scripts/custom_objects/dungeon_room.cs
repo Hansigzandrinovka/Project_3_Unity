@@ -60,7 +60,7 @@ public class dungeon_room {
         if(downRoom != null)
         downRoom.upRoom = null;
         downRoom = null;
-        Debug.Log("Destroying a dungeon room");
+        //Debug.Log("Destroying a dungeon room");
     }
     public int getSize()
     { return size; }
