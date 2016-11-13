@@ -31,6 +31,23 @@ public class Entity : MonoBehaviour { //testtest
     public void EndTurn()
     { }
 
+    //On Start, 
+    public override void Start()
+    {
+        Vector2 topRightLoc = new Vector2(transform.position.x + 0.25f, transform.position.y + 0.25f);
+        Vector2 botLeftLoc = new Vector2(transform.position.x - 0.25f, transform.position.y - 0.25f);
+        Collider2D collider = Physics2D.OverlapArea(topRightLoc, botLeftLoc, TileMonoBehavior.tileLayerMask);
+        if (collider != null)
+        {
+            TileMonoBehavior belowTile = collider.gameObject.GetComponent<TileMonoBehavior>();
+            if (belowTile != null)
+            {
+                //Debug.Log("Tile at " + transform.position.x + "," + transform.position.y + " found a right Tile");
+                belowTile.ConnectToEntity(this);
+            }
+        }
+    }
+
 	public int GetRemainingSpeed()
 	{
 		return remainingSpeed;
