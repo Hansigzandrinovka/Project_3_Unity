@@ -24,14 +24,17 @@ public class spellController : MonoBehaviour {
 		if(type == spellType.fire)
 		{
 			GetComponent<SpriteRenderer>().color = Color.red;
+			damageCaused = 5;
 		}
 		else if(type == spellType.ice)
 		{
 			GetComponent<SpriteRenderer>().color = Color.blue;
+			damageCaused = 5;
 		}
 		else if(type == spellType.lightning)
 		{
 			GetComponent<SpriteRenderer>().color = Color.yellow;
+			damageCaused = 5;
 		}
 		else
 		{
@@ -61,20 +64,38 @@ public class spellController : MonoBehaviour {
 					if(type == spellType.regular)
 					{
 						tileBeneathUs.GetComponent<SpriteRenderer>().material = defaultMaterial;
+						tileBeneathUs.timeToRevert = 0;
 					}
 					else if(type == spellType.fire)
 					{
 						tileBeneathUs.GetComponent<SpriteRenderer>().material = Resources.Load("Materials/Red") as Material;
+						if(!tileBeneathUs.inList)
+						{
+							tileBeneathUs.timeToRevert = 15;
+							DungeonManager.AddToTileList(tileBeneathUs);
+							tileBeneathUs.inList = true;
+						}
 					}
 					else if(type == spellType.ice)
 					{
 						tileBeneathUs.GetComponent<SpriteRenderer>().material = Resources.Load("Materials/Blue") as Material;
+						if(!tileBeneathUs.inList)
+						{
+							tileBeneathUs.timeToRevert = 15;
+							DungeonManager.AddToTileList(tileBeneathUs);
+							tileBeneathUs.inList = true;
+						}
 					}
 					else
 					{
 						tileBeneathUs.GetComponent<SpriteRenderer>().material = Resources.Load("Materials/Yellow") as Material;
-					}
-					//TODO: material changes back to default after a few turns
+						if(!tileBeneathUs.inList)
+						{
+							tileBeneathUs.timeToRevert = 15;
+							DungeonManager.AddToTileList(tileBeneathUs);
+							tileBeneathUs.inList = true;
+						}
+					}				
 				}
 			}
 			else
@@ -88,6 +109,6 @@ public class spellController : MonoBehaviour {
             //Debug.Log("Destroying spell by lack of Collider");
             Destroy(this.gameObject);
         }
-        Debug.Log("after collider check");
+        //Debug.Log("after collider check");
 	}
 }
