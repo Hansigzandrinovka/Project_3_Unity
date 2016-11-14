@@ -8,6 +8,10 @@ public class DungeonGenerator : MonoBehaviour {
     public GameObject roomFloorTilePrefab; //the tile used to fill generated rooms
     public GameObject hallwayFloorTilePrefab; //the tile used to fill hallways between rooms
     public GameObject tileContainer; //the gameobject that every tile prefab will be a part of
+
+    public GameObject playerObject; //the gameobject representing the player in the scene
+    public GameObject dungeonController; //the gameobject holding turn regulation: ie entity turn order
+
     public int numberOfRooms = 1;
     public int minRoomSize = 3;
     public int maxRoomSize = 5;
@@ -50,6 +54,18 @@ public class DungeonGenerator : MonoBehaviour {
             Destroy(this.gameObject);
             return;
         }
+        if(playerObject == null)
+        {
+            Debug.LogError("Unrecoverable Error! Missing player character prefab, removing this gameobject");
+            Destroy(this.gameObject);
+            return;
+        }
+        if (dungeonController == null)
+        {
+            Debug.LogError("Unrecoverable Error! Missing dungeon controller prefab, removing this gameobject");
+            Destroy(this.gameObject);
+            return;
+        }
         //hold off on data structure creation until after all validations occur (we don't want to waste processor time on structures that won't be used)
         createdRoomsQueue = new Queue(numberOfRooms); //we won't have more than the given number of rooms to create in our Queue
         tappedRoomsStack = new Stack(numberOfRooms);
@@ -69,7 +85,6 @@ public class DungeonGenerator : MonoBehaviour {
     dungeon_room TryCreateRoom(Vector3 roomOrigin, int roomSize,float distanceAway, Entity.MoveDirection direction)
     {
         int halfSizeOffset = roomSize / 2;
-        Debug.Log("Attempting to create room");
         for(int i = 0; i < roomSize; i++) //(x coord)
             for(int j = 0; j < roomSize; j++) //for every position in the room, try to place a tile there, if there is a tile, abort, (y coord)
             {
@@ -78,12 +93,9 @@ public class DungeonGenerator : MonoBehaviour {
                 Collider2D collider = Physics2D.OverlapArea(topRightLoc, botLeftLoc, TileMonoBehavior.tileLayerMask); //check if there is a tile there
                 if (collider != null) //if a tile already exists here, this whole room is a bust
                 {
-                    Debug.Log("Found gameobject at " + collider.transform.position.ToString());
-                    Debug.Log("Failed at coordinates " + (roomOrigin.x + i) + "," + (roomOrigin.y + j));
                     return null;
                 }
             }
-        //Debug.Log("Created room successfully");
         for(int i = 0; i < roomSize; i++) //populate room with Tiles
             for(int j = 0; j < roomSize; j++)
             {
@@ -99,7 +111,6 @@ public class DungeonGenerator : MonoBehaviour {
                 {
                     for (int i = 0; i <= distanceAway; i++)
                     {
-                        Debug.Log("from above, formula is: room origin.y " + roomOrigin.x + ", i " + i + ", halfSizeOffset " + halfSizeOffset);
                         Vector2 topRightLoc = new Vector2(roomOrigin.x + 0.25f, roomOrigin.y - halfSizeOffset - i + 0.25f);
                         Vector2 botLeftLoc = new Vector2(roomOrigin.x - 0.25f, roomOrigin.y - halfSizeOffset - i - 0.25f);
                         Collider2D collider = Physics2D.OverlapArea(topRightLoc, botLeftLoc, TileMonoBehavior.tileLayerMask); //check if there is a tile there
@@ -107,7 +118,6 @@ public class DungeonGenerator : MonoBehaviour {
                         {
 
                             GameObject tile = (GameObject)Instantiate(roomFloorTilePrefab, new Vector3(roomOrigin.x, roomOrigin.y - i - halfSizeOffset, roomOrigin.z), transform.rotation);
-                            Debug.Log("Connecting hallway: " + roomOrigin.x + ',' + (roomOrigin.y - i - halfSizeOffset) + " on iteration " + i);
                             if (tileContainer != null)
                                 tile.transform.SetParent(tileContainer.transform);
                         }
@@ -119,7 +129,6 @@ public class DungeonGenerator : MonoBehaviour {
                     int otherHalfSize = roomSize - halfSizeOffset;
                     for (int i = 0; i <= distanceAway; i++)
                     {
-                        Debug.Log("from left, formula is: room origin.x " + roomOrigin.x + ", i " + i + ", otherHalfSize " + otherHalfSize);
                         Vector2 topRightLoc = new Vector2(roomOrigin.x + otherHalfSize + i + 0.25f, roomOrigin.y + 0.25f);
                         Vector2 botLeftLoc = new Vector2(roomOrigin.x + otherHalfSize + i - 0.25f, roomOrigin.y - 0.25f);
                         Collider2D collider = Physics2D.OverlapArea(topRightLoc, botLeftLoc, TileMonoBehavior.tileLayerMask); //check if there is a tile there
@@ -127,7 +136,6 @@ public class DungeonGenerator : MonoBehaviour {
                         {
 
                             GameObject tile = (GameObject)Instantiate(roomFloorTilePrefab, new Vector3(roomOrigin.x + i + otherHalfSize, roomOrigin.y, roomOrigin.z), transform.rotation);
-                            Debug.Log("Connecting hallway: " + (roomOrigin.x + i + otherHalfSize) + ',' + roomOrigin.y + " on iteration " + i);
                             if (tileContainer != null)
                                 tile.transform.SetParent(tileContainer.transform);
                         }
@@ -139,7 +147,6 @@ public class DungeonGenerator : MonoBehaviour {
                     int otherHalfSize = roomSize - halfSizeOffset;
                     for (int i = 0; i <= distanceAway; i++)
                     {
-                        Debug.Log("from down, formula is: room origin.y " + roomOrigin.y + ", i " + i + ", otherHalfSize " + otherHalfSize);
                         Vector2 topRightLoc = new Vector2(roomOrigin.x + 0.25f, roomOrigin.y + otherHalfSize + i + 0.25f);
                         Vector2 botLeftLoc = new Vector2(roomOrigin.x - 0.25f, roomOrigin.y + otherHalfSize + i - 0.25f);
                         Collider2D collider = Physics2D.OverlapArea(topRightLoc, botLeftLoc, TileMonoBehavior.tileLayerMask); //check if there is a tile there
@@ -147,7 +154,6 @@ public class DungeonGenerator : MonoBehaviour {
                         {
 
                             GameObject tile = (GameObject)Instantiate(roomFloorTilePrefab, new Vector3(roomOrigin.x, roomOrigin.y + i + otherHalfSize, roomOrigin.z), transform.rotation);
-                            Debug.Log("Connecting hallway: " + roomOrigin.x + ',' + (roomOrigin.y + i + otherHalfSize) + " on iteration " + i);
                             if (tileContainer != null)
                                 tile.transform.SetParent(tileContainer.transform);
                         }
@@ -158,14 +164,12 @@ public class DungeonGenerator : MonoBehaviour {
                 {
                     for (int i = 0; i <= distanceAway; i++)
                     {
-                        Debug.Log("from right, formula is: room origin.x " + roomOrigin.x + ", i " + i + ", halfSizeOffset " + halfSizeOffset);
                         Vector2 topRightLoc = new Vector2(roomOrigin.x - i - halfSizeOffset + 0.25f, roomOrigin.y + 0.25f);
                         Vector2 botLeftLoc = new Vector2(roomOrigin.x - i - halfSizeOffset - 0.25f, roomOrigin.y - 0.25f);
                         Collider2D collider = Physics2D.OverlapArea(topRightLoc, botLeftLoc, TileMonoBehavior.tileLayerMask); //check if there is a tile there
                         if (collider == null) //if no tile there, place a tile there
                         {
                             GameObject tile = (GameObject)Instantiate(roomFloorTilePrefab, new Vector3(roomOrigin.x - i - halfSizeOffset, roomOrigin.y, roomOrigin.z), transform.rotation);
-                            Debug.Log("Connecting hallway: " + (roomOrigin.x - i - halfSizeOffset) + ',' + roomOrigin.y + " on iteration " + i);
                             if (tileContainer != null)
                                 tile.transform.SetParent(tileContainer.transform);
                         }
@@ -218,13 +222,11 @@ public class DungeonGenerator : MonoBehaviour {
                 dungeon_room newRoom = TryCreateRoom(new Vector3(transform.position.x, transform.position.y, TileMonoBehavior.tileZLayer), newSize,0,Entity.MoveDirection.up);
                 if (newRoom != null) //if room successfully created
                 {
-                    Debug.Log("First room created");
                     createdRoomsQueue.Enqueue(newRoom);
                     count++;
                 }
                 else
                 {
-                    Debug.Log("Unable to create first room, so floor must be predefined.");
                     count = numberOfRooms; //forces Generator to stop generating
                     GracefullyExit();
                     return;
@@ -235,22 +237,17 @@ public class DungeonGenerator : MonoBehaviour {
                 dungeon_room oldRoom = GetRandomRoomFromQueue(); //picks an old room to generate new room relative to
                 if(oldRoom == null)
                 {
-                    Debug.LogError("Unhandled Error! Room queue is Empty! Aborting");
                     count = numberOfRooms;
                     return;
                 }
-                Debug.Log("Using room at " + oldRoom.getCoords().ToString() + " of size " + oldRoom.getSize());
                 dungeon_room newRoom = null; //the room we hope to create
                 int roomSize = Random.Range(minRoomSize, maxRoomSize + 1); //the size we want the new room to be
-                Debug.Log("new room size picked to be " + roomSize);
                 
                 float distance = Random.Range(minDisplacement, maxDisplacement + 1);
-                Debug.Log("Distance away " + distance);
 
                 Vector3 newRoomLocation = new Vector3();
                 Vector3 oldRoomLocation = oldRoom.getCoords();
                 Entity.MoveDirection direction = (Entity.MoveDirection)Random.Range(0, 4); //direction can be 0 up, 2 left, 1 down, 3 right
-                Debug.Log("Picked direction " + direction);
                 Entity.MoveDirection originalDirection = direction;
 
                 do //try to create room at given direction, if it fails, keep trying with new direction until there are no more directions to pick
@@ -272,8 +269,6 @@ public class DungeonGenerator : MonoBehaviour {
                         case Entity.MoveDirection.down: //down
                             {
                                 float relativePosition = Mathf.Floor(oldRoom.getSize() / 2f) + distance + Mathf.Ceil(roomSize / 2f);
-                                Debug.Log("DEBUG LOG: " + relativePosition);
-                                Debug.Log("DEBUG LOG 2: " + Mathf.Ceil(roomSize / 2f));
                                 newRoomLocation = new Vector3(oldRoomLocation.x, oldRoomLocation.y - relativePosition, 0);
                                 break;
                             }
@@ -286,59 +281,61 @@ public class DungeonGenerator : MonoBehaviour {
                             }
                     }
                     //default case, it tries to initialize room at 0,0,0
-                    Debug.Log("Creating next room at " + newRoomLocation.x + ',' + newRoomLocation.y + ',' + newRoomLocation.z + " with size " + roomSize);
                     newRoom = TryCreateRoom(newRoomLocation,roomSize,distance,direction); //try to create the room at specified location
                     if (newRoom != null) //if room creation succeeded, store the room in list for later use
                     {
                         count++;
-                        Debug.Log("New room created");
                         createdRoomsQueue.Enqueue(newRoom);
                     }
                     else if (direction == Entity.MoveDirection.right)
                     {
                         //else keep trying new directions until all exhausted
                         direction = Entity.MoveDirection.up;
-                        Debug.Log("Creation right failed, trying up");
                     }
                     else
                     {
                         direction++;
-                        Debug.Log("Creation failed, might try next direction " + direction);
                     }
                 }
                 while (newRoom == null && direction != originalDirection); //stop iterating when we successfully create a room, or when we reach original direction
                 
                 if(newRoom != null) //successfully created room, prepare for creating next room
                 {
-                    //Debug.Log("Successfully created room");
                     while(tappedRoomsStack.Count != 0) //move all previously invalidated dungeon rooms back into queue again
                     {
                         createdRoomsQueue.Enqueue(tappedRoomsStack.Pop());
                     }
                 }
-                else //if we were unable to create a room with any direction, so current old room is invalid, remove it from queue
-                {
-                    Debug.Log("Failed to create room, finished with room generation");
-                }
             }
             //reaching here, this is not first room, so there exists at least one room, but we can't make any more rooms, so stop and cleanup
             else //createdRooms.Peek() == 0, so no more rooms to pick from. We can't build dungeon, so give up.
             {
-                Debug.Log("Unable to create any more rooms, so we'll have to deal with fewer rooms.");
                 count = numberOfRooms; //forces Generator to stop generating
             }
         }
         else //we are finished creating rooms
         {
-            Debug.Log("Finished creating dungeon");
+            PopulateDungeon();
             Destroy(this.gameObject);
         }
 	}
 
+    //populates random dungeon rooms, including placing player character
+    void PopulateDungeon()
+    {
+        //create dungeon controller that all entities will reference
+
+        Instantiate(dungeonController, new Vector3(), transform.rotation);
+
+        Instantiate(playerObject, GetRandomRoomFromQueue().getCoords(), transform.rotation);
+    }
+
     void OnDestroy()
     {
+        if(createdRoomsQueue != null)
         while (createdRoomsQueue.Count != 0)
             createdRoomsQueue.Dequeue();
+        if(tappedRoomsStack != null)
         while (tappedRoomsStack.Count != 0)
             tappedRoomsStack.Pop();
     }

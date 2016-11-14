@@ -168,6 +168,19 @@ public class TileMonoBehavior : MonoBehaviour {
             }
         }
     }
+
+    //used after Tile has already been created, connects given Entity to this Tile both ways so that Entity can walk on tile
+    public bool ConnectToEntity(Entity connectedEntity)
+    {
+        if (occupyingEntity == null) //if entity can't exist on tile because another already exists
+        {
+            Debug.Log("Tile syncing with Entity");
+            occupyingEntity = connectedEntity;
+            connectedEntity.goToTile(this);
+            return true;
+        }
+        return false;
+    }
     
     //cleans up connections this Tile has to other Tiles
     void DeleteTile()

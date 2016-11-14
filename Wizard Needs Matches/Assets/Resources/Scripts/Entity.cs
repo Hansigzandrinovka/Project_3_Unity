@@ -27,12 +27,8 @@ public class Entity : MonoBehaviour { //testtest
     public enum MoveDirection { up = 0, down = 1, left = 2, right = 3 }; //the direction player wishes to move for the purpose of Move function
     public enum DamageType { poking }; //the types of damage that an entity can take for the purpose of the TakeDamage function
 
-    //tells the DungeonController this entity is done acting
-    public void EndTurn()
-    { }
-
-    //On Start, 
-    public override void Start()
+    //On Start, Entity attempts to bind itself to a Tile occupying its space
+    public virtual void Start()
     {
         Vector2 topRightLoc = new Vector2(transform.position.x + 0.25f, transform.position.y + 0.25f);
         Vector2 botLeftLoc = new Vector2(transform.position.x - 0.25f, transform.position.y - 0.25f);
@@ -42,8 +38,11 @@ public class Entity : MonoBehaviour { //testtest
             TileMonoBehavior belowTile = collider.gameObject.GetComponent<TileMonoBehavior>();
             if (belowTile != null)
             {
-                //Debug.Log("Tile at " + transform.position.x + "," + transform.position.y + " found a right Tile");
-                belowTile.ConnectToEntity(this);
+                Debug.Log("Entity syncing with Tile");
+                if(!belowTile.ConnectToEntity(this)) //if could not connect entity to a tile, we should garbage collect entity because it can't interract with game at all
+                {
+                    Destroy(this.gameObject);
+                }
             }
         }
     }
