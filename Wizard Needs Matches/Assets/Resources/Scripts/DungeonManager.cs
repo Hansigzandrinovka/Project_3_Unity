@@ -8,6 +8,7 @@ public class DungeonManager : MonoBehaviour {
     public static LinkedList<EntityController> turnOrder; //holds all EntityControllers that can act
     //when a controller finishes acting, it tells DungeonManager that its turn is finished, and DungeonManager grabs next actor in Queue and calls its StartTurn method
     //private static int typicalListCapacity = 20;
+	public static List<TileMonoBehavior> oddTiles;
     private EntityController someController;
     public int turnOrderSize = -1;
 	public int startDelay = 2; //time in seconds before Turn Order goes into effect
@@ -16,6 +17,10 @@ public class DungeonManager : MonoBehaviour {
 	void Start () {
         if(turnOrder == null)
             turnOrder = new LinkedList<EntityController>();
+		if(oddTiles == null)
+		{
+			oddTiles = new List<TileMonoBehavior>();
+		}
 	}
 
     //initializes Queue and adds a Controller to it
@@ -36,11 +41,38 @@ public class DungeonManager : MonoBehaviour {
 	{
 		return turnOrder.Remove (controller);
 	}
+	
+	public static void AddToTileList(TileMonoBehavior tile)
+	{
+		if(oddTiles == null)
+		{
+			oddTiles = new List<TileMonoBehavior>();
+		}
+		oddTiles.Add(tile);
+	}
+	public static void RemoveTiles()
+	{
+		foreach(TileMonoBehavior tile in oddTiles)
+		{
+			tile.reduceTime();
+		}
+		oddTiles.RemoveAll(getRevertingTiles);
+	}
+	private static bool getRevertingTiles(TileMonoBehavior tile)
+	{
+		if(tile.timeToRevert == 0)
+		{
+			tile.GetComponent<SpriteRenderer>().material = tile.defaultMaterial;
+			tile.inList = false;
+		}
+		return(tile.timeToRevert == 0);
+	}
 
     //precondition: turnEnder is a Queue of EntityControllers, no other objects exist in Queue
     //ends current controller's turn and starts next controller's turn
     public static void EndTurn()
     {
+	    RemoveTiles();
         EntityController currentTurnHolder = turnOrder.First.Value;
 		turnOrder.RemoveFirst ();
         if(currentTurnHolder != null)
