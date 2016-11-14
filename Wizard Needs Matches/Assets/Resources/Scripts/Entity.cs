@@ -30,18 +30,21 @@ public class Entity : MonoBehaviour { //testtest
     //On Start, Entity attempts to bind itself to a Tile occupying its space
     public virtual void Start()
     {
-        Vector2 topRightLoc = new Vector2(transform.position.x + 0.25f, transform.position.y + 0.25f);
-        Vector2 botLeftLoc = new Vector2(transform.position.x - 0.25f, transform.position.y - 0.25f);
-        Collider2D collider = Physics2D.OverlapArea(topRightLoc, botLeftLoc, TileMonoBehavior.tileLayerMask);
-        if (collider != null)
+        if(occupyingTile == null)
         {
-            TileMonoBehavior belowTile = collider.gameObject.GetComponent<TileMonoBehavior>();
-            if (belowTile != null)
+            Vector2 topRightLoc = new Vector2(transform.position.x + 0.25f, transform.position.y + 0.25f);
+            Vector2 botLeftLoc = new Vector2(transform.position.x - 0.25f, transform.position.y - 0.25f);
+            Collider2D collider = Physics2D.OverlapArea(topRightLoc, botLeftLoc, TileMonoBehavior.tileLayerMask);
+            if (collider != null)
             {
-                Debug.Log("Entity syncing with Tile");
-                if(!belowTile.ConnectToEntity(this)) //if could not connect entity to a tile, we should garbage collect entity because it can't interract with game at all
+                TileMonoBehavior belowTile = collider.gameObject.GetComponent<TileMonoBehavior>();
+                if (belowTile != null)
                 {
-                    Destroy(this.gameObject);
+                    Debug.Log("Entity syncing with Tile");
+                    if (!belowTile.ConnectToEntity(this)) //if could not connect entity to a tile, we should garbage collect entity because it can't interract with game at all
+                    {
+                        Destroy(this.gameObject);
+                    }
                 }
             }
         }
