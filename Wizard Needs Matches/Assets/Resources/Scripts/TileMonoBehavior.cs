@@ -7,6 +7,11 @@ public class TileMonoBehavior : MonoBehaviour {
     //public GameObject tileImage;
     int rowPosition;
     int colPosition;
+	
+	public int timeToRevert = 15;
+	public Material defaultMaterial;
+	public bool inList = false;
+	
     public static int tileZLayer = 0; //used to make all tiles appear on the same layer
     //[SerializeField] //SerializeField allows us to make private variables show up in Inspector for testing and editing.
     private TileMonoBehavior below;
@@ -17,6 +22,11 @@ public class TileMonoBehavior : MonoBehaviour {
     //[SerializeField]
     private TileMonoBehavior right;
     // Use this for GameObject initialization
+	
+	public void reduceTime()
+	{
+		this.timeToRevert--;
+	}
 
         //returns the Tile at location relative to this tile, or null if tile could not be found
         //DOES NOT physically move anything in a direction
@@ -93,6 +103,7 @@ public class TileMonoBehavior : MonoBehaviour {
     void Start () {
         //Debug.Log("Started");
         transform.position.Set(transform.position.x, transform.position.y, tileZLayer);
+	    defaultMaterial = GetComponent<SpriteRenderer>().material;
         //get all tiles L,R,U,D relative to this one, and point them together (first acting tile connects both ways, so no need to connect back later, and makes later tiles start faster)
         if(right == null) //if tile hasn't been already defined (because we don't want to define the same tile's same value twice)
             //look for a tile right of this
