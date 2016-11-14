@@ -24,12 +24,28 @@ public class Entity : MonoBehaviour { //testtest
     public GameObject Spell; //the prefab associated with casting a particular spell
     public float castSpeed = 1; //speed with which a projectile travels through the dungeon
 
-    public enum MoveDirection { up, down, left, right }; //the direction player wishes to move for the purpose of Move function
+    public enum MoveDirection { up = 0, down = 1, left = 2, right = 3 }; //the direction player wishes to move for the purpose of Move function
     public enum DamageType { poking }; //the types of damage that an entity can take for the purpose of the TakeDamage function
 
-    //tells the DungeonController this entity is done acting
-    public void EndTurn()
-    { }
+    //On Start, Entity attempts to bind itself to a Tile occupying its space
+    public virtual void Start()
+    {
+        Vector2 topRightLoc = new Vector2(transform.position.x + 0.25f, transform.position.y + 0.25f);
+        Vector2 botLeftLoc = new Vector2(transform.position.x - 0.25f, transform.position.y - 0.25f);
+        Collider2D collider = Physics2D.OverlapArea(topRightLoc, botLeftLoc, TileMonoBehavior.tileLayerMask);
+        if (collider != null)
+        {
+            TileMonoBehavior belowTile = collider.gameObject.GetComponent<TileMonoBehavior>();
+            if (belowTile != null)
+            {
+                Debug.Log("Entity syncing with Tile");
+                if(!belowTile.ConnectToEntity(this)) //if could not connect entity to a tile, we should garbage collect entity because it can't interract with game at all
+                {
+                    Destroy(this.gameObject);
+                }
+            }
+        }
+    }
 
 	public int GetRemainingSpeed()
 	{
