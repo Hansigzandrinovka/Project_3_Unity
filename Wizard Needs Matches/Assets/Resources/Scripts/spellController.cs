@@ -71,7 +71,7 @@ public class spellController : MonoBehaviour {
 						tileBeneathUs.GetComponent<SpriteRenderer>().material = Resources.Load("Materials/Red") as Material;
 						if(!tileBeneathUs.inList)
 						{
-							tileBeneathUs.timeToRevert = 15;
+							tileBeneathUs.timeToRevert = DungeonManager.turnOrder.Count*5;
 							DungeonManager.AddToTileList(tileBeneathUs);
 							tileBeneathUs.inList = true;
 						}
@@ -81,7 +81,7 @@ public class spellController : MonoBehaviour {
 						tileBeneathUs.GetComponent<SpriteRenderer>().material = Resources.Load("Materials/Blue") as Material;
 						if(!tileBeneathUs.inList)
 						{
-							tileBeneathUs.timeToRevert = 15;
+							tileBeneathUs.timeToRevert = DungeonManager.turnOrder.Count*5;
 							DungeonManager.AddToTileList(tileBeneathUs);
 							tileBeneathUs.inList = true;
 						}
@@ -91,7 +91,7 @@ public class spellController : MonoBehaviour {
 						tileBeneathUs.GetComponent<SpriteRenderer>().material = Resources.Load("Materials/Yellow") as Material;
 						if(!tileBeneathUs.inList)
 						{
-							tileBeneathUs.timeToRevert = 15;
+							tileBeneathUs.timeToRevert = DungeonManager.turnOrder.Count*5;
 							DungeonManager.AddToTileList(tileBeneathUs);
 							tileBeneathUs.inList = true;
 						}
