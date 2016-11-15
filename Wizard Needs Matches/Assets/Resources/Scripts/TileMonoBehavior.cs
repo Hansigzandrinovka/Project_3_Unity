@@ -18,8 +18,18 @@ public class TileMonoBehavior : MonoBehaviour {
     private TileMonoBehavior right;
     // Use this for GameObject initialization
 
-        //returns the Tile at location relative to this tile, or null if tile could not be found
-        //DOES NOT physically move anything in a direction
+    //Layer Mask values are integer equivalent of binary arrays, so (1000)v2 is (8)v10, represents true for layer 8, false for all other layers
+    public readonly static int tileLayerMask = 1 << 8; //this Layer Mask evaluates on Tiles Layer
+    public readonly static int entitiesLayerMask = 1 << 9; //this Layer Mask evaluates on Entities Layer
+
+    public enum TileType { empty, wall, stairs };
+    public TileType tileType = TileType.empty;
+
+    public TileType getTileType()
+    { return tileType; }
+
+    //returns the Tile at location relative to this tile, or null if tile could not be found
+    //DOES NOT physically move anything in a direction
     public TileMonoBehavior StepInDirection(int colAmount, int rowAmount)
     {
         int x = colAmount;
@@ -67,6 +77,8 @@ public class TileMonoBehavior : MonoBehaviour {
                 return true;
             case (TileType.wall):
                 return false;
+            case (TileType.stairs):
+                return true;
             default:
                 return false;
         }
@@ -79,12 +91,7 @@ public class TileMonoBehavior : MonoBehaviour {
         return occupyingEntity != null;
     }
 
-    //Layer Mask values are integer equivalent of binary arrays, so (1000)v2 is (8)v10, represents true for layer 8, false for all other layers
-    public readonly static int tileLayerMask = 1 << 8; //this Layer Mask evaluates on Tiles Layer
-    public readonly static int entitiesLayerMask = 1 << 9; //this Layer Mask evaluates on Entities Layer
-
-    public enum TileType { empty, wall };
-    public TileType tileType = TileType.empty;
+    
 
     void Start () {
         //Debug.Log("Started");

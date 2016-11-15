@@ -72,6 +72,11 @@ public class TestPlayerController : EntityController {
 			energy = maxEnergy;
 	}
 	
+    void PromptForStairs()
+    {
+        DungeonManager.theManager.GoToNextLevel();
+    }
+
 	// Update is called once per frame
 	//if it is Controller's turn, waits for player input to control Entity
 	void Update () {
@@ -87,22 +92,39 @@ public class TestPlayerController : EntityController {
             {
                 //Debug.Log("Player tries to move right");
                 puppetEntity.Move(Entity.MoveDirection.right);
+                if (puppetEntity.occupyingTile.getTileType() == TileMonoBehavior.TileType.stairs)
+                {
+                    PromptForStairs();
+                }
                 clock = 0;
             }
             else if (xAxis < -0.5) //player tries to move left
             {
                 puppetEntity.Move(Entity.MoveDirection.left);
+                if (puppetEntity.occupyingTile.getTileType() == TileMonoBehavior.TileType.stairs)
+                {
+                    PromptForStairs();
+                }
                 clock = 0;
             }
                 
             else if (yAxis > 0.5)
             {
-                clock = 0;
+                
                 puppetEntity.Move(Entity.MoveDirection.up);
+                if (puppetEntity.occupyingTile.getTileType() == TileMonoBehavior.TileType.stairs)
+                {
+                    PromptForStairs();
+                }
+                clock = 0;
             } 
             else if (yAxis < -0.5)
             {
                 puppetEntity.Move(Entity.MoveDirection.down);
+                if(puppetEntity.occupyingTile.getTileType() == TileMonoBehavior.TileType.stairs)
+                {
+                    PromptForStairs();
+                }
                 clock = 0;
             }
             else if(turnLeftButton) //user rotating left to face a new direction
