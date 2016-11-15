@@ -8,7 +8,8 @@ public class DungeonManager : MonoBehaviour {
     public static LinkedList<EntityController> turnOrder; //holds all EntityControllers that can act
     //when a controller finishes acting, it tells DungeonManager that its turn is finished, and DungeonManager grabs next actor in Queue and calls its StartTurn method
     //private static int typicalListCapacity = 20;
-    private static int levelNumber = 1;
+    private static readonly int nonExistentLevelIndex = -1;
+    private static int levelNumber = nonExistentLevelIndex;
     private EntityController someController;
     public int turnOrderSize = -1;
 	public int startDelay = 2; //time in seconds before Turn Order goes into effect
@@ -20,25 +21,26 @@ public class DungeonManager : MonoBehaviour {
         if(turnOrder == null)
             turnOrder = new LinkedList<EntityController>();
         theManager = this;
+        levelNumber = Application.loadedLevel;
 	}
 
-    public void GoToNextLevel()
+    public static void GoToLevel(int index)
     {
-        switch(levelNumber)
+        switch (index)
         {
-            case 0:
-                {
-                    Application.LoadLevel("TestLevel");
-                    return;
-                }
-            case 1:
+            case 0: //current level is TestLevel
                 {
                     Application.LoadLevel("Level_One");
                     return;
                 }
-            case 2:
+            case 1:
                 {
                     Application.LoadLevel("Level_Two");
+                    return;
+                }
+            case 2:
+                {
+                    Application.LoadLevel("TestLevel");
                     return;
                 }
             default:
@@ -47,6 +49,11 @@ public class DungeonManager : MonoBehaviour {
                     return;
                 }
         }
+    }
+
+    public void GoToNextLevel()
+    {
+        GoToLevel(levelNumber);
     }
 
 

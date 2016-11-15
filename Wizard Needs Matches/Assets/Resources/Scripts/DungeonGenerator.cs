@@ -6,6 +6,7 @@ public class DungeonGenerator : MonoBehaviour {
 
     public int testingSeed = 22; //the seed for the RNG system to predictably produce random tiles
     public GameObject roomFloorTilePrefab; //the tile used to fill generated rooms
+    public GameObject stairsTilePrefab; //the tile used to represent the 1 stairs in the entire dungeon
     public GameObject hallwayFloorTilePrefab; //the tile used to fill hallways between rooms
     public GameObject tileContainer; //the gameobject that every tile prefab will be a part of
 
@@ -181,6 +182,8 @@ public class DungeonGenerator : MonoBehaviour {
         return new dungeon_room(roomOrigin.x, roomOrigin.y, roomSize) ;
     }
 
+    // @precondition: createdRoomsQueue is already initialized
+    // @postcondition: created room is at top of Queue
     //Can return null!
     //uses Random.Range to cycle the Queue (Enqueue the Dequeued value), then returns dungeon room at front of queue
     public dungeon_room GetRandomRoomFromQueue()
@@ -201,6 +204,8 @@ public class DungeonGenerator : MonoBehaviour {
     void GracefullyExit()
     {
         Destroy(this.gameObject);
+        Debug.Log("Gracefully exiting to level 1");
+        DungeonManager.GoToLevel(1);
         return;
     }
 
@@ -323,11 +328,43 @@ public class DungeonGenerator : MonoBehaviour {
     //populates random dungeon rooms, including placing player character
     void PopulateDungeon()
     {
+        Debug.Log("At this time, dungeon room queue contains " + createdRoomsQueue.Count + " rooms");
         //create dungeon controller that all entities will reference
-
         Instantiate(dungeonController, new Vector3(), transform.rotation);
 
-        Instantiate(playerObject, GetRandomRoomFromQueue().getCoords(), transform.rotation);
+        dungeon_room targetRoom = GetRandomRoomFromQueue(); //pick a random room to stick the stairs in
+        if (createdRoomsQueue.Count >= 2) //if we can have stairs in separate room from Player
+        {
+            Debug.Log("Preventing Stairs appearing in player's room");
+            tappedRoomsStack.Push(createdRoomsQueue.Dequeue()); //prevent the stairs from appearing in the same room as the player
+        }
+        //clear the tile that the stairs occupy
+        Vector3 stairsPos = targetRoom.getRandomTileInRoom();
+        Vector2 topRightLoc = new Vector2(stairsPos.x + 0.25f, stairsPos.y + 0.25f);
+        Vector2 botLeftLoc = new Vector2(stairsPos.x - 0.25f, stairsPos.y - 0.25f);
+
+
+
+        Collider2D collider = Physics2D.OverlapArea(topRightLoc, botLeftLoc, TileMonoBehavior.tileLayerMask);
+        if (collider != null)
+        {
+            Destroy(collider.gameObject);
+        }
+        //place stairs into the dungeon
+        Instantiate(stairsTilePrefab, stairsPos, transform.rotation);
+        targetRoom = GetRandomRoomFromQueue();
+
+        //playe player into the dungeon
+        Vector3 playerPos = targetRoom.getRandomTileInRoom();
+        while (playerPos.x == stairsPos.x && playerPos.y == stairsPos.y) //if player directly overlaps stairs, move player someplace else
+            playerPos = targetRoom.getRandomTileInRoom();
+        Instantiate(playerObject, playerPos, transform.rotation);
+
+        if(tappedRoomsStack.Count > 0) //shift all of the removed elements back onto the queue, preparation for placing in rest of the dungeon
+        {
+            createdRoomsQueue.Enqueue(tappedRoomsStack.Pop());
+        }
+        //TODO: insert spectacular monster/item spawning algorithm here!
     }
 
     void OnDestroy()

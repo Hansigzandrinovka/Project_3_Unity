@@ -9,3 +9,4 @@ http://answers.unity3d.com/questions/225729/gameobject-positionset-not-working.h
 http://answers.unity3d.com/questions/8202/how-to-make-a-split-screen-2-cameras-rendering-at.html - splitting the screen up for Gem half and Dungeon half
 https://msdn.microsoft.com/en-us/library/ms173172.aspx
 https://www.draw.io/ Used for doing UML
+http://answers.unity3d.com/questions/14637/get-the-currently-open-scene-name-or-file-name.html - reading current scene, for scene changing

@@ -40,7 +40,6 @@ public class Entity : MonoBehaviour { //testtest
                 TileMonoBehavior belowTile = collider.gameObject.GetComponent<TileMonoBehavior>();
                 if (belowTile != null)
                 {
-                    Debug.Log("Entity syncing with Tile");
                     if (!belowTile.ConnectToEntity(this)) //if could not connect entity to a tile, we should garbage collect entity because it can't interract with game at all
                     {
                         Destroy(this.gameObject);
