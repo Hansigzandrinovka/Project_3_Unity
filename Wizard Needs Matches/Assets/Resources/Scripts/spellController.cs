@@ -5,9 +5,36 @@ public class spellController : MonoBehaviour {
 	
 	public int damageCaused = 10;
 	public TileMonoBehavior occupyingTile; //the tile this entity stands on, and its entry point into moving around on the board
+	public enum spellType
+	{
+		regular,
+		fire,
+		ice,
+		lightning
+	};
+	public spellType type = spellType.regular;
+	public Material defaultMaterial;
+	
+	void Start()
+	{
+		defaultMaterial = GetComponent<SpriteRenderer>().material;
+	}
 	
 	// Update is called once per frame
 	void Update () {
+		if(type == spellType.regular){
+			GetComponent<SpriteRenderer>().color = Color.white;
+		} else if (type == spellType.fire){
+			GetComponent<SpriteRenderer>().color = Color.red;
+			damageCaused = 5;
+		} else if (type == spellType.ice){
+			GetComponent<SpriteRenderer>().color = Color.blue;
+			damageCaused = 5;
+		} else{
+			GetComponent<SpriteRenderer>().color = Color.yellow;
+			damageCaused = 5;
+		}
+		
 		Vector2 topRightLoc = new Vector2(transform.position.x + 0.25f, transform.position.y + 0.25f);
 		Vector2 botLeftLoc = new Vector2(transform.position.x - 0.25f, transform.position.y - 0.25f);
 		Collider2D collider = Physics2D.OverlapArea(topRightLoc, botLeftLoc, TileMonoBehavior.tileLayerMask); //test if a floor tile is under this tile, if so then grab it and check what occupies it
@@ -29,6 +56,40 @@ public class spellController : MonoBehaviour {
 				else
 				{
 					this.occupyingTile = tileBeneathUs;
+					if(type == spellType.regular)
+					{
+						tileBeneathUs.GetComponent<SpriteRenderer>().material = defaultMaterial;
+						tileBeneathUs.timeToRevert = 0;
+					}
+					else if(type == spellType.fire)
+					{
+						tileBeneathUs.GetComponent<SpriteRenderer>().material = Resources.Load("Materials/Blue") as Material;
+						if(!tileBeneathUs.inList){
+							tileBeneathUs.timeToRevert = DungeonManager.turnOrder.Count*5
+							DungeonManager.AddToTileList(tileBeneathUs);
+							tileBeneathUs.inList = true;
+						}
+					}
+					else if(type == spellType.ice)
+					{
+						tileBeneathUs.GetComponent<SpriteRenderer>().material = Resources.Load("Materials/Red") as Material;
+						if(!tileBeneathUs.inList)
+						{
+							tileBeneathUs.timeToRevert = DungeonManager.turnOrder.Count*5;
+							DungeonManager.AddToTileList(tileBeneathUs);
+							tileBeneathUs.inList = true;
+						}
+					}
+					else
+					{
+						tileBeneathUs.GetComponent<SpriteRenderer>().material = Resources.Load("Materials/Yellow") as Material;
+						if(!tileBeneathUs.inList)
+						{
+							tileBeneathUs.timeToRevert = DungeonManager.turnOrder.Count*5;
+							DungeonManager.AddToTileList(tileBeneathUs);
+							tileBeneathUs.inList = true;
+						}					
+					}
 				}
 			}
 			else
