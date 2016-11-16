@@ -6,6 +6,7 @@ public class Entity : MonoBehaviour { //testtest   
   //if a variable is used of the Delegate's type, you can store a method in the variable to call some class's method through this class    
   //in this case, I can store a delegate variable as a listener for when this Entity's health changes (as part of TakeDamage()), and whatever method is in the delegate will be called    
   private HealthChangeListener uiHealthChangeListener; //the listener associated with the UI, that will notify UI displays for health to update properly private MoveDirection lastDirection;    
+  
   public delegate void TurnReadyListener(); //the listener associated with Turn Order and deciding what to do, Controllers will     
   public int maxHealth = 10;    
   public int currentHealth = 7;    
@@ -20,9 +21,32 @@ public class Entity : MonoBehaviour { //testtest   
   public DamageType attackType = DamageType.poking;    
   public GameObject Spell; //the prefab associated with casting a particular spell    
   public float castSpeed = 1; //speed with which a projectile travels through the dungeon    
-  public enum MoveDirection { up, down, left, right }; //the direction player wishes to move for the purpose of Move function    
+  
+  public enum MoveDirection { up = 0, down = 1, left = 2, right = 3 }; //the direction player wishes to move for the purpose of Move function    
   public enum DamageType { poking, burn }; //the types of damage that an entity can take for the purpose of the TakeDamage function    
   
+  public virtual void Start()
+  {
+    if(occupyingTile == null)
+    {
+      Vector2 topRightLoc = new Vector2(transform.position.x+0.25f,transform.position.y+0.25f);
+      Vector2 botLeftLoc = new Vector2(transform.position.x-0.25f,transform.position.y-0.25f);
+      Collider2D collider = Physics2D.OverlapArea(topRightLoc,botLeftLoc,TileMonoBehavior.tileLayerMask);
+      if(collider != null)
+      {
+        TileMonoBehavior belowTile = collider.gameObject.GetComponent<TileMonoBehavior>();
+        if(belowTile != null)
+        {
+          Debug.Log("Entity syncing with Tile");
+          if(!belowTile.ConnectToEntity(this))
+          {
+            Destroy(this.gameObject);
+          }
+        }
+      }
+    }
+  }
+  }
   //tells the DungeonController this entity is done acting    
   public void EndTurn()    
   { } 
