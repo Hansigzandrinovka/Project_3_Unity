@@ -8,6 +8,7 @@ public class Entity : MonoBehaviour { //testtest
     //if a variable is used of the Delegate's type, you can store a method in the variable to call some class's method through this class
     //in this case, I can store a delegate variable as a listener for when this Entity's health changes (as part of TakeDamage()), and whatever method is in the delegate will be called
     private HealthChangeListener uiHealthChangeListener; //the listener associated with the UI, that will notify UI displays for health to update properly
+	private MoveDirection lastDirection;
 
     public delegate void TurnReadyListener(); //the listener associated with Turn Order and deciding what to do, Controllers will 
     public int maxHealth = 10;
@@ -25,7 +26,7 @@ public class Entity : MonoBehaviour { //testtest
     public float castSpeed = 1; //speed with which a projectile travels through the dungeon
 
     public enum MoveDirection { up = 0, down = 1, left = 2, right = 3 }; //the direction player wishes to move for the purpose of Move function
-    public enum DamageType { poking }; //the types of damage that an entity can take for the purpose of the TakeDamage function
+    public enum DamageType { poking, burn }; //the types of damage that an entity can take for the purpose of the TakeDamage function
 
     //On Start, Entity attempts to bind itself to a Tile occupying its space
     public virtual void Start()
@@ -88,18 +89,82 @@ public class Entity : MonoBehaviour { //testtest
         {
             case (MoveDirection.up):
                 clone = (GameObject)Instantiate(Spell, transform.position + transform.up, transform.rotation);
-                clone.GetComponent<Rigidbody2D>().velocity = transform.up * castSpeed;
+                if(spellIndex == 0)
+		{
+			clone.GetComponent<spellController>().type = spellController.spellType.regular;
+		}
+		else if(spellIndex == 1)
+		{
+			clone.GetComponent<spellController>().type = spellController.spellType.fire;
+		}		
+		else if(spellIndex == 2)
+		{
+			clone.GetComponent<spellController>().type = spellController.spellType.ice;
+		}
+		else if(spellIndex == 3)
+		{
+			clone.GetComponent<spellController>().type = spellController.spellType.lightning;
+		}
+		clone.GetComponent<Rigidbody2D>().velocity = transform.up * castSpeed;
                 break;
             case (MoveDirection.right):
                 clone = (GameObject)Instantiate(Spell, transform.position + transform.right, transform.rotation);
+			if(spellIndex == 0)
+			{
+				clone.GetComponent<spellController>().type = spellController.spellType.regular;
+			}
+			else if(spellIndex == 1)
+			{
+				clone.GetComponent<spellController>().type = spellController.spellType.fire;
+			}
+			else if(spellIndex == 2)
+			{
+				clone.GetComponent<spellController>().type = spellController.spellType.ice;
+			}
+			else if(spellIndex == 3)
+			{
+				clone.GetComponent<spellController>().type = spellController.spellType.lightning;
+			}
                 clone.GetComponent<Rigidbody2D>().velocity = transform.right * castSpeed;
                 break;
             case (MoveDirection.left):
                 clone = (GameObject)Instantiate(Spell, transform.position - transform.right, transform.rotation);
+			if(spellIndex == 0)
+			{
+				clone.GetComponent<spellController>().type = spellController.spellType.regular;
+			}
+			else if(spellIndex == 1)
+			{
+				clone.GetComponent<spellController>().type = spellController.spellType.fire;
+			}
+			else if(spellIndex == 2)
+			{
+				clone.GetComponent<spellController>().type = spellController.spellType.ice;
+			}
+			else if(spellIndex == 3)
+			{
+				clone.GetComponent<spellController>().type = spellController.spellType.lightning;
+			}
                 clone.GetComponent<Rigidbody2D>().velocity = transform.right * -1 * castSpeed;
                 break;
             default:
                 clone = (GameObject)Instantiate(Spell, transform.position - transform.up, transform.rotation);
+			if(spellIndex == 0)
+			{
+				clone.GetComponent<spellController>().type = spellController.spellType.regular;
+			}
+			else if(spellIndex == 1)
+			{
+				clone.GetComponent<spellController>().type = spellController.spellType.fire;
+			}
+			else if(spellIndex == 2)
+			{
+				clone.GetComponent<spellController>().type = spellController.spellType.ice;
+			}
+			else if(spellIndex == 3)
+			{
+				clone.GetComponent<spellController>().type = spellController.spellType.lightning;
+			}
                 clone.GetComponent<Rigidbody2D>().velocity = transform.up * -1 * castSpeed;
                 break;
         }
@@ -129,6 +194,7 @@ public class Entity : MonoBehaviour { //testtest
     //fail can be because out of movement, or because tile is occupied, or because not this entity's turn
     public virtual bool Move(MoveDirection givenDirection)
     {
+	    lastDirection = givenDirection;
         if (remainingSpeed == 0 || remainingDelay > 0)
         {
             Debug.Log("Entity speed is depleted, can't move");
@@ -255,6 +321,59 @@ public class Entity : MonoBehaviour { //testtest
         occupyingTile = newTile;
         occupyingTile.occupyingEntity = this;
         transform.position = new Vector3(occupyingTile.transform.position.x, occupyingTile.transform.position.y, transform.position.z);
+	    if(occupyingTile.GetComponent<SpriteRenderer>().sharedMaterial == Resources.Load("Materials/Red"))
+	    {
+		    this.TakeDamage(2,DamageType.burn);
+	    }
+	    else if(occupyingTile.GetComponent<SpriteRenderer>().sharedMaterial == Resources.Load("Materials/Yellow"))
+	    {
+		    if(this.speed > 1)
+		    {
+			    this.speed--;
+		    }
+	    }
+	    else if(occupyingTile.GetComponent<SpriteRenderer>().sharedMaterial == Resources.Load("Materials/Blue"))
+	    {
+		    while(occupyingTile.GetComponent<SpriteRenderer>().sharedMaterial == Resources.Load("Materials/Blue"))
+		    {
+			    TileMonoBehavior targetTile;
+			    switch(lastDirection)
+			    {
+				case(MoveDirection.up):
+						targetTile = occupyingTile.getAbove();
+					    	break;
+				case(MoveDirection.down):
+					    targetTile = occupyingTile.getBelow();
+					    break;
+				case(MoveDirection.left):
+					    targetTile = occupyingTile.getLeft();
+					    break;
+				    default:
+					    targetTile = occupyingTile.getRight();
+					    break;
+			    }
+			    if(targetTile == null)
+			    {
+				    break;
+			    }
+			    if(targetTile.isWalkable())
+			    {
+				    if(!targetTile.isOccupied())
+				    {
+					    goToTile(targetTile);
+				    }
+				    else
+				    {
+					    targetTile.occupyingEntity.TakeDamage(damageAmount,attackType);
+				    }
+			    }
+			    else
+			    {
+				    break;
+			    }
+		    }
+		    Debug.Log("Finished sliding");
+	    }						  
     }
 	
 	public void Die()
