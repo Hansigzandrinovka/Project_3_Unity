@@ -66,7 +66,7 @@ public class spellController : MonoBehaviour {
 					}
 					else if(type == spellType.fire)
 					{
-						tileBeneathUs.GetComponent<SpriteRenderer>().material = Resources.Load("Materials/Blue") as Material;
+						tileBeneathUs.GetComponent<SpriteRenderer>().material = Resources.Load("Materials/Red") as Material;
 						if(!tileBeneathUs.inList){
 							tileBeneathUs.timeToRevert = DungeonManager.turnOrder.Count*5;
 							DungeonManager.AddToTileList(tileBeneathUs);
@@ -75,7 +75,7 @@ public class spellController : MonoBehaviour {
 					}
 					else if(type == spellType.ice)
 					{
-						tileBeneathUs.GetComponent<SpriteRenderer>().material = Resources.Load("Materials/Red") as Material;
+						tileBeneathUs.GetComponent<SpriteRenderer>().material = Resources.Load("Materials/Blue") as Material;
 						if(!tileBeneathUs.inList)
 						{
 							tileBeneathUs.timeToRevert = DungeonManager.turnOrder.Count*5;
