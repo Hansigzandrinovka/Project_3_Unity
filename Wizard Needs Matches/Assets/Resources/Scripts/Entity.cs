@@ -356,9 +356,9 @@ public class Entity : MonoBehaviour { //testtest
 			    {
 				    break;
 			    }
-			    if(targetTile.isWalkable())
+			    if(targetTile.IsWalkable())
 			    {
-				    if(!targetTile.isOccupied())
+				    if(!targetTile.IsOccupied())
 				    {
 					    goToTile(targetTile);
 				    }
