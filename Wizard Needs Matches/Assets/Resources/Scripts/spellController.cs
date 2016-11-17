@@ -21,6 +21,9 @@ public class spellController : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
+	//Change color of spell based on type
+	//Gets the tile beneath the spell and changes tile material based on spell type
+	//Spell is destroyed after hitting enemy or going off the board
 	void Update () {
 		if(type == spellType.regular){
 			GetComponent<SpriteRenderer>().color = Color.white;
@@ -65,7 +68,7 @@ public class spellController : MonoBehaviour {
 					{
 						tileBeneathUs.GetComponent<SpriteRenderer>().material = Resources.Load("Materials/Blue") as Material;
 						if(!tileBeneathUs.inList){
-							tileBeneathUs.timeToRevert = DungeonManager.turnOrder.Count*5
+							tileBeneathUs.timeToRevert = DungeonManager.turnOrder.Count*5;
 							DungeonManager.AddToTileList(tileBeneathUs);
 							tileBeneathUs.inList = true;
 						}
