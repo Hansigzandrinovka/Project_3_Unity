@@ -1,8 +1,6 @@
-Wizard Needs Matches/Library/metadata/
+
 *.csproj
 *.dwlt
-Wizard Needs Matches/Library/InspectorExpandedItems.asset
 *.mdb
-Wizard Needs Matches/Library/assetDatabase3
 *.sln
 *.userprefs
