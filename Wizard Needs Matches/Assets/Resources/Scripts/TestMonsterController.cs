@@ -21,7 +21,7 @@ public class TestMonsterController : EntityController {
         clock = 0;
     }
 	
-	//Takes integer and returns absolute value
+	//Takes float and returns absolute value
 	private float absVal(float x)
 	{
 		if(x < 0)
@@ -36,31 +36,84 @@ public class TestMonsterController : EntityController {
         {
 		float xDir = playerTile.transform.position.x - puppetEntity.transform.position.x;
 		float yDir = playerTile.transform.position.y - puppetEntity.transform.position.y;
-            if(xDir > 0 && absVal(yDir) <= absVal(xDir))
+            if(absVal(xDir) >= 5 && absVal(yDir) >= 5) //Monster can't see player - sit or move randomly
 	    {
-		    puppetEntity.Move(Entity.MoveDirection.right);
+		    puppetEntity.speed = 0;
 	    }
-		else if(xDir < 0 && absVal(yDir) <= absVal(xDir))
+		else if(absVal(xDir) >= absVal(yDir)) //Player is further away horizontally
 		{
-			puppetEntity.Move(Entity.MoveDirection.left);
+			if(!MoveHorizontal(xDir,yDir))
+			{
+				if(!MoveVertical(xDir,yDir))
+				{
+					MoveSomewhere();
+				}
+			}
 		}
-            
+		else
+		{
+			if(!MoveVertical(xDir,yDir))
+			{
+				if(!MoveHorizontal(xDir,yDir))
+				{
+					MoveSomewhere();
+				}
+			}
+		}
             if (puppetEntity.GetRemainingSpeed() == 0) //if Entity can't act anymore
             {
-                //Debug.Log("Player Entity finished Turn");
                 EndTurn();
             }
-		
-		if(yDir > 0)
-		{
-			puppetEntity.Move(Entity.MoveDirection.up);
-		}
-		else if(yDir < 0)
-		{
-			puppetEntity.Move(Entity.MoveDirection.down);
-		}
         }
         else if (canAct)
             clock += Time.deltaTime;
     }
+	//Player is further away in horizontal direction
+	//Return true if monster moved left or right; false otherwise
+	private bool MoveHorizontal(float xDir, float yDir)
+	{
+		if(xDir > 0) //Player is right of monster
+		{
+			return(puppetEntity.Move(Entity.MoveDirection.right));
+		}
+		else if(xDir < 0) //Player is left of monster
+		{
+			return(puppetEntity.Move(Entity.MoveDirection.left));
+		}
+		return(false);
+	}
+	//Player is further away in vertical direction
+	//Return true if monster moved up or down; false otherwise
+	private bool MoveVertical(float xDir, float yDir)
+	{
+		if(yDir > 0) //Player is in front of monster
+		{
+			return(puppetEntity.Move(Entity.MoveDirection.up));
+		}
+		else if(yDir < 0) //Player is behind monster
+		{
+			return(puppetEntity.Move(Entity.MoveDirection.down));
+		}
+		return(false);
+	}
+	//Monster can't move toward player - move somewhere
+	//Return true if moved; false otherwise
+	private bool MoveSomewhere()
+	{
+		if(!puppetEntity.Move(Entity.MoveDirection.down))
+		{
+			if(!puppetEntity.Move(Entity.MoveDirection.up))
+			{
+				if(!puppetEntity.Move(Entity.MoveDirection.right))
+				{
+					if(!puppetEntity.Move(Entity.MoveDirection.left))
+					{
+						puppetEntity.speed = 0;
+						return(false);
+					}
+				}
+			}
+		}
+		return(true);
+	}
 }
