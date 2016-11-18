@@ -18,7 +18,7 @@ public class Gem : MonoBehaviour {
     public bool isFalling = false;
     private Rigidbody velocityReader;
 
-    private static readonly float stopSpeed = .1f; //the speed at which object moves to be approximately unmoving
+    public static readonly float stopSpeed = .1f; //the speed at which object moves to be approximately unmoving
 
 	public int XCoord{
 		get{
