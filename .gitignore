@@ -1,5 +1,7 @@
 Wizard Needs Matches/Library/
 Bejeweled2/Library/
+Wizard Needs Matches/Temp/
+Bejeweled2/Temp/
 *.csproj
 *.dwlt
 *.mdb
