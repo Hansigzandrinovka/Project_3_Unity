@@ -15,6 +15,10 @@ public class Gem : MonoBehaviour {
 	public List<Gem> Neighbors = new List<Gem>();
 	public bool isSelected = false;
 	public bool isMatched = false;
+    public bool isFalling = false;
+    private Rigidbody velocityReader;
+
+    private static readonly float stopSpeed = .1f; //the speed at which object moves to be approximately unmoving
 
 	public int XCoord{
 		get{
@@ -35,15 +39,22 @@ public class Gem : MonoBehaviour {
 	void Start () {
 
 		CreateGem();
-	
+        velocityReader = GetComponent<Rigidbody>();
+        if (velocityReader == null)
+            Debug.LogError("Alert! Could not find Rigidbody on Gem!");
 	}
 
 	
 	// Update is called once per frame
 
 	void Update () {
-
-	
+        if(velocityReader != null)
+        {
+            if (velocityReader.velocity.magnitude > stopSpeed)
+                isFalling = true;
+            else
+                isFalling = false;
+        }
 	}
 
 	public void ToggleSelector(){
