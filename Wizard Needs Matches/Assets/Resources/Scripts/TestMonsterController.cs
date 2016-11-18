@@ -20,16 +20,27 @@ public class TestMonsterController : EntityController {
 	    playerTile = player.occupyingTile;
         clock = 0;
     }
-
+	
+	//Takes integer and returns absolute value
+	private float absVal(float x)
+	{
+		if(x < 0)
+			return(x*-1);
+		else
+			return(x);
+	}
+	
     // Update is called once per frame
     void Update () {
         if(clock >= inputTime && canAct)
         {
-            if(playerTile.transform.position.x > puppetEntity.transform.position.x)
+		float xDir = playerTile.transform.position.x - puppetEntity.transform.position.x;
+		float yDir = playerTile.transform.position.y - puppetEntity.transform.position.y;
+            if(xDir > 0 && absVal(yDir) <= absVal(xDir))
 	    {
 		    puppetEntity.Move(Entity.MoveDirection.right);
 	    }
-		else if(playerTile.transform.position.x < puppetEntity.transform.position.x)
+		else if(xDir < 0 && absVal(yDir) <= absVal(xDir))
 		{
 			puppetEntity.Move(Entity.MoveDirection.left);
 		}
@@ -40,11 +51,11 @@ public class TestMonsterController : EntityController {
                 EndTurn();
             }
 		
-		if(playerTile.transform.position.y > puppetEntity.transform.position.y)
+		if(yDir > 0)
 		{
 			puppetEntity.Move(Entity.MoveDirection.up);
 		}
-		else if(playerTile.transform.position.y < puppetEntity.transform.position.y)
+		else if(yDir < 0)
 		{
 			puppetEntity.Move(Entity.MoveDirection.down);
 		}
