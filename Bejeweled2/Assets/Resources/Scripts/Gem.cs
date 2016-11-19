@@ -12,7 +12,7 @@ public class Gem : MonoBehaviour {
 	public GameObject selector;
 	string[] gemMats ={"Red","Blue","Green","Orange","Yellow","Pink","Purple"};
 	public string color="";
-	public List<Gem> Neighbors = new List<Gem>();
+	public List<Gem> Neighbors = new List<Gem>(); //contains gems to the left, up, right, and below this gem
 	public bool isSelected = false;
 	public bool isMatched = false;
     public bool isFalling = false;
@@ -61,6 +61,8 @@ public class Gem : MonoBehaviour {
 		isSelected  = !isSelected ;
 		selector.SetActive(isSelected);
 }
+    
+    //gives the Gem its appearance and color identity
 	public void CreateGem(){
 		color = gemMats[Random.Range(0,gemMats.Length)];
 		Material m = Resources.Load("Materials/"+color)as Material;
@@ -74,6 +76,7 @@ public class Gem : MonoBehaviour {
 		return false;
 }
 	public void AddNeighbor(Gem g){
+        //Neighbors.Add(g);
 		if(!Neighbors.Contains(g))
 			Neighbors.Add(g);
 		}

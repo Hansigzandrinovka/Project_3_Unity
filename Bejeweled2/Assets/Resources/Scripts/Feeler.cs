@@ -9,18 +9,23 @@ public class Feeler : MonoBehaviour {
 	public Gem owner;
 
 	void OnTriggerEnter(Collider c){
-		if(c.tag == "Gem")
+		if(c.tag == "Gem") //prevents Feelers and other objects from being added
 		{
-		owner.AddNeighbor(c.GetComponent<Gem>());
-		}
+            Gem gemToAdd = c.GetComponent<Gem>();
+            if(gemToAdd != null) //just-in-case testing
+                owner.AddNeighbor(gemToAdd);
+        }
 
 		}
 	void OnTriggerExit(Collider c){
 
 		if(c.tag == "Gem")
 		{
-		owner.RemoveNeighbor(c.GetComponent<Gem>());
-		}
+            Gem gemToRemove = c.GetComponent<Gem>();
+            if(gemToRemove != null)
+                owner.RemoveNeighbor(gemToRemove);
+
+        }
 
 		
 

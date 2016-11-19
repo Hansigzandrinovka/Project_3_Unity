@@ -6,34 +6,34 @@ using System.Collections.Generic;
 public class Board : MonoBehaviour {
 
 
-public List<Gem> gems = new List<Gem>();
+public List<Gem> gems = new List<Gem>(); //holds all active Gems on the board
 public int GridWidth;
 public int GridHeight;
-public GameObject gemPrefab;
+public GameObject gemPrefab; //the prefab used to create Gems on the board
 public Gem lastGem;
 public Vector3 gem1Start, gem1End, gem2Start, gem2End;
 public bool isSwapping = false;
 public Gem gem1,gem2;
 public float startTime;
 public float swapRate = 2 ;
-public int AmountToMatch = 3;
+public int AmountToMatch = 3; //number of gems in a row that are needed to match, ie 3 in a row
 public bool isMatched = false;
 
 	
 // Use this for initialization
 	
-void Start () {
+    void Start () {
 
-for(int y=0; y<GridHeight ; y++){
-for(int x=0; x<GridWidth; x++){
-GameObject g = Instantiate(gemPrefab,new Vector3(x,y,0),Quaternion.identity)as GameObject;
-g.transform.parent = gameObject.transform;
-gems.Add(g.GetComponent<Gem>());
-}
-}
-gameObject.transform.position = new Vector3(- 3.5f, -3.5f,0);
+    for(int y=0; y<GridHeight ; y++){
+        for(int x=0; x<GridWidth; x++){
+            GameObject g = Instantiate(gemPrefab,new Vector3(x,y,0),Quaternion.identity)as GameObject;
+            g.transform.parent = gameObject.transform;
+            gems.Add(g.GetComponent<Gem>());
+        }
+    }
+    gameObject.transform.position = new Vector3(- 3.5f, -3.5f,0); //places board in center of screen
 	
-	}
+}
 
 	
 	// Update is called once per frame
@@ -41,19 +41,21 @@ gameObject.transform.position = new Vector3(- 3.5f, -3.5f,0);
 	void Update () {
 
 
-		if (isMatched) {
+		if (isMatched) { //time to remove matched gems
 
-			for (int i=0; i<gems.Count; i++) {
+			for (int i=0; i<gems.Count; i++) { //push matched gems to the top of the screen so they can fall back down
 				if (gems [i].isMatched) {
+                    Debug.Log("Matched gem at location: " + gems[i].transform.position.x + "," + gems[i].transform.position.y + " of color " + gems[i].color);
 					gems [i].CreateGem ();
+                    //ToDo: make sure there isn't already a gem there
 					gems [i].transform.position = new Vector3 (
 						gems [i].transform.position.x,
-						gems [i].transform.position.y + 6,
+						gems [i].transform.position.y + GridHeight, //prevents weird stuff happening when we match the gems at the bottom two rows (originally was + 6)
 						gems [i].transform.position.z);
 				}
 			}
 			isMatched = false;
-		} else if (isSwapping) {
+		} else if (isSwapping) { //time to swap gems
 			MoveGem (gem1, gem1End, gem1Start);
 			MoveNegGem (gem2, gem2End, gem2Start);
 			if (Vector3.Distance (gem1.transform.position, gem1End) < 0.1f || Vector3.Distance (gem2.transform.position, gem2End) < 0.1f) {
@@ -70,7 +72,7 @@ gameObject.transform.position = new Vector3(- 3.5f, -3.5f,0);
 				CheckMatch ();
 
 			}
-		} else if( DetermineBoardState() ){
+		} else if( DetermineBoardState() ){ //not matching or swapping, so check board state
 			for (int i=0; i<gems.Count; i++){
 				CheckForNearbyMatches( gems[i] );
 
@@ -91,17 +93,18 @@ gameObject.transform.position = new Vector3(- 3.5f, -3.5f,0);
 		return false;
 	}
 
-	public void CheckMatch(){
+    //creates two lists, determines if lists contain valid matches in them, makes each list test all gems in them for matches
+    public void CheckMatch(){
 		List<Gem> gem1List = new List<Gem>();
 		List<Gem> gem2List = new List<Gem>();
-		ConstructMatchList( gem1.color , gem1 , gem1.XCoord, gem1.YCoord , ref gem1List );
+		ConstructMatchList( gem1.color , gem1 , gem1.XCoord, gem1.YCoord , ref gem1List ); //recursive function
 		FixMatchList( gem1 , gem1List);
 		ConstructMatchList( gem2.color , gem2 , gem2.XCoord, gem2.YCoord , ref gem2List );
 		FixMatchList( gem2 , gem2List);
 
 		//print("Gem1"+ gem1List.Count);
 
-		}
+		} 
 
 	public void CheckForNearbyMatches( Gem g)
 	{
@@ -110,21 +113,21 @@ gameObject.transform.position = new Vector3(- 3.5f, -3.5f,0);
 		FixMatchList ( g , gemList);
 	}
 
-
+    //see if current gem in same row/column of given gem to build row/col list of matching gems
 	public void ConstructMatchList( string color, Gem gem, int XCoord, int YCoord, ref List<Gem> MatchList ){
 		
-		if( gem == null){
+		if( gem == null){ //somehow we're looking at nonexistent gem
 			return;
 			}
-		else if( gem.color != color){
+		else if( gem.color != color){ //only match same-color gems
 				return;}
-			else if( MatchList.Contains(gem)){
+			else if( MatchList.Contains(gem)){ //if we have already evaluated gem?
 					return;
 					}
 				else{
 					MatchList.Add(gem);
 					if(XCoord == gem.XCoord || YCoord == gem.YCoord){
-						foreach( Gem g in gem.Neighbors){
+						foreach( Gem g in gem.Neighbors){ //check each gem in this gem's neighbors for matching
 							//ConstructMatchList( color, g, XCoord, YCoord, ref MatchList );
 							ConstructMatchList( color, g, XCoord, YCoord, ref  MatchList );
 							}
@@ -132,24 +135,25 @@ gameObject.transform.position = new Vector3(- 3.5f, -3.5f,0);
 					}
 }
 
-
+    //makes Match Lists remove gems that are not in the row/column of the majority of the list
 	public void FixMatchList(Gem gem , List<Gem> ListToFix){
 
 		List<Gem> rows = new List<Gem>();
 		List<Gem> Collumns = new List<Gem>();
 		
+        //iterate through given List, move Gem to rows list or cols list depending on its coordinates
 		for( int i =0 ; i< ListToFix.Count ; i++){
-			if( gem.XCoord == ListToFix[i].XCoord){
+			if( gem.XCoord == ListToFix[i].XCoord){ //it is in same row as gem
 				rows.Add(ListToFix[i]);
 				}
-			if( gem.YCoord == ListToFix[i].YCoord){
+			if( gem.YCoord == ListToFix[i].YCoord){ //it is in same column as gem
 				Collumns.Add(ListToFix[i]);
 				}
 			}
 
-			if( rows.Count >= AmountToMatch){
+			if( rows.Count >= AmountToMatch){ //check if we have enough gems to make a match
 				isMatched = true;
-				for( int i=0 ; i < rows.Count ; i++){
+				for( int i=0 ; i < rows.Count ; i++){ //notify each of the gems in row that they match (should be removed)
 					rows[i].isMatched  = true;
 					}
 				
