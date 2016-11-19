@@ -77,7 +77,9 @@ public class DungeonManager : MonoBehaviour {
     public static void EndTurn()
     {
 	    RemoveTiles();
-        EntityController currentTurnHolder = turnOrder.First.Value;
+        EntityController currentTurnHolder = null;
+        if(turnOrder != null && turnOrder.First != null)
+            currentTurnHolder = turnOrder.First.Value;
 		turnOrder.RemoveFirst ();
         if(currentTurnHolder != null)
         {
