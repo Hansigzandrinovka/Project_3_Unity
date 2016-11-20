@@ -58,7 +58,7 @@ public bool isMatched = false;
 		} else if (isSwapping) { //time to swap gems
 			MoveGem (gem1, gem1End, gem1Start);
 			MoveNegGem (gem2, gem2End, gem2Start);
-			if (Vector3.Distance (gem1.transform.position, gem1End) < 0.1f || Vector3.Distance (gem2.transform.position, gem2End) < 0.1f) {
+			if (Vector3.Distance (gem1.transform.position, gem1End) < 0.1f || Vector3.Distance (gem2.transform.position, gem2End) < 0.1f) { //if gems are close enough to their final positions to snap, snap them and acknowledge swap occurred
 				gem1.transform.position = gem1End;
 				gem2.transform.position = gem2End;
 				gem1.ToggleSelector ();
@@ -81,18 +81,19 @@ public bool isMatched = false;
 	
 	}
 
-
+    //returns true if board is not in a stable state because: either gems are above the board, or gems are falling right now
 	public bool DetermineBoardState()
 	{
 		for (int i=0; i < gems.Count; i++) {
-			if(gems[i].transform.localPosition.y > 8)
+			if(gems[i].transform.localPosition.y > GridHeight)
 				return true;
-			else if( gems[i].GetComponent<Rigidbody>().velocity.y > .1f)
+			else if( Mathf.Abs(gems[i].GetComponent<Rigidbody>().velocity.y) > .1f)
 				return true;
 		}
 		return false;
 	}
 
+    //tests match for two given gems
     //creates two lists, determines if lists contain valid matches in them, makes each list test all gems in them for matches
     public void CheckMatch(){
 		List<Gem> gem1List = new List<Gem>();
@@ -105,7 +106,7 @@ public bool isMatched = false;
 		//print("Gem1"+ gem1List.Count);
 
 		} 
-
+    //fetches all matching gems around given gem, then checks them for row/column alignment
 	public void CheckForNearbyMatches( Gem g)
 	{
 		List<Gem> gemList = new List<Gem> ();
@@ -116,7 +117,7 @@ public bool isMatched = false;
     //see if current gem in same row/column of given gem to build row/col list of matching gems
 	public void ConstructMatchList( string color, Gem gem, int XCoord, int YCoord, ref List<Gem> MatchList ){
 		
-		if( gem == null){ //somehow we're looking at nonexistent gem
+		if( gem == null){ //if somehow we're looking at nonexistent gem
 			return;
 			}
 		else if( gem.color != color){ //only match same-color gems
@@ -124,10 +125,10 @@ public bool isMatched = false;
 			else if( MatchList.Contains(gem)){ //if we have already evaluated gem?
 					return;
 					}
-				else{
+				else{ //same kind of gem not in list, so add to list and check
 					MatchList.Add(gem);
 					if(XCoord == gem.XCoord || YCoord == gem.YCoord){
-						foreach( Gem g in gem.Neighbors){ //check each gem in this gem's neighbors for matching
+						foreach( Gem g in gem.Neighbors){ //check each gem in this gem's neighbors for matching, will naturally exclude incorrectly colored and already checked gems
 							//ConstructMatchList( color, g, XCoord, YCoord, ref MatchList );
 							ConstructMatchList( color, g, XCoord, YCoord, ref  MatchList );
 							}

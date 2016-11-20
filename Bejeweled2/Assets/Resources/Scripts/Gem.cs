@@ -15,7 +15,7 @@ public class Gem : MonoBehaviour {
 	public List<Gem> Neighbors = new List<Gem>(); //contains gems to the left, up, right, and below this gem
 	public bool isSelected = false;
 	public bool isMatched = false;
-    public bool isFalling = false;
+    //public bool isFalling = false;
     private Rigidbody velocityReader;
 
     public static readonly float stopSpeed = .1f; //the speed at which object moves to be approximately unmoving
@@ -48,13 +48,13 @@ public class Gem : MonoBehaviour {
 	// Update is called once per frame
 
 	void Update () {
-        if(velocityReader != null)
+        /*if(velocityReader != null)
         {
             if (velocityReader.velocity.magnitude > stopSpeed)
                 isFalling = true;
             else
                 isFalling = false;
-        }
+        }*/
 	}
 
 	public void ToggleSelector(){
@@ -67,6 +67,7 @@ public class Gem : MonoBehaviour {
 		color = gemMats[Random.Range(0,gemMats.Length)];
 		Material m = Resources.Load("Materials/"+color)as Material;
 		sphere.GetComponent<Renderer>().material = m;
+        isMatched = false;
 }
 
 	public bool IsNeighborWith(Gem g){
