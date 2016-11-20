@@ -18,6 +18,7 @@ public float startTime;
 public float swapRate = 2 ;
 public int AmountToMatch = 3; //number of gems in a row that are needed to match, ie 3 in a row
 public bool isMatched = false;
+    public int currentScore = 0; //tracks the score until we move score tracking to EntityControllers
 
 	
 // Use this for initialization
@@ -35,6 +36,66 @@ public bool isMatched = false;
 	
 }
 
+    //handles generation of score/energy numbers based on the number of gems matched in this iteration, ie matching 3 gems gives 
+    void ScoreGems(int comboCount, int matchSize)
+    {
+        if (comboCount < 1)
+        {
+            Debug.LogError("Alert! Called ScoreGems with comboCount < 1: " + comboCount);
+            return;
+        }
+        if(matchSize < AmountToMatch)
+        {
+            Debug.LogError("Alert! Called ScoreGems with matchSize < AmountToMatch: " + matchSize + "," + AmountToMatch);
+            return;
+        }
+            
+        int comboPoints = comboCount * 5;
+        Debug.Log("Awarded Combo Points: " + comboPoints);
+        currentScore += comboPoints;
+        int matchPoints = 0;
+        switch(matchSize)
+        {
+            case 1:
+                {
+                    matchPoints = 0;
+                    break;
+                }
+            case 2:
+                {
+                    matchPoints = 0;
+                    break;
+                }
+            case 3:
+                {
+                    matchPoints = 10; //30 total
+                    break;
+                }
+            case 4:
+                {
+                    matchPoints = 12; //48 total
+                    break;
+                }
+            case 5:
+                {
+                    matchPoints = 14; //70 total
+                    break;
+                }
+            case 6:
+                {
+                    matchPoints = 15; //90 total
+                    break;
+                }
+            default:
+                {
+                    matchPoints = 9 + matchSize; //expect for size=7, points = 16, increase by 1 every case after
+                    break;
+                }
+        }
+        Debug.Log("Awarded match points: " + matchPoints);
+        currentScore += matchPoints;
+    }
+
 	
 	// Update is called once per frame
 
@@ -42,10 +103,11 @@ public bool isMatched = false;
 
 
 		if (isMatched) { //time to remove matched gems
-
+            int comboCount = 0; //number of gems matched in the same update, awards more points the more gems matched
 			for (int i=0; i<gems.Count; i++) { //push matched gems to the top of the screen so they can fall back down
 				if (gems [i].isMatched) {
-                    Debug.Log("Matched gem at location: " + gems[i].transform.position.x + "," + gems[i].transform.position.y + " of color " + gems[i].color);
+                    comboCount++;
+                    ScoreGems(comboCount,gems[i].matchSize);
 					gems [i].CreateGem ();
                     //ToDo: make sure there isn't already a gem there
 					gems [i].transform.position = new Vector3 (
@@ -156,6 +218,7 @@ public bool isMatched = false;
 				isMatched = true;
 				for( int i=0 ; i < rows.Count ; i++){ //notify each of the gems in row that they match (should be removed)
 					rows[i].isMatched  = true;
+                rows[i].matchSize += rows.Count;
 					}
 				
 				}
@@ -164,6 +227,7 @@ public bool isMatched = false;
 				isMatched = true;
 				for( int i=0 ; i < Collumns.Count ; i++){
 					Collumns[i].isMatched  = true;
+                Collumns[i].matchSize += Collumns.Count;
 					}
 				
 				}
