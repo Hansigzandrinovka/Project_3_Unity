@@ -12,8 +12,14 @@ public class DungeonManager : MonoBehaviour {
 	public static List<TileMonoBehavior> oddTiles; //Contains tiles which have been affected by spells
 	
     private EntityController someController;
+    private static bool gameStarted = false;
     public int turnOrderSize = -1;
 	public int startDelay = 2; //time in seconds before Turn Order goes into effect
+
+    public static bool IsGameStarted()
+    {
+        return gameStarted;
+    }
 
     // Use this for initialization
 	void Start () {
@@ -117,6 +123,7 @@ public class DungeonManager : MonoBehaviour {
 		{
 			//Debug.Log("Turn order starts with " + turnOrder.First.Value);
 			turnOrder.First.Value.StartTurn(); //after entity starts its turn, it will eventually tell Dungeon Manager to end turn
+            gameStarted = true;
 		}
 		else
 			Debug.LogError("Turn Order is empty, can't start turns");

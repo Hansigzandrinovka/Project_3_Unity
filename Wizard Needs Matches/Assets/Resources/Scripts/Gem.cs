@@ -48,11 +48,11 @@ public class Gem : MonoBehaviour {
 	// Update is called once per frame
 
 	void Update () {
-        if(velocityReader != null) //enforces that gems can only fall down
+        /*if(velocityReader != null) //enforces that gems can only fall down
         {
             if (velocityReader.velocity.y > stopSpeed)
                 velocityReader.velocity = new Vector3(velocityReader.velocity.x, 0, velocityReader.velocity.z);
-        }
+        }*/
 	}
 
 	public void ToggleSelector(){
@@ -84,10 +84,12 @@ public class Gem : MonoBehaviour {
 		Neighbors.Remove(g);
 		}
 	void OnMouseDown(){
-		
-		if( !GameObject.Find("Board").GetComponent<Board>().isSwapping){
+        if (!DungeonManager.IsGameStarted()) //player can't make matches until the game starts
+            return;
+		if( !Board.theMatchingBoard.isSwapping)
+        {
 			ToggleSelector();
-			GameObject.Find("Board").GetComponent<Board>().SwapGems(this);
+			Board.theMatchingBoard.SwapGems(this);
 			}
 		}
 

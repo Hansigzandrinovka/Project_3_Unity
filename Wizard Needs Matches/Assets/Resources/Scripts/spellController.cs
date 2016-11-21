@@ -106,6 +106,5 @@ public class spellController : MonoBehaviour {
             //Debug.Log("Destroying spell by lack of Collider");
             Destroy(this.gameObject);
         }
-        Debug.Log("after collider check");
 	}
 }

@@ -4,12 +4,15 @@ using UnityEngine.UI;
 
 public class TestPlayerController : EntityController {
     
-    public Slider playerHealthSlider; //the Slider that will store Player's current health
-	public Slider playerEnergySlider; //the Slider that will store Player's current Energy
+    public Slider playerHealthSlider; //the Slider that will provide feedback on Player's current health
+	public Slider playerEnergySlider; //the Slider that will provide feedback on Player's current Energy
+    public Slider playerTimeSlider; //the Slider that will provide feedback on Player's remaining time to take a turn
     private float clock = 0; //used to prevent input flooding by slowing user input processing
     public float inputTime = 2; //how many seconds must pass before input can be processed again
+    public float remainingTime = Player_Turn_WaitTime_Base;
 	public int energy = 150; //current energy that player can allocate to actions
 	public int maxEnergy = 200; //maximum energy that player can store
+    private float maxRemainingTime = Player_Turn_WaitTime_Base;
 
     //constants for spending Player Energy
     private static readonly int EnergyCost_Move = 30; //cost in energy to move in any direction
@@ -18,6 +21,9 @@ public class TestPlayerController : EntityController {
     private static int EnergyCost_Cast_Spell_2 = 200;
     private static int EnergyCost_Cast_Spell_3 = 250;
     private static int EnergyCost_Cast_Spell_4 = 280;
+
+    private static readonly float Player_Turn_WaitTime_Base = 20f; //the base time the game will wait for the player to take their turn before making player forfeit their turn
+    private static readonly float Player_Turn_WaitTime_Speed_Increment = 10; //the amount of additional time player gets to plan because they have higher speed (IE speed 2 gives 30 = 20 + 10*1 seconds)
 
 	public override bool GoesFirst() //Players have higher priority when placed into Turn Order
 	{
@@ -36,13 +42,15 @@ public class TestPlayerController : EntityController {
         }
         else
             return false;
-            
     }
 
+    //overrides EntityController.StartTurn() to initialize the clock for player input and the player's remaining time
     public override void StartTurn()
     {
         base.StartTurn();
         clock = 0;
+        remainingTime = maxRemainingTime;
+        Debug.Log("Player's remaining time is: " + remainingTime);
     }
 
     // Use this for initialization
@@ -56,20 +64,43 @@ public class TestPlayerController : EntityController {
         }
         if(puppetEntity != null)
         {
+            maxRemainingTime = Player_Turn_WaitTime_Base + ((puppetEntity.speed - 1) * Player_Turn_WaitTime_Speed_Increment);
+            remainingTime = maxRemainingTime;
 			if(playerHealthSlider != null)
 			{
 				playerHealthSlider.value = puppetEntity.SetUIHealthChangeListener(UpdateDisplayHealth);
 				playerHealthSlider.maxValue = puppetEntity.maxHealth;
 			}
+            else
+            {
+                Debug.LogError("Alert! Player Health Slider not configured!");
+            }
 			if(playerEnergySlider != null)
 			{
 				playerEnergySlider.value = energy;
 				playerEnergySlider.maxValue = maxEnergy;
 			}
+            else
+            {
+                Debug.LogError("Alert! Player Energy Slider not configured!");
+            }
+            if(playerTimeSlider != null)
+            {
+                playerTimeSlider.value = remainingTime;
+                playerTimeSlider.maxValue = maxRemainingTime;
+            }
+            else
+            {
+                Debug.LogError("Alert! Player Time Slider not configured!");
+            }
+        }
+        else
+        {
+            Debug.LogError("Alert! TestPlayerController is missing a puppetEntity to control!");
         }
         if(Board.theMatchingBoard != null)
         {
-            Board.theMatchingBoard.SetScoreIncreaseListener(this.UpdateDisplayEnergy_Increment);
+            Board.theMatchingBoard.SetScoreIncreaseListener(this.ReceiveMatchPoints);
         }
         else
         {
@@ -84,11 +115,14 @@ public class TestPlayerController : EntityController {
     }
 
     //used as a Listener to Board
-    //increases Energy of Controller towards maximum
+    //increases Energy of Controller towards maximum,
+    //increases remaining time,
     //and updates display with new energy
-    void UpdateDisplayEnergy_Increment(int amountToChange)
+    void ReceiveMatchPoints(int amountToChange)
     {
         IncreaseEnergy(amountToChange, false);
+        if(canAct) //if it is this player's turn, so time is ticking down, so give them more time
+            IncreaseRemainingTime(Mathf.Ceil(amountToChange / Board.averageScore),false);
     }
 	//increases energy
     //assumes amount is positive
@@ -101,20 +135,40 @@ public class TestPlayerController : EntityController {
         if (playerEnergySlider != null)
             playerEnergySlider.value = energy;
     }
+
+    //reduces remaining time for Controller if player can act,
+    //and updates the time display accordingly
+    //there is a possibility of external influences decreasing remaining time, IE ailments that make time move faster
+    public void DecreaseRemainingTime(float amount)
+    {
+        remainingTime -= amount;
+        if (playerTimeSlider != null)
+            playerTimeSlider.value = Mathf.Ceil(remainingTime);
+    }
+    public void IncreaseRemainingTime(float amount, bool overflow)
+    {
+        remainingTime += amount;
+        if ((remainingTime > maxRemainingTime) && !overflow) //if player is not allowed to have beyond-max energy:
+            remainingTime = maxRemainingTime;
+        if (playerTimeSlider != null)
+            playerTimeSlider.value = Mathf.Ceil(remainingTime);
+    }
 	
 	// Update is called once per frame
 	//if it is Controller's turn, waits for player input to control Entity
 	void Update () {
         if (clock >= inputTime && canAct) //only evaluates player activity every time increment, but only if player can act
         {
+            DecreaseRemainingTime(Time.deltaTime); //player now has less time to act
+
             float xAxis = Input.GetAxis("Horizontal");
             float yAxis = Input.GetAxis("Vertical");
             bool turnLeftButton = Input.GetButton("RotateLeft");
             bool turnRightButton = Input.GetButton("RotateRight");
             bool castRegSpell = Input.GetButton("Fire1");
-		bool castFireSpell = Input.GetButton("FireSp");
-		bool castIceSpell = Input.GetButton("IceSp");
-		bool castLightningSpell = Input.GetButton("LightSp");
+		    bool castFireSpell = Input.GetButton("FireSp");
+		    bool castIceSpell = Input.GetButton("IceSp");
+		    bool castLightningSpell = Input.GetButton("LightSp");
 
             if (xAxis > 0.5) //user wants to go Right
             {
@@ -235,33 +289,38 @@ public class TestPlayerController : EntityController {
                     puppetEntity.CastSpell(0);
                 clock = 0;
             }
-		else if(castFireSpell)
-		{
-            if (TrySpendEnergy(EnergyCost_Cast_Spell_2))
-                puppetEntity.CastSpell(1);
-			clock = 0;
-		}
-		else if(castIceSpell)
-		{
-            if (TrySpendEnergy(EnergyCost_Cast_Spell_3))
-                puppetEntity.CastSpell(2);
-			clock = 0;
-		}
-		else if(castLightningSpell)
-		{
-            if (TrySpendEnergy(EnergyCost_Cast_Spell_4))
-                puppetEntity.CastSpell(3);
-			clock = 0;
-		}
+		    else if(castFireSpell)
+		    {
+                if (TrySpendEnergy(EnergyCost_Cast_Spell_2))
+                    puppetEntity.CastSpell(1);
+			    clock = 0;
+		    }
+		    else if(castIceSpell)
+		    {
+                if (TrySpendEnergy(EnergyCost_Cast_Spell_3))
+                    puppetEntity.CastSpell(2);
+			    clock = 0;
+		    }
+		    else if(castLightningSpell)
+		    {
+                if (TrySpendEnergy(EnergyCost_Cast_Spell_4))
+                    puppetEntity.CastSpell(3);
+			    clock = 0;
+		    }
 
-			if(puppetEntity.GetRemainingSpeed() == 0) //if Entity can't act anymore
+			if(puppetEntity.GetRemainingSpeed() == 0 || remainingTime <= 0) //if Entity can't act anymore, or player ran out of time -> forfeits turn
 			{
 				//Debug.Log("Player Entity finished Turn");
 				EndTurn();
 			}
         }
-        else if(canAct)
+        else if(canAct) //player can act, but is off-cycle
+        {
+            DecreaseRemainingTime(Time.deltaTime);
             clock += Time.deltaTime;
+            if (remainingTime <= 0) //not time to act, but player ran out of time to act, forfeits turn
+                EndTurn();
+        }
 	}
     override protected void OnDestroy()
     {

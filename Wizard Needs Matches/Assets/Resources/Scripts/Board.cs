@@ -6,19 +6,23 @@ using System.Collections.Generic;
 public class Board : MonoBehaviour {
 
 
-public List<Gem> gems = new List<Gem>(); //holds all active Gems on the board
-public int GridWidth;
-public int GridHeight;
-public GameObject gemPrefab; //the prefab used to create Gems on the board
-public Gem lastGem;
-public Vector3 gem1Start, gem1End, gem2Start, gem2End;
-public bool isSwapping = false;
-public Gem gem1,gem2;
-public float startTime;
-public float swapRate = 2 ;
-public int AmountToMatch = 3; //number of gems in a row that are needed to match, ie 3 in a row
-public bool isMatched = false;
-public int currentScore = 0; //tracks the score until we move score tracking to EntityControllers
+    public List<Gem> gems = new List<Gem>(); //holds all active Gems on the board
+    public int GridWidth;
+    public int GridHeight;
+    public GameObject gemPrefab; //the prefab used to create Gems on the board
+    public Gem lastGem;
+    public Vector3 gem1Start, gem1End, gem2Start, gem2End;
+    public bool isSwapping = false;
+    public Gem gem1,gem2;
+    public int nextUpdatePayout = 0;
+    public float startTime;
+    public float swapRate = 2;
+    public int AmountToMatch = 3; //number of gems in a row that are needed to match, ie 3 in a row
+    public bool isMatched = false;
+    public int currentScore = 0; //tracks the score until we move score tracking to EntityControllers
+    private int comboCount = 0; //represents number of matches taking place before board stabilizes - more combos means more points!
+
+    public static readonly int averageScore = 20; //the most commonly predicted score value for use in Time incrementing (if you get a big score, you get more time back)
     public static Board theMatchingBoard;
 
     public delegate void ScoreIncreaseListener(int incrementAmount); //a listener that detects when an update worth of matches has occurred, taking in the amount that score went up from the matches in total
@@ -33,7 +37,7 @@ public int currentScore = 0; //tracks the score until we move score tracking to 
 // Use this for initialization
 	
     void Start () {
-
+        theMatchingBoard = this;
     for(int y=0; y<GridHeight ; y++){
         for(int x=0; x<GridWidth; x++){
             GameObject g = Instantiate(gemPrefab,new Vector3(x,y,0),Quaternion.identity)as GameObject;
@@ -45,13 +49,16 @@ public int currentScore = 0; //tracks the score until we move score tracking to 
 	
 }
 
+    //configures the Board to start sending score change messages to the provided listener
+    //so that whenever a match is made, the Listener is told how many points were made in the Update when the match is resolved
     public void SetScoreIncreaseListener(ScoreIncreaseListener listener)
     {
         player_one_energy_listener = listener;
     }
 
-    //handles generation of score/energy numbers based on the number of gems matched in this iteration, ie matching 3 gems gives 
-    void ScoreGems(int comboCount, int matchSize)
+    //handles generation of score/energy numbers based on the number of gems matched in this iteration, ie matching 3 gems gives,
+    //but doesn't give player the score until the next update!
+    void BuildGemScore(int comboCount, int matchSize)
     {
         if (comboCount < 1)
         {
@@ -60,12 +67,11 @@ public int currentScore = 0; //tracks the score until we move score tracking to 
         }
         if(matchSize < AmountToMatch)
         {
-            Debug.LogError("Alert! Called ScoreGems with matchSize < AmountToMatch: " + matchSize + "," + AmountToMatch);
+            Debug.LogError("Alert! Called BuildGemScore with matchSize < AmountToMatch: " + matchSize + "," + AmountToMatch);
             return;
         }
             
         int comboPoints = comboCount * 5;
-        Debug.Log("Awarded Combo Points: " + comboPoints);
         currentScore += comboPoints;
         int matchPoints = 0;
         switch(matchSize)
@@ -82,48 +88,44 @@ public int currentScore = 0; //tracks the score until we move score tracking to 
                 }
             case 3:
                 {
-                    matchPoints = 10; //30 total
+                    matchPoints = 20; //30 total
                     break;
                 }
             case 4:
                 {
-                    matchPoints = 12; //48 total
+                    matchPoints = 24; //48 total
                     break;
                 }
             case 5:
                 {
-                    matchPoints = 14; //70 total
+                    matchPoints = 28; //70 total
                     break;
                 }
             case 6:
                 {
-                    matchPoints = 15; //90 total
+                    matchPoints = 30; //90 total
                     break;
                 }
             default:
                 {
-                    matchPoints = 9 + matchSize; //expect for size=7, points = 16, increase by 1 every case after
+                    matchPoints = 18 + 2 * matchSize; //expect for size=7, points = 16, increase by 1 every case after
                     break;
                 }
         }
-        Debug.Log("Awarded match points: " + matchPoints);
-        currentScore += matchPoints;
-        if (player_one_energy_listener != null)
-            player_one_energy_listener(matchPoints);
+        currentScore += matchPoints; //track player's running score for "high score" purposes
+        nextUpdatePayout += matchPoints; //track amount of points to give with next payout
     }
 
 	
 	// Update is called once per frame
 
 	void Update () {
-
-
 		if (isMatched) { //time to remove matched gems
             int comboCount = 0; //number of gems matched in the same update, awards more points the more gems matched
 			for (int i=0; i<gems.Count; i++) { //push matched gems to the top of the screen so they can fall back down
 				if (gems [i].isMatched) {
                     comboCount++;
-                    ScoreGems(comboCount,gems[i].matchSize);
+                    BuildGemScore(comboCount,gems[i].matchSize);
 					gems [i].CreateGem ();
                     //ToDo: make sure there isn't already a gem there
 					gems [i].transform.position = new Vector3 (
@@ -132,6 +134,12 @@ public int currentScore = 0; //tracks the score until we move score tracking to 
 						gems [i].transform.position.z);
 				}
 			}
+            if (nextUpdatePayout > 0 && player_one_energy_listener != null)
+            {
+                if (DungeonManager.IsGameStarted()) //only hand out the points if the game is active (no free points for player)
+                    player_one_energy_listener(nextUpdatePayout);
+                nextUpdatePayout = 0;
+            }
 			isMatched = false;
 		} else if (isSwapping) { //time to swap gems
 			MoveGem (gem1, gem1End, gem1Start);
