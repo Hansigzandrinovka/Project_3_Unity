@@ -11,10 +11,33 @@ public class TestPlayerController : EntityController {
 	public int energy = 150; //current energy that player can allocate to actions
 	public int maxEnergy = 200; //maximum energy that player can store
 
+    //constants for spending Player Energy
+    private static readonly int EnergyCost_Move = 30; //cost in energy to move in any direction
+    private static readonly int EnergyCost_Attack = 60; //cost in energy to make an attack against an adjacent enemy
+    private static int EnergyCost_Cast_Spell_1 = 150; //cost in energy to cast the spell bound to 1 key
+    private static int EnergyCost_Cast_Spell_2 = 200;
+    private static int EnergyCost_Cast_Spell_3 = 250;
+    private static int EnergyCost_Cast_Spell_4 = 280;
+
 	public override bool GoesFirst() //Players have higher priority when placed into Turn Order
 	{
 		return true;
 	}
+
+    //returns true if Controller was capable of spending energy (which they did spend)
+    //else returns false, and energy is unchanged
+    public bool TrySpendEnergy(int spentEnergy)
+    {
+        if (energy > spentEnergy)
+        {
+            energy -= spentEnergy;
+            playerEnergySlider.value = energy;
+            return true;
+        }
+        else
+            return false;
+            
+    }
 
     public override void StartTurn()
     {
@@ -44,6 +67,14 @@ public class TestPlayerController : EntityController {
 				playerEnergySlider.maxValue = maxEnergy;
 			}
         }
+        if(Board.theMatchingBoard != null)
+        {
+            Board.theMatchingBoard.SetScoreIncreaseListener(this.UpdateDisplayEnergy_Increment);
+        }
+        else
+        {
+            Debug.LogError("Alert! " + this + " was unable to sync with static Board instance to configure Score change listening!");
+        }
 	}
 
     void UpdateDisplayHealth(int newHealth)
@@ -52,25 +83,24 @@ public class TestPlayerController : EntityController {
             playerHealthSlider.value = newHealth;
     }
 
-	//decreases energy to at or above 0
-	//assumes amount is positive
-	void DecreaseEnergy(int amount)
-	{
-		energy -= amount;
-		if (energy < 0)
-			energy = 0;
-		if (playerEnergySlider != null)
-			playerEnergySlider.value = energy;
-	}
-	//increases energy to maximum
-	//assumes amount is positive
-	//if overflow is true, increases energy beyond maximum
+    //used as a Listener to Board
+    //increases Energy of Controller towards maximum
+    //and updates display with new energy
+    void UpdateDisplayEnergy_Increment(int amountToChange)
+    {
+        IncreaseEnergy(amountToChange, false);
+    }
+	//increases energy
+    //assumes amount is positive
+	//if overflow is true, increases energy beyond maximum, else energy cannot be greater than maximum
 	public void IncreaseEnergy(int amount, bool overflow)
 	{
 		energy += amount;
 		if (!overflow && energy >= maxEnergy)
 			energy = maxEnergy;
-	}
+        if (playerEnergySlider != null)
+            playerEnergySlider.value = energy;
+    }
 	
 	// Update is called once per frame
 	//if it is Controller's turn, waits for player input to control Entity
@@ -88,24 +118,103 @@ public class TestPlayerController : EntityController {
 
             if (xAxis > 0.5) //user wants to go Right
             {
-                //Debug.Log("Player tries to move right");
-                puppetEntity.Move(Entity.MoveDirection.right);
+
+                //if player will attack in direction,
+                if(puppetEntity.WillAttack(Entity.MoveDirection.right))
+                {
+                    // then Try to spend energy on attacking in direction
+                    if (TrySpendEnergy(EnergyCost_Attack))
+                        puppetEntity.Move(Entity.MoveDirection.right);
+                    else //otw, player can't attack in direction, so notify player somehow
+                    {
+                    }
+                } //entity won't attack in direction, try moving
+                else if(TrySpendEnergy(EnergyCost_Move)) //try to spend energy on moving
+                {
+                    //player has enough energy
+                    //try to move right. On fail, give player their energy back
+                    if(!puppetEntity.Move(Entity.MoveDirection.right))
+                    {
+                        IncreaseEnergy(EnergyCost_Move, false);
+                    }
+                }
                 clock = 0;
             }
             else if (xAxis < -0.5) //player tries to move left
             {
-                puppetEntity.Move(Entity.MoveDirection.left);
+                //if player will attack in direction,
+                if (puppetEntity.WillAttack(Entity.MoveDirection.left))
+                {
+                    // then Try to spend energy on attacking in direction
+                    if (TrySpendEnergy(EnergyCost_Attack))
+                        puppetEntity.Move(Entity.MoveDirection.left);
+                    else //otw, player doesn't have enough energy, so notify player somehow
+                    {
+                    }
+                } //entity won't attack in direction, try moving
+                else if (TrySpendEnergy(EnergyCost_Move)) //try to spend energy on moving
+                {
+                    //player has enough energy
+                    //try to move right. On fail, give player their energy back
+                    if (!puppetEntity.Move(Entity.MoveDirection.left))
+                    {
+                        IncreaseEnergy(EnergyCost_Move, false);
+                    }
+                }
+
                 clock = 0;
             }
                 
             else if (yAxis > 0.5)
             {
                 clock = 0;
-                puppetEntity.Move(Entity.MoveDirection.up);
+
+                //if player will attack in direction,
+                if (puppetEntity.WillAttack(Entity.MoveDirection.up))
+                {
+                    // then Try to spend energy on attacking in direction
+                    if (TrySpendEnergy(EnergyCost_Attack))
+                        puppetEntity.Move(Entity.MoveDirection.up);
+                    else //otw, player doesn't have enough energy, so notify player somehow
+                    {
+                    }
+                } //entity won't attack in direction, try moving
+                else if (TrySpendEnergy(EnergyCost_Move)) //try to spend energy on moving
+                {
+                    //player has enough energy
+                    //try to move right. On fail, give player their energy back
+                    if (!puppetEntity.Move(Entity.MoveDirection.up))
+                    {
+                        IncreaseEnergy(EnergyCost_Move, false);
+                    }
+                }
+
+                //puppetEntity.Move(Entity.MoveDirection.up);
             } 
             else if (yAxis < -0.5)
             {
-                puppetEntity.Move(Entity.MoveDirection.down);
+                //puppetEntity.Move(Entity.MoveDirection.down);
+
+                //if player will attack in direction,
+                if (puppetEntity.WillAttack(Entity.MoveDirection.down))
+                {
+                    // then Try to spend energy on attacking in direction
+                    if (TrySpendEnergy(EnergyCost_Attack))
+                        puppetEntity.Move(Entity.MoveDirection.down);
+                    else //otw, player doesn't have enough energy, so notify player somehow
+                    {
+                    }
+                } //entity won't attack in direction, try moving
+                else if (TrySpendEnergy(EnergyCost_Move)) //try to spend energy on moving
+                {
+                    //player has enough energy
+                    //try to move right. On fail, give player their energy back
+                    if (!puppetEntity.Move(Entity.MoveDirection.down))
+                    {
+                        IncreaseEnergy(EnergyCost_Move, false);
+                    }
+                }
+
                 clock = 0;
             }
             else if(turnLeftButton) //user rotating left to face a new direction
@@ -122,22 +231,26 @@ public class TestPlayerController : EntityController {
             }
             else if(castRegSpell)
             {
-                puppetEntity.CastSpell(0);
+                if(TrySpendEnergy(EnergyCost_Cast_Spell_1))
+                    puppetEntity.CastSpell(0);
                 clock = 0;
             }
 		else if(castFireSpell)
 		{
-			puppetEntity.CastSpell(1);
+            if (TrySpendEnergy(EnergyCost_Cast_Spell_2))
+                puppetEntity.CastSpell(1);
 			clock = 0;
 		}
 		else if(castIceSpell)
 		{
-			puppetEntity.CastSpell(2);
+            if (TrySpendEnergy(EnergyCost_Cast_Spell_3))
+                puppetEntity.CastSpell(2);
 			clock = 0;
 		}
 		else if(castLightningSpell)
 		{
-			puppetEntity.CastSpell(3);
+            if (TrySpendEnergy(EnergyCost_Cast_Spell_4))
+                puppetEntity.CastSpell(3);
 			clock = 0;
 		}
 

@@ -190,6 +190,33 @@ public class Entity : MonoBehaviour { //testtest
             
     }
 
+    //returns true if this entity moving in given direction would initiate an attack instead of shifting spaces
+    //returns false otherwise
+    public virtual bool WillAttack(MoveDirection givenDirection)
+    {
+        TileMonoBehavior targetTile = null;
+        switch (givenDirection) //finds tile in given direction, tries to move there
+        {
+            case (MoveDirection.up):
+                targetTile = occupyingTile.getAbove();
+                break;
+            case (MoveDirection.left):
+                targetTile = occupyingTile.getLeft();
+                break;
+            case (MoveDirection.down):
+                targetTile = occupyingTile.getBelow();
+                break;
+            default:
+                targetTile = occupyingTile.getRight();
+                break;
+        }
+        if (targetTile == null || !targetTile.IsOccupied())
+        {
+            return false;
+        }
+        return true;
+    }
+
     //tries to move this entity in direction, returns false on fail
     //fail can be because out of movement, or because tile is occupied, or because not this entity's turn
     public virtual bool Move(MoveDirection givenDirection)
