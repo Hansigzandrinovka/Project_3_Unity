@@ -18,8 +18,17 @@ public float startTime;
 public float swapRate = 2 ;
 public int AmountToMatch = 3; //number of gems in a row that are needed to match, ie 3 in a row
 public bool isMatched = false;
-    public int currentScore = 0; //tracks the score until we move score tracking to EntityControllers
+public int currentScore = 0; //tracks the score until we move score tracking to EntityControllers
+    public static Board theMatchingBoard;
 
+    public delegate void ScoreIncreaseListener(int incrementAmount); //a listener that detects when an update worth of matches has occurred, taking in the amount that score went up from the matches in total
+
+    private ScoreIncreaseListener player_one_energy_listener;
+
+    void Awake() //ensures this object can be used through static calls rather than through instance calls
+    {
+        theMatchingBoard = this;
+    }
 	
 // Use this for initialization
 	
@@ -35,6 +44,11 @@ public bool isMatched = false;
     gameObject.transform.position = new Vector3(- 3.5f, -3.5f,0); //places board in center of screen
 	
 }
+
+    public void SetScoreIncreaseListener(ScoreIncreaseListener listener)
+    {
+        player_one_energy_listener = listener;
+    }
 
     //handles generation of score/energy numbers based on the number of gems matched in this iteration, ie matching 3 gems gives 
     void ScoreGems(int comboCount, int matchSize)
@@ -94,6 +108,8 @@ public bool isMatched = false;
         }
         Debug.Log("Awarded match points: " + matchPoints);
         currentScore += matchPoints;
+        if (player_one_energy_listener != null)
+            player_one_energy_listener(matchPoints);
     }
 
 	
@@ -197,6 +213,11 @@ public bool isMatched = false;
 						}
 					}
 }
+    //called when the GameObject this is attached to is destroyed
+    void OnDestroy()
+    {
+        theMatchingBoard = null; //ensures this instance doesn't remain in scope after destruction
+    }
 
     //makes Match Lists remove gems that are not in the row/column of the majority of the list
 	public void FixMatchList(Gem gem , List<Gem> ListToFix){
