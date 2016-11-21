@@ -48,13 +48,11 @@ public class Gem : MonoBehaviour {
 	// Update is called once per frame
 
 	void Update () {
-        /*if(velocityReader != null)
+        if(velocityReader != null) //enforces that gems can only fall down
         {
-            if (velocityReader.velocity.magnitude > stopSpeed)
-                isFalling = true;
-            else
-                isFalling = false;
-        }*/
+            if (velocityReader.velocity.y > stopSpeed)
+                velocityReader.velocity = new Vector3(velocityReader.velocity.x, 0, velocityReader.velocity.z);
+        }
 	}
 
 	public void ToggleSelector(){
