@@ -7,9 +7,9 @@ public class TileMonoBehavior : MonoBehaviour {
     //public GameObject tileImage;
     int rowPosition;
     int colPosition;
-	public int timeToRevert = 15;
-	public Material defaultMaterial;
-	public bool inList = false;
+	public int timeToRevert = 15; //presumably the time remaining before tile is no longer "on fire,frozen,cracked,etc."
+	public Material defaultMaterial; //default material appearance for tile, gets modified when spells cast on tile
+	public bool inList = false; //presumably tracks if tile is in the DungeonManagers tiles-to-update list
     public static int tileZLayer = 0; //used to make all tiles appear on the same layer
     //[SerializeField] //SerializeField allows us to make private variables show up in Inspector for testing and editing.
     private TileMonoBehavior below;
@@ -20,8 +20,16 @@ public class TileMonoBehavior : MonoBehaviour {
     //[SerializeField]
     private TileMonoBehavior right;
     // Use this for GameObject initialization
-	
-	public void reduceTime()
+
+    //Layer Mask values are integer equivalent of binary arrays, so (1000)v2 is (8)v10, represents true for layer 8, false for all other layers
+    public readonly static int tileLayerMask = 1 << 8; //this Layer Mask evaluates on Tiles Layer
+    public readonly static int entitiesLayerMask = 1 << 9; //this Layer Mask evaluates on Entities Layer
+
+    public enum TileType { empty, wall, stairs };
+    public TileType tileType = TileType.empty;
+
+    //reduces the time left for the tile being affected by a spell
+    public void reduceTime()
 	{
 		this.timeToRevert--;
 	}
@@ -75,6 +83,8 @@ public class TileMonoBehavior : MonoBehaviour {
                 return true;
             case (TileType.wall):
                 return false;
+            case (TileType.stairs):
+                return true;
             default:
                 return false;
         }
@@ -86,13 +96,6 @@ public class TileMonoBehavior : MonoBehaviour {
     {
         return occupyingEntity != null;
     }
-
-    //Layer Mask values are integer equivalent of binary arrays, so (1000)v2 is (8)v10, represents true for layer 8, false for all other layers
-    public readonly static int tileLayerMask = 1 << 8; //this Layer Mask evaluates on Tiles Layer
-    public readonly static int entitiesLayerMask = 1 << 9; //this Layer Mask evaluates on Entities Layer
-
-    public enum TileType { empty, wall };
-    public TileType tileType = TileType.empty;
 
     void Start () {
         //Debug.Log("Started");
@@ -198,6 +201,7 @@ public class TileMonoBehavior : MonoBehaviour {
         above = null;
         left = null;
         right = null;
+        occupyingEntity = null;
     }
 
     //initializes this Tile relative to the tile below and left of it
@@ -211,11 +215,4 @@ public class TileMonoBehavior : MonoBehaviour {
         if (leftTile != null)
             leftTile.right = this;
     }
-
-    
-
-    // Update is called once per frame
-    void Update () {
-	
-	}
 }
