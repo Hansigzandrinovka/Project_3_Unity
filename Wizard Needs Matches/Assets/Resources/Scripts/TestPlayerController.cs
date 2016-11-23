@@ -191,6 +191,11 @@ public class TestPlayerController : EntityController {
                     {
                         IncreaseEnergy(EnergyCost_Move, false);
                     }
+                    //on success, player may be standing on stairs
+                    else if(puppetEntity.occupyingTile.tileType == TileMonoBehavior.TileType.stairs)
+                    {
+                        PromptForStairs();
+                    }
                 }
                 clock = 0;
             }
@@ -213,6 +218,11 @@ public class TestPlayerController : EntityController {
                     if (!puppetEntity.Move(Entity.MoveDirection.left))
                     {
                         IncreaseEnergy(EnergyCost_Move, false);
+                    }
+                    //on success, player may be standing on stairs
+                    else if (puppetEntity.occupyingTile.tileType == TileMonoBehavior.TileType.stairs)
+                    {
+                        PromptForStairs();
                     }
                 }
 
@@ -241,6 +251,11 @@ public class TestPlayerController : EntityController {
                     {
                         IncreaseEnergy(EnergyCost_Move, false);
                     }
+                    //on success, player may be standing on stairs
+                    else if (puppetEntity.occupyingTile.tileType == TileMonoBehavior.TileType.stairs)
+                    {
+                        PromptForStairs();
+                    }
                 }
 
                 //puppetEntity.Move(Entity.MoveDirection.up);
@@ -266,6 +281,11 @@ public class TestPlayerController : EntityController {
                     if (!puppetEntity.Move(Entity.MoveDirection.down))
                     {
                         IncreaseEnergy(EnergyCost_Move, false);
+                    }
+                    //on success, player may be standing on stairs
+                    else if (puppetEntity.occupyingTile.tileType == TileMonoBehavior.TileType.stairs)
+                    {
+                        PromptForStairs();
                     }
                 }
 
@@ -325,5 +345,10 @@ public class TestPlayerController : EntityController {
     override protected void OnDestroy()
     {
         base.OnDestroy();
+    }
+
+    void PromptForStairs()
+    {
+        DungeonManager.theManager.GoToNextLevel();
     }
 }
