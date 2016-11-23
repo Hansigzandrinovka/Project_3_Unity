@@ -107,10 +107,19 @@ public class TestPlayerController : EntityController {
         }
 	}
 
+    //called whenever attached Entity's health changes
+    //used to update Player's health display and handle player dying
     void UpdateDisplayHealth(int newHealth)
     {
         if (playerHealthSlider != null)
             playerHealthSlider.value = newHealth;
+
+        if(newHealth <= 0)
+        {
+            Debug.Log("Player has died :(");
+            DungeonManager.GoToLevel(0); //returns player to the main menu
+        }
+        
     }
 
     //used as a Listener to Board
@@ -345,8 +354,7 @@ public class TestPlayerController : EntityController {
     {
         base.OnDestroy();
         //possibly play a death animation for player?
-        Debug.Log("Player has died :(");
-        DungeonManager.GoToLevel(0); //returns player to the main menu
+        
     }
 
     void PromptForStairs()
