@@ -52,10 +52,29 @@ public class TestPlayerController : EntityController {
         remainingTime = maxRemainingTime;
     }
 
+    //assumes provided objects are not null
+    //used for post-Start() GUI connections (or reconnections?)
+    public void ConfigureGUIConnections(Slider healthSlider,Slider energySlider,Slider timeSlider)
+    {
+        playerHealthSlider = healthSlider;
+        playerEnergySlider = energySlider;
+        playerTimeSlider = timeSlider;
+        if(puppetEntity != null)
+        {
+            playerHealthSlider.value = puppetEntity.SetUIHealthChangeListener(UpdateDisplayHealth);
+            playerHealthSlider.maxValue = puppetEntity.maxHealth;
+            playerEnergySlider.value = energy;
+            playerEnergySlider.maxValue = maxEnergy;
+            playerTimeSlider.value = remainingTime;
+            playerTimeSlider.maxValue = maxRemainingTime;
+        }
+    }
+
     // Use this for initialization
     //overrides virtual Start() in EntityController
     protected override void Start () {
 		base.Start ();
+        ProceduralComponentConnector.AllocatePlayerGUILink(this);
         if (inputTime <= 0)
         {
             Debug.LogError("Player Controller Input Time initialized to bad value " + inputTime + ", now setting to 2");
@@ -65,6 +84,7 @@ public class TestPlayerController : EntityController {
         {
             maxRemainingTime = Player_Turn_WaitTime_Base + ((puppetEntity.speed - 1) * Player_Turn_WaitTime_Speed_Increment);
             remainingTime = maxRemainingTime;
+            bool needToPrepProcedural = false; //if we don't have a health,energy,time slider, notify component connector
 			if(playerHealthSlider != null)
 			{
 				playerHealthSlider.value = puppetEntity.SetUIHealthChangeListener(UpdateDisplayHealth);
@@ -119,7 +139,6 @@ public class TestPlayerController : EntityController {
             Debug.Log("Player has died :(");
             DungeonManager.GoToLevel(0); //returns player to the main menu
         }
-        
     }
 
     //used as a Listener to Board

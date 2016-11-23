@@ -167,6 +167,7 @@ public class DungeonManager : MonoBehaviour {
 	/// </summary>
 	public void StartTurn()
 	{
+        ProceduralComponentConnector.DeAllocate();
 		Debug.Log ("Starting Turn");
 		if(turnOrder.Count > 0)
 		{
