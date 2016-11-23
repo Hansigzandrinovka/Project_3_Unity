@@ -54,6 +54,8 @@
      <Compile Include="Assets\Resources\Scripts\Feeler.cs" />
      <Compile Include="Assets\Resources\Scripts\Gem.cs" />
      <Compile Include="Assets\Resources\Scripts\InEditor_SnapToGrid.cs" />
+     <Compile Include="Assets\Resources\Scripts\LoadSceneOnClick.cs" />
+     <Compile Include="Assets\Resources\Scripts\QuitOnClick.cs" />
      <Compile Include="Assets\Resources\Scripts\TestMonsterController.cs" />
      <Compile Include="Assets\Resources\Scripts\TestPlayerController.cs" />
      <Compile Include="Assets\Resources\Scripts\TileMonoBehavior.cs" />
