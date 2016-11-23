@@ -28,7 +28,8 @@ public class Entity : MonoBehaviour { //testtest
     public enum MoveDirection { up = 0, down = 1, left = 2, right = 3 }; //the direction player wishes to move for the purpose of Move function
     public enum DamageType { poking, burn }; //the types of damage that an entity can take for the purpose of the TakeDamage function
 
-    //On Start, Entity attempts to bind itself to a Tile occupying its space
+    //On Start, Entity attempts to bind itself to the Tile underneath it
+    //on fail, Entity destroys itself
     public virtual void Start()
     {
         if(occupyingTile == null)
@@ -51,11 +52,14 @@ public class Entity : MonoBehaviour { //testtest
         }
     }
 
+    //returns remainingSpeed
 	public int GetRemainingSpeed()
 	{
 		return remainingSpeed;
 	}
 
+    //configures this Entity's HealthChangeListener to be the method provided,
+    //so that the provided method will be called whenever this Entity's health changes
     public int SetUIHealthChangeListener(HealthChangeListener x)
     {
         uiHealthChangeListener = x;
@@ -81,9 +85,12 @@ public class Entity : MonoBehaviour { //testtest
         remainingSpeed = 0;
     }
 
-    //by default, generic entities do not know any spells
+    //Entity attempts to cast a spell if it knows it,
+    //if not, it doesn't do anything
     public virtual bool CastSpell(int spellIndex)
     {
+        if (Spell == null)
+            return false;
         GameObject clone;
         switch (facing)
         {
@@ -268,6 +275,7 @@ public class Entity : MonoBehaviour { //testtest
     }
 
     //attempts to rotate Entity to face a new direction specified as input
+    //rotates Entity by turning the Facing sprite and updating facing direction
     //returns true if command was successful, false if unable to (ie not enough move)
     public virtual bool Rotate(MoveDirection direction)
     {
@@ -312,6 +320,9 @@ public class Entity : MonoBehaviour { //testtest
             return true;
         }
     }
+
+    //mimics Rotate(direction) where next direction is determined by current direction and turnLeft
+    //if turnLeft is true, next direction is counterclockwise of current direction, else is clockwise
     public virtual bool Rotate(bool turnLeft)
     {
         switch(facing)
@@ -403,13 +414,9 @@ public class Entity : MonoBehaviour { //testtest
 	    }						  
     }
 	
+    //handles any needed Death mechanics (remove buffs,debuffs,drop money, etc.)
 	public void Die()
 	{
 		Destroy(this.gameObject);
-	}
-	
-    // Update is called once per frame
-    void Update () {
-	
 	}
 }

@@ -55,6 +55,6 @@ public class EntityController : MonoBehaviour {
         Debug.Log(this + " destroyed");
 		canAct = false;
 		DungeonManager.RemoveFromTurnOrder (this);
-        DungeonManager.EndTurn();
+        //DungeonManager.EndTurn();
 	}
 }

@@ -96,6 +96,8 @@ public class DungeonManager : MonoBehaviour {
 	}
 
     //initializes Queue and adds a Controller to it
+    //used to make an EntityController begin following TurnOrder conventions
+    //non-player entities will be added to the back of turn order, players will be added to front
     public static void AddToTurnOrder(EntityController controllerToAdd)
     {
         //TODO: fancy Turn Order Logic
@@ -108,16 +110,27 @@ public class DungeonManager : MonoBehaviour {
 			turnOrder.AddLast(controllerToAdd);
     }
 
-	//removes given Entity from turn order if able, taking it out of this class's scope, and returning whether or not it was successful
-	public static bool RemoveFromTurnOrder(EntityController controller)
+    //precondition: if EntityController is at front of list, it is EntityController's turn currently
+	//removes given EntityController from turn order if able, taking it out of this class's scope
+    //also ends EntityController's turn if it is currently their turn
+	public static void RemoveFromTurnOrder(EntityController controller)
 	{
-		return turnOrder.Remove (controller);
+        if(turnOrder.First.Value == controller) //if it is current Entity's turn, then end their turn after removing them from turn order
+        {
+            turnOrder.Remove(controller);
+            EndTurn();
+            return;
+        }
+	    turnOrder.Remove (controller);
+
 	}
 
-    //precondition: turnEnder is a Queue of EntityControllers, no other objects exist in Queue
+    //precondition: turnOrder is a Queue of EntityControllers, no other objects exist in Queue
     //ends current controller's turn and starts next controller's turn
     public static void EndTurn()
     {
+        if (turnOrder == null || turnOrder.Count == 0) //can't end turn for empty turn order (possible case when closing up everything for level transition)
+            return;
 	    RemoveTiles();
         EntityController currentTurnHolder = null;
         if(turnOrder != null && turnOrder.First != null)

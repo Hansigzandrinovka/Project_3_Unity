@@ -50,7 +50,6 @@ public class TestPlayerController : EntityController {
         base.StartTurn();
         clock = 0;
         remainingTime = maxRemainingTime;
-        Debug.Log("Player's remaining time is: " + remainingTime);
     }
 
     // Use this for initialization
@@ -345,6 +344,9 @@ public class TestPlayerController : EntityController {
     override protected void OnDestroy()
     {
         base.OnDestroy();
+        //possibly play a death animation for player?
+        Debug.Log("Player has died :(");
+        DungeonManager.GoToLevel(0); //returns player to the main menu
     }
 
     void PromptForStairs()

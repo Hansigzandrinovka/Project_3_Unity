@@ -17,6 +17,7 @@ public class dungeon_room {
         size = dimensions;
         xpos = x;
         ypos = y;
+        //Not sure if we want rooms connected to each other
         /*switch(connectionDirection)
         {
             case Entity.MoveDirection.up:
@@ -48,6 +49,7 @@ public class dungeon_room {
     //severs this dungeon room's connections to/from it when it is deleted
     ~dungeon_room()
     {
+        //removes other rooms' connections to this room so that it/they can leave scope successfully
         if(leftRoom != null)
         leftRoom.rightRoom = null;
         leftRoom = null;
@@ -62,10 +64,26 @@ public class dungeon_room {
         downRoom = null;
         //Debug.Log("Destroying a dungeon room");
     }
+
+    //returns size
     public int getSize()
     { return size; }
+
+    //returns a new Vector3 representing center position (upper right of center) tile of the room that the room was built around
     public Vector3 getCoords()
     {
         return new Vector3(xpos, ypos, TileMonoBehavior.tileZLayer);
+    }
+
+    //uses Unity's built in RNG to return a new Vector3 with x and y coordinates corresponding to the location of a random tile in the room
+    public Vector3 getRandomTileInRoom()
+    {
+        int leftAmount = -1 * Mathf.FloorToInt(size / 2);
+        int rightAmount = Mathf.CeilToInt(size / 2) - 1;
+        float tileXPos = Random.Range(rightAmount, leftAmount) + xpos;
+        Debug.Log("random x offset " + tileXPos + " from " + xpos);
+        float tileYPos = Random.Range(rightAmount, leftAmount) + ypos;
+        Debug.Log("random y offset " + tileYPos + " from " + ypos);
+        return new Vector3(tileXPos, tileYPos, 0);
     }
 }
