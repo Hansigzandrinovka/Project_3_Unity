@@ -5,6 +5,7 @@ public class DungeonGenerator : MonoBehaviour {
     //uses a RNG to create dungeon tiles through rooms connected by hallways
 
     public int testingSeed = 22; //the seed for the RNG system to predictably produce random tiles
+    public GameObject stairsTilePrefab; //the tile used to represent the stairs used to reach the next floor
     public GameObject roomFloorTilePrefab; //the tile used to fill generated rooms
     public GameObject hallwayFloorTilePrefab; //the tile used to fill hallways between rooms
     public GameObject tileContainer; //the gameobject that every tile prefab will be a part of
@@ -12,18 +13,20 @@ public class DungeonGenerator : MonoBehaviour {
     public GameObject playerObject; //the gameobject representing the player in the scene
     public GameObject dungeonController; //the gameobject holding turn regulation: ie entity turn order
 
-    public int numberOfRooms = 1;
-    public int minRoomSize = 3;
-    public int maxRoomSize = 5;
+    public int numberOfRooms = 1; //number of rooms that the generator will attempt to generate on this floor
+    public int minRoomSize = 3; //minimum room size any given room will be (ie 3x3 rooms minimum)
+    public int maxRoomSize = 5; //maximum room size any given room will be (ie 5x5 rooms maximum)
     public int maxDisplacement = 3; //max distance any two rooms can be from each other
     public int minDisplacement = 1; //min distance any two rooms can be from each other
     public bool testingMode = true; //determines if testing seed is used for RNG
 
-    private int count = 0; //used for counting action sequence
+    private int roomCount = 0; //used for counting number of rooms that have been created
     private Queue createdRoomsQueue; //rooms that have been created, but could be invalid to create bordering rooms around
     private Stack tappedRoomsStack; //rooms that have been found invalid to create at
 
 	// Use this for initialization
+    //validates that all provided inputs are acceptable,
+    //Logs errors to console and attempts to fix bad input errors
 	void Start () {
         if (maxRoomSize == 0)
         {
@@ -54,7 +57,13 @@ public class DungeonGenerator : MonoBehaviour {
             Destroy(this.gameObject);
             return;
         }
-        if(playerObject == null)
+        if (stairsTilePrefab == null)
+        {
+            Debug.LogError("Unrecoverable Error! Missing stairs tile prefab, removing this gameobject");
+            Destroy(this.gameObject);
+            return;
+        }
+        if (playerObject == null)
         {
             Debug.LogError("Unrecoverable Error! Missing player character prefab, removing this gameobject");
             Destroy(this.gameObject);
@@ -74,7 +83,7 @@ public class DungeonGenerator : MonoBehaviour {
 	}
 
 
-    //@precondition: attached object (this) doesn't have a messed up rotation
+    //@precondition: attached object (this) has default rotation (Vector3: 0,0,0)
     //@params:  roomOrigin -> location in 3d space for room origin (bottom left corner), 
     //          roomSize -> number of tiles to extend right and up from origin, 
     //          distanceAway -> distance from old tile that new tile is away, must be POSITIVE, used to populate connecting tiles
@@ -207,27 +216,23 @@ public class DungeonGenerator : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
-        //TryCreateRoom(new Vector3(0, 0, 0), 3);
-        //TryCreateRoom(new Vector3(0, -4, 0), 3);
-        //TryCreateRoom(new Vector3(0, 50, 0), 3);
-        //TryCreateRoom(new Vector3(-3, 0, 0), 3);
         //on each update, pick a random room from list, try to generate a new room relative to that room
         //if no room in list (means we have exhausted all rooms to create around, or we have not created first room), give up on creating room
-        //
-        if(count < numberOfRooms) //create numberOfRooms rooms
+        //after creating rooms, populate them with a player, a set of stairs, and any relevant entities
+        if(roomCount < numberOfRooms) //create numberOfRooms rooms
         {
-            if(count == 0) //creating very first room
+            if(roomCount == 0) //creating very first room
             {
                 int newSize = Random.Range(minRoomSize, maxRoomSize + 1); //size of new room
                 dungeon_room newRoom = TryCreateRoom(new Vector3(transform.position.x, transform.position.y, TileMonoBehavior.tileZLayer), newSize,0,Entity.MoveDirection.up);
                 if (newRoom != null) //if room successfully created
                 {
                     createdRoomsQueue.Enqueue(newRoom);
-                    count++;
+                    roomCount++;
                 }
                 else
                 {
-                    count = numberOfRooms; //forces Generator to stop generating
+                    roomCount = numberOfRooms; //forces Generator to stop generating
                     GracefullyExit();
                     return;
                 }
@@ -237,7 +242,7 @@ public class DungeonGenerator : MonoBehaviour {
                 dungeon_room oldRoom = GetRandomRoomFromQueue(); //picks an old room to generate new room relative to
                 if(oldRoom == null)
                 {
-                    count = numberOfRooms;
+                    roomCount = numberOfRooms;
                     return;
                 }
                 dungeon_room newRoom = null; //the room we hope to create
@@ -284,7 +289,7 @@ public class DungeonGenerator : MonoBehaviour {
                     newRoom = TryCreateRoom(newRoomLocation,roomSize,distance,direction); //try to create the room at specified location
                     if (newRoom != null) //if room creation succeeded, store the room in list for later use
                     {
-                        count++;
+                        roomCount++;
                         createdRoomsQueue.Enqueue(newRoom);
                     }
                     else if (direction == Entity.MoveDirection.right)
@@ -310,7 +315,7 @@ public class DungeonGenerator : MonoBehaviour {
             //reaching here, this is not first room, so there exists at least one room, but we can't make any more rooms, so stop and cleanup
             else //createdRooms.Peek() == 0, so no more rooms to pick from. We can't build dungeon, so give up.
             {
-                count = numberOfRooms; //forces Generator to stop generating
+                roomCount = numberOfRooms; //forces Generator to stop generating
             }
         }
         else //we are finished creating rooms
@@ -325,9 +330,43 @@ public class DungeonGenerator : MonoBehaviour {
     {
         //create dungeon controller that all entities will reference
 
-        Instantiate(dungeonController, new Vector3(), transform.rotation);
+        Instantiate(dungeonController, new Vector3(), transform.rotation); //places dungeon controller first to take advantage of automatic turn order tracking
 
-        Instantiate(playerObject, GetRandomRoomFromQueue().getCoords(), transform.rotation);
+        //Instantiate(playerObject, GetRandomRoomFromQueue().getCoords(), transform.rotation); //places player character in a random room
+
+        dungeon_room targetRoom = GetRandomRoomFromQueue(); //pick a random room to place the stairs in
+        if (createdRoomsQueue.Count >= 2) //if we can have stairs in separate room from Player (if we grab top room, there is another room after for player to go into)
+        {
+            Debug.Log("Preventing Stairs appearing in player's room");
+            tappedRoomsStack.Push(createdRoomsQueue.Dequeue()); //prevent the stairs from appearing in the same room as the player (we already grabbed the stairs room, now we're just keeping it separate from random rooms list)
+        }
+        //clear the tile that the stairs occupy
+        Vector3 stairsPos = targetRoom.getRandomTileInRoom(); //grab a random position in the room, TODO: remove that tile, and place the stairs tile in its place
+        Vector2 topRightLoc = new Vector2(stairsPos.x + 0.25f, stairsPos.y + 0.25f);
+        Vector2 botLeftLoc = new Vector2(stairsPos.x - 0.25f, stairsPos.y - 0.25f);
+
+
+
+        Collider2D collider = Physics2D.OverlapArea(topRightLoc, botLeftLoc, TileMonoBehavior.tileLayerMask);//build a collider at stairs position to see if there is already a tile there
+        if (collider != null)
+        {
+            Destroy(collider.gameObject);
+        }
+        //place stairs into the dungeon
+        Instantiate(stairsTilePrefab, stairsPos, transform.rotation);
+        targetRoom = GetRandomRoomFromQueue();
+
+        //playe player into the dungeon
+        Vector3 playerPos = targetRoom.getRandomTileInRoom();
+        while (playerPos.x == stairsPos.x && playerPos.y == stairsPos.y) //if player directly overlaps stairs, move player someplace else
+            playerPos = targetRoom.getRandomTileInRoom();
+        Instantiate(playerObject, playerPos, transform.rotation);
+
+        if (tappedRoomsStack.Count > 0) //shift all of the removed elements back onto the queue, preparation for placing in rest of the dungeon
+        {
+            createdRoomsQueue.Enqueue(tappedRoomsStack.Pop());
+        }
+        //TODO: insert spectacular monster/item spawning algorithm here!
     }
 
     void OnDestroy()

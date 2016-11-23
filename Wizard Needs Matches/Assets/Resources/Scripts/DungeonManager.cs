@@ -10,11 +10,10 @@ public class DungeonManager : MonoBehaviour {
     //private static int typicalListCapacity = 20;
 	
 	public static List<TileMonoBehavior> oddTiles; //Contains tiles which have been affected by spells
-	
-    private EntityController someController;
+    private static int levelNumber = 0; //the initial index to set current level to
     private static bool gameStarted = false;
-    public int turnOrderSize = -1;
 	public int startDelay = 2; //time in seconds before Turn Order goes into effect
+    public static DungeonManager theManager; //allows any entity to quickly and easily access turn order, level changing, etc.
 
     public static bool IsGameStarted()
     {
@@ -27,10 +26,47 @@ public class DungeonManager : MonoBehaviour {
             turnOrder = new LinkedList<EntityController>();
 		if(oddTiles == null)
 			oddTiles = new List<TileMonoBehavior>();
-	}
-	
-	//Initializes list of changed tiles and adds tiles to list when called
-	public static void AddToTileList(TileMonoBehavior tile)
+        levelNumber = Application.loadedLevel; //track what the current level of the game is
+    }
+
+    //depending on the provided index, goes to the level named with that index IE: Level_One,Level_Two,Level_Three, etc.
+    //defaults to loading Level_One if out of bounds
+    public static void GoToLevel(int index)
+    {
+        switch (index)
+        {
+            case 0: //current level is TestLevel
+                {
+                    Application.LoadLevel("Level_One");
+                    return;
+                }
+            case 1:
+                {
+                    Application.LoadLevel("Level_Two");
+                    return;
+                }
+            case 2:
+                {
+                    Application.LoadLevel("TestLevel");
+                    return;
+                }
+            default:
+                {
+                    Application.LoadLevel("Level_One");
+                    return;
+                }
+        }
+    }
+
+    //precondition: menu level uses index 0 or default case in GoToLevel()
+    //calls GoToLevel with given Level number
+    public void GoToNextLevel()
+    {
+        GoToLevel(levelNumber);
+    }
+
+    //Initializes list of changed tiles and adds tiles to list when called
+    public static void AddToTileList(TileMonoBehavior tile)
 	{
 		Debug.Log("Adding tiles");
 		if(oddTiles == null)
@@ -131,12 +167,7 @@ public class DungeonManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if (turnOrder != null)
-            turnOrderSize = turnOrder.Count;
-        else
-            turnOrderSize = -1;
-
-		if(Input.GetButtonDown("Submit"))
+		if(Input.GetButtonDown("Submit") && !gameStarted)
 		{
 			StartTurn();
 		}
