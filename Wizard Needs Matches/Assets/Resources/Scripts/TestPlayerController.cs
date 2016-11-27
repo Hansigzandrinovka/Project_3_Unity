@@ -74,6 +74,7 @@ public class TestPlayerController : EntityController {
     //overrides virtual Start() in EntityController
     protected override void Start () {
 		base.Start ();
+        ProceduralComponentConnector.AllocateGUICameraListener(this);
         ProceduralComponentConnector.AllocatePlayerGUILink(this);
         if (inputTime <= 0)
         {
@@ -145,7 +146,7 @@ public class TestPlayerController : EntityController {
     //increases Energy of Controller towards maximum,
     //increases remaining time,
     //and updates display with new energy
-    void ReceiveMatchPoints(int amountToChange)
+    public void ReceiveMatchPoints(int amountToChange)
     {
         IncreaseEnergy(amountToChange, false);
         if(canAct) //if it is this player's turn, so time is ticking down, so give them more time

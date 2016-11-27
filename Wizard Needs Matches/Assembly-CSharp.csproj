@@ -46,6 +46,8 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\GUIReferenceScript.cs" />
+     <Compile Include="Assets\ProceduralCallGUIPlayerConnection.cs" />
      <Compile Include="Assets\Resources\Scripts\Board.cs" />
      <Compile Include="Assets\Resources\Scripts\DungeonGenerator.cs" />
      <Compile Include="Assets\Resources\Scripts\DungeonManager.cs" />
@@ -55,6 +57,7 @@
      <Compile Include="Assets\Resources\Scripts\Gem.cs" />
      <Compile Include="Assets\Resources\Scripts\InEditor_SnapToGrid.cs" />
      <Compile Include="Assets\Resources\Scripts\LoadSceneOnClick.cs" />
+     <Compile Include="Assets\Resources\Scripts\ProceduralComponentConnector.cs" />
      <Compile Include="Assets\Resources\Scripts\QuitOnClick.cs" />
      <Compile Include="Assets\Resources\Scripts\TestMonsterController.cs" />
      <Compile Include="Assets\Resources\Scripts\TestPlayerController.cs" />
