@@ -11,3 +11,5 @@ https://msdn.microsoft.com/en-us/library/ms173172.aspx
 https://www.draw.io/ Used for doing UML
 
 http://opengameart.org/content/gold-treasure-icons --- treasure images for coins in dungeon
+http://opengameart.org/content/loyalty-lies-monsters-earth-monster-10 --- rat model for basic easy-to-fight enemy
+http://opengameart.org/content/dungeon-crawl-32x32-tiles --- lots of potentially helpful sprites to possibly use
