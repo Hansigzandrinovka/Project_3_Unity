@@ -42,7 +42,6 @@ public class Entity : MonoBehaviour { //testtest
                 TileMonoBehavior belowTile = collider.gameObject.GetComponent<TileMonoBehavior>();
                 if (belowTile != null)
                 {
-                    Debug.Log("Entity syncing with Tile");
                     if (!belowTile.ConnectToEntity(this)) //if could not connect entity to a tile, we should garbage collect entity because it can't interract with game at all
                     {
                         Destroy(this.gameObject);
@@ -225,7 +224,8 @@ public class Entity : MonoBehaviour { //testtest
     }
 
     //tries to move this entity in direction, returns false on fail
-    //fail can be because out of movement, or because tile is occupied, or because not this entity's turn
+    //if an Entity is already in the tile, this Entity will attempt to attack it rather than move
+    //fail can be because out of movement, or because not this entity's turn
     public virtual bool Move(MoveDirection givenDirection)
     {
 	    lastDirection = givenDirection;
@@ -263,9 +263,11 @@ public class Entity : MonoBehaviour { //testtest
             }
             else
             {
+                Debug.Log(this + " attacks " + targetTile.occupyingEntity);
                 targetTile.occupyingEntity.TakeDamage(damageAmount,attackType);
             }
             remainingSpeed--;
+            Debug.Log("Remaining speed for " + this + " " + remainingSpeed);
             return true;
         }
         else
@@ -350,20 +352,23 @@ public class Entity : MonoBehaviour { //testtest
         }
     }
 
+    //precondition: newTile does not have an occupying Entity, or occupying Entity must be garbage collected
     //moves this Enity to the specified Tile and begins tracking it
-    //assumes it is already possible for Entity to move to designated Tile (tile is walkable, not occupied
+    //assumes it is already possible for Entity to move to designated Tile (tile is walkable, not occupied)
     public void goToTile(TileMonoBehavior newTile)
     {
         if(occupyingTile != null)
-            occupyingTile.occupyingEntity = null; //makes old tile not think Entity is still there
+            occupyingTile.occupyingEntity = null; //makes old tile not think this Entity is still there
         occupyingTile = newTile;
-        occupyingTile.occupyingEntity = this;
+        occupyingTile.occupyingEntity = this; //may forcefully evict existing entity from tile
         transform.position = new Vector3(occupyingTile.transform.position.x, occupyingTile.transform.position.y, transform.position.z);
-	    if(occupyingTile.GetComponent<SpriteRenderer>().sharedMaterial == Resources.Load("Materials/Red"))
+        //entitites that go to tiles have status effects applied to them
+	    if(occupyingTile.GetComponent<SpriteRenderer>().sharedMaterial == Resources.Load("Materials/Red")) //standing in fire
 	    {
+            Debug.Log(this + " takes 2 damage for standing in the fire");
 		    this.TakeDamage(2,DamageType.burn);
 	    }
-	    else if(occupyingTile.GetComponent<SpriteRenderer>().sharedMaterial == Resources.Load("Materials/Yellow"))
+	    else if(occupyingTile.GetComponent<SpriteRenderer>().sharedMaterial == Resources.Load("Materials/Yellow")) //standing in... wind?
 	    {
 		    if(this.speed > 1)
 		    {
@@ -400,8 +405,10 @@ public class Entity : MonoBehaviour { //testtest
 				    {
 					    goToTile(targetTile);
 				    }
-				    else
+				    else //ALERT! Potential issue here: if occupying entity is shoved into another entity, the other entity will take damage until it dies or its occupying tile changes
+                        //thus this spell makes the pushing entity kill any entities it is pushed into
 				    {
+                        Debug.Log(targetTile.occupyingEntity + " takes " + damageAmount + " " + attackType + " damage from the shoved " + this);
 					    targetTile.occupyingEntity.TakeDamage(damageAmount,attackType);
 				    }
 			    }

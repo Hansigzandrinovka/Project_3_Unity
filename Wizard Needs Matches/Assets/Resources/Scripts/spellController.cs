@@ -53,6 +53,7 @@ public class spellController : MonoBehaviour {
 				}
 				else if(tileBeneathUs.IsOccupied())
 				{
+                    Debug.Log(tileBeneathUs.occupyingEntity + " takes " + damageCaused + " poking damage from the spell");
 					tileBeneathUs.occupyingEntity.TakeDamage(damageCaused,Entity.DamageType.poking);
 					Destroy(this.gameObject);
 				}

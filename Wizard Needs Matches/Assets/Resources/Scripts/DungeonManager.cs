@@ -30,6 +30,7 @@ public class DungeonManager : MonoBehaviour {
 		if(oddTiles == null)
 			oddTiles = new List<TileMonoBehavior>();
         levelNumber = Application.loadedLevel; //track what the current level of the game is
+        Debug.Log("Level Number is " + levelNumber);
     }
 
     //depending on the provided index, goes to the level named with that index IE: Level_One,Level_Two,Level_Three, etc.
@@ -39,22 +40,22 @@ public class DungeonManager : MonoBehaviour {
         Debug.Log("Changing Levels");
         switch (index)
         {
-            case 0: //current level is TestLevel
+            case 0: //go to menu
+                {
+                    Application.LoadLevel("menu");
+                    return;
+                }
+            case 1: //go to first level
+                {
+                    Application.LoadLevel("startLevel");
+                    return;
+                }
+            case 2: //go to second level
                 {
                     Application.LoadLevel("proceduralTesting");
                     return;
                 }
-            case 1:
-                {
-                    Application.LoadLevel("proceduralTesting");
-                    return;
-                }
-            case 2:
-                {
-                    Application.LoadLevel("proceduralTesting");
-                    return;
-                }
-            default:
+            default: //only two levels
                 {
                     Application.LoadLevel("proceduralTesting");
                     return;
@@ -66,7 +67,7 @@ public class DungeonManager : MonoBehaviour {
     //calls GoToLevel with given Level number
     public void GoToNextLevel()
     {
-        GoToLevel(levelNumber);
+        GoToLevel(levelNumber + 1);
     }
 
     //removes static reference to this object to prevent garbage collection
