@@ -15,6 +15,8 @@ public class DungeonManager : MonoBehaviour {
 	public int startDelay = 2; //time in seconds before Turn Order goes into effect
     public static DungeonManager theManager; //allows any entity to quickly and easily access turn order, level changing, etc.
 
+    public bool feedback_game_started = false;
+
     public static bool IsGameStarted()
     {
         return gameStarted;
@@ -22,6 +24,7 @@ public class DungeonManager : MonoBehaviour {
 
     // Use this for initialization
 	void Start () {
+        theManager = this;
         if(turnOrder == null)
             turnOrder = new LinkedList<EntityController>();
 		if(oddTiles == null)
@@ -33,26 +36,27 @@ public class DungeonManager : MonoBehaviour {
     //defaults to loading Level_One if out of bounds
     public static void GoToLevel(int index)
     {
+        Debug.Log("Changing Levels");
         switch (index)
         {
             case 0: //current level is TestLevel
                 {
-                    Application.LoadLevel("Level_One");
+                    Application.LoadLevel("proceduralTesting");
                     return;
                 }
             case 1:
                 {
-                    Application.LoadLevel("Level_Two");
+                    Application.LoadLevel("proceduralTesting");
                     return;
                 }
             case 2:
                 {
-                    Application.LoadLevel("TestLevel");
+                    Application.LoadLevel("proceduralTesting");
                     return;
                 }
             default:
                 {
-                    Application.LoadLevel("Level_One");
+                    Application.LoadLevel("proceduralTesting");
                     return;
                 }
         }
@@ -63,6 +67,22 @@ public class DungeonManager : MonoBehaviour {
     public void GoToNextLevel()
     {
         GoToLevel(levelNumber);
+    }
+
+    //removes static reference to this object to prevent garbage collection
+    //cleanup everything about current level to wait for next level to start
+    public void OnDestroy()
+    {
+        theManager = null;
+        gameStarted = false;
+        
+        //empty out the static turn order to prevent non-existent entities still acting, and to aid in garbage-collecting
+        /*Debug.Log("Emptying turn order");
+        int x = turnOrder.Count;
+        for (int i = 0; i < x; i++)
+        {
+            turnOrder.RemoveFirst();
+        }*/
     }
 
     //Initializes list of changed tiles and adds tiles to list when called
@@ -115,14 +135,19 @@ public class DungeonManager : MonoBehaviour {
     //also ends EntityController's turn if it is currently their turn
 	public static void RemoveFromTurnOrder(EntityController controller)
 	{
-        if(turnOrder.First.Value == controller) //if it is current Entity's turn, then end their turn after removing them from turn order
+        
+        if (turnOrder.Count == 0)
+            return;
+        Debug.Log("Removing a Controller from Turn Order");
+        if (turnOrder.First.Value == controller) //if it is current Entity's turn, then end their turn after removing them from turn order
         {
             turnOrder.Remove(controller);
+            Debug.Log("Remaining entities: " + turnOrder.Count);
             EndTurn();
             return;
         }
 	    turnOrder.Remove (controller);
-
+        Debug.Log("Remaining entities: " + turnOrder.Count);
 	}
 
     //precondition: turnOrder is a Queue of EntityControllers, no other objects exist in Queue
@@ -185,5 +210,6 @@ public class DungeonManager : MonoBehaviour {
 		{
 			StartTurn();
 		}
+        feedback_game_started = gameStarted;
 	}
 }

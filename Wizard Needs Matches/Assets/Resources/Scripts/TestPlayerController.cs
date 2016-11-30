@@ -200,7 +200,6 @@ public class TestPlayerController : EntityController {
 
             if (xAxis > 0.5) //user wants to go Right
             {
-
                 //if player will attack in direction,
                 if(puppetEntity.WillAttack(Entity.MoveDirection.right))
                 {

@@ -52,7 +52,6 @@ public class EntityController : MonoBehaviour {
 	//cleans up other references to this Object in Turn Order, etc.
 	virtual protected void OnDestroy()
 	{
-        Debug.Log(this + " destroyed");
 		canAct = false;
 		DungeonManager.RemoveFromTurnOrder (this);
         //DungeonManager.EndTurn();

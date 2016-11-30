@@ -81,9 +81,7 @@ public class dungeon_room {
         int leftAmount = -1 * Mathf.FloorToInt(size / 2);
         int rightAmount = Mathf.CeilToInt(size / 2) - 1;
         float tileXPos = Random.Range(rightAmount, leftAmount) + xpos;
-        Debug.Log("random x offset " + tileXPos + " from " + xpos);
         float tileYPos = Random.Range(rightAmount, leftAmount) + ypos;
-        Debug.Log("random y offset " + tileYPos + " from " + ypos);
         return new Vector3(tileXPos, tileYPos, 0);
     }
 }
