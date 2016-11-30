@@ -12,6 +12,7 @@ public class DungeonGenerator : MonoBehaviour {
 
     public GameObject playerObject; //the gameobject representing the player in the scene
     public GameObject dungeonController; //the gameobject holding turn regulation: ie entity turn order
+    public GameObject basicMonster; //the gameobject representing a monster the player can encounter in dungeon
 
     public int numberOfRooms = 1; //number of rooms that the generator will attempt to generate on this floor
     public int minRoomSize = 3; //minimum room size any given room will be (ie 3x3 rooms minimum)
@@ -19,6 +20,7 @@ public class DungeonGenerator : MonoBehaviour {
     public int maxDisplacement = 3; //max distance any two rooms can be from each other
     public int minDisplacement = 1; //min distance any two rooms can be from each other
     public bool testingMode = true; //determines if testing seed is used for RNG
+    public int numberOfMonsters = 2; //number of monsters to populate the dungeon with
 
     private int roomCount = 0; //used for counting number of rooms that have been created
     private Queue createdRoomsQueue; //rooms that have been created, but could be invalid to create bordering rooms around
@@ -60,6 +62,12 @@ public class DungeonGenerator : MonoBehaviour {
         if (stairsTilePrefab == null)
         {
             Debug.LogError("Unrecoverable Error! Missing stairs tile prefab, removing this gameobject");
+            Destroy(this.gameObject);
+            return;
+        }
+        if(basicMonster == null)
+        {
+            Debug.LogError("Unrecoverable Error! Missing basic monster prefab, removing this gameobject");
             Destroy(this.gameObject);
             return;
         }
@@ -325,7 +333,7 @@ public class DungeonGenerator : MonoBehaviour {
         }
 	}
 
-    //populates random dungeon rooms, including placing player character
+    //populates random dungeon rooms with stuff, including placing player character, stairs, enemies
     void PopulateDungeon()
     {
         //create dungeon controller that all entities will reference
@@ -367,6 +375,35 @@ public class DungeonGenerator : MonoBehaviour {
             createdRoomsQueue.Enqueue(tappedRoomsStack.Pop());
         }
         //TODO: insert spectacular monster/item spawning algorithm here!
+        int failCount = 0; //used to kill while loop after too many failed cases
+        while(numberOfMonsters > 0 && (failCount < 10))
+        {
+            //pick a tile, any tile...
+            TileMonoBehavior tileAtSpawnPos = null;
+            dungeon_room monsterSpawnRoom = GetRandomRoomFromQueue();
+            Vector3 monsterSpawnPos = monsterSpawnRoom.getRandomTileInRoom();
+            //check if tile already occupied
+            topRightLoc = new Vector2(monsterSpawnPos.x + 0.25f, monsterSpawnPos.y + 0.25f); //build a collider to fetch the tile there
+            botLeftLoc = new Vector2(monsterSpawnPos.x - 0.25f, monsterSpawnPos.y - 0.25f);
+            collider = Physics2D.OverlapArea(topRightLoc, botLeftLoc, TileMonoBehavior.tileLayerMask);
+            if (collider != null)
+            {
+                tileAtSpawnPos = collider.gameObject.GetComponent<TileMonoBehavior>();
+            }
+            if(tileAtSpawnPos != null && !tileAtSpawnPos.IsOccupied()) //if we found a tile and it is not occupied, spawn a monster there
+            {
+                Debug.Log("Creating monster");
+                Instantiate(basicMonster, monsterSpawnPos,transform.rotation); //place a monster there
+                numberOfMonsters--;
+                failCount = 0;
+            }
+            else
+            {
+                failCount++;
+            }
+        }
+        if (failCount == 10)
+            Debug.Log("Failed to spawn all monsters, remaining monsters: " + numberOfMonsters);
     }
 
     void OnDestroy()
