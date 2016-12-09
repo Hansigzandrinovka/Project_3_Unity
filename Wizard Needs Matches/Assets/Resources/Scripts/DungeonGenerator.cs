@@ -4,7 +4,7 @@ using System.Collections;
 public class DungeonGenerator : MonoBehaviour {
     //uses a RNG to create dungeon tiles through rooms connected by hallways
 
-    public int testingSeed = 22; //the seed for the RNG system to predictably produce random tiles
+    public int testingSeed = -785466603; //the seed for the RNG system to predictably produce random tiles
     public GameObject stairsTilePrefab; //the tile used to represent the stairs used to reach the next floor
     public GameObject roomFloorTilePrefab; //the tile used to fill generated rooms
     public GameObject hallwayFloorTilePrefab; //the tile used to fill hallways between rooms
@@ -88,6 +88,7 @@ public class DungeonGenerator : MonoBehaviour {
         tappedRoomsStack = new Stack(numberOfRooms);
         if(testingMode)
             Random.seed = testingSeed; //configure random seed for testing purposes
+        Debug.Log("seed: " + Random.seed);
 	}
 
 
@@ -345,7 +346,7 @@ public class DungeonGenerator : MonoBehaviour {
         dungeon_room targetRoom = GetRandomRoomFromQueue(); //pick a random room to place the stairs in
         if (createdRoomsQueue.Count >= 2) //if we can have stairs in separate room from Player (if we grab top room, there is another room after for player to go into)
         {
-            Debug.Log("Preventing Stairs appearing in player's room");
+//            Debug.Log("Preventing Stairs appearing in player's room");
             tappedRoomsStack.Push(createdRoomsQueue.Dequeue()); //prevent the stairs from appearing in the same room as the player (we already grabbed the stairs room, now we're just keeping it separate from random rooms list)
         }
         //clear the tile that the stairs occupy
@@ -386,14 +387,15 @@ public class DungeonGenerator : MonoBehaviour {
             topRightLoc = new Vector2(monsterSpawnPos.x + 0.25f, monsterSpawnPos.y + 0.25f); //build a collider to fetch the tile there
             botLeftLoc = new Vector2(monsterSpawnPos.x - 0.25f, monsterSpawnPos.y - 0.25f);
             collider = Physics2D.OverlapArea(topRightLoc, botLeftLoc, TileMonoBehavior.tileLayerMask);
-            if (collider != null)
+            if (collider != null) //we find a tile there
             {
                 tileAtSpawnPos = collider.gameObject.GetComponent<TileMonoBehavior>();
             }
             if(tileAtSpawnPos != null && !tileAtSpawnPos.IsOccupied()) //if we found a tile and it is not occupied, spawn a monster there
             {
-                Debug.Log("Creating monster");
-                Instantiate(basicMonster, monsterSpawnPos,transform.rotation); //place a monster there
+                Debug.Log("Creating monster at " + monsterSpawnPos.x + "," + monsterSpawnPos.y);
+                GameObject spawnedEnemy = (GameObject)Instantiate(basicMonster, monsterSpawnPos,transform.rotation); //place a monster there, connect it to the tile
+                tileAtSpawnPos.ConnectToEntity(spawnedEnemy.GetComponent<Entity>());
                 numberOfMonsters--;
                 failCount = 0;
             }

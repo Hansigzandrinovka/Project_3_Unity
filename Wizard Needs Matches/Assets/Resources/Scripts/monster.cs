@@ -44,7 +44,7 @@ public class monster : EntityController
 		base.Start ();
 		// FIND player by type
 		player = GameObject.FindGameObjectWithTag("Player");
-		Debug.Log("Find " + this);
+//		Debug.Log("Find " + this);
 
 		numMonsters += 1;
 		UpdateInputTime ();

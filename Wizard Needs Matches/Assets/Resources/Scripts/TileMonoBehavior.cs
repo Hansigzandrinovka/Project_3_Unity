@@ -186,7 +186,7 @@ public class TileMonoBehavior : MonoBehaviour {
     {
         if (occupyingEntity == null) //if entity can't exist on tile because another already exists
         {
-            Debug.Log("Tile syncing with Entity");
+//            Debug.Log("Tile syncing with Entity");
             occupyingEntity = connectedEntity;
             connectedEntity.goToTile(this);
             return true;

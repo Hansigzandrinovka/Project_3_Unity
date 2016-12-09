@@ -30,7 +30,7 @@ public class DungeonManager : MonoBehaviour {
 		if(oddTiles == null)
 			oddTiles = new List<TileMonoBehavior>();
         levelNumber = Application.loadedLevel; //track what the current level of the game is
-        Debug.Log("Level Number is " + levelNumber);
+//        Debug.Log("Level Number is " + levelNumber);
     }
 
     //depending on the provided index, goes to the level named with that index IE: Level_One,Level_Two,Level_Three, etc.
