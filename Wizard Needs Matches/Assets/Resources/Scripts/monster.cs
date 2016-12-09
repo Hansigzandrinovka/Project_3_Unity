@@ -5,7 +5,9 @@ public class monster : EntityController
 {
 	
 	private float clock = 0;
-	public float inputTime = 2;
+	private static readonly float initialInputTime = .5f; //the total that inputTime is a fraction of
+	public static float inputTime = 1; //tracks how much time each monster takes to perform its turn
+	public static int numMonsters = 0; //tracks number of instances of this class in existence, reduces input time so that really large amounts of monsters won't eat up wait time as bad
 	// Distance to player in X, Y, and Grid, and direction
 	enum EntVecVal { distX, distY, distG, entDir, prevX, prevY, upDatePos };
 	// Compass layout to help decide where player is (16 directions)
@@ -19,6 +21,14 @@ public class monster : EntityController
 		//Straight left to before straight up
 		W, WNW, NW, NNW
 	};
+
+	//configures UpdateInputTime depending on the number of active monsters in the dungeon
+	private void UpdateInputTime()
+	{
+		if (numMonsters >= 1) {
+			inputTime = (initialInputTime / numMonsters) + (numMonsters - 1) * .05f;
+		}
+	}
 	
 	// relative dist and dir array, and old location, and update flag
 	int [] entVec = new int[7];
@@ -35,6 +45,9 @@ public class monster : EntityController
 		// FIND player by type
 		player = GameObject.FindGameObjectWithTag("Player");
 		Debug.Log("Find " + this);
+
+		numMonsters += 1;
+		UpdateInputTime ();
 	}
 	
 	public override void StartTurn()
@@ -71,6 +84,12 @@ public class monster : EntityController
 		else if (canAct) {
 			clock += Time.deltaTime;
 		}
+	}
+
+	void OnDestroy()
+	{
+        base.OnDestroy();
+		numMonsters --;
 	}
 	
 	/* Entity finds the distance of target from itself by subtracting
