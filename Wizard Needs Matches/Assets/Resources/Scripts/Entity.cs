@@ -194,7 +194,7 @@ public class Entity : MonoBehaviour { //testtest
     //fail can be because out of movement, or because tile is occupied, or because not this entity's turn
     public virtual bool Move(MoveDirection givenDirection)
     {
-	    lastDirection = givenDirection;
+	    //lastDirection = givenDirection;
         if (remainingSpeed == 0 || remainingDelay > 0)
         {
             Debug.Log("Entity speed is depleted, can't move");
@@ -281,6 +281,7 @@ public class Entity : MonoBehaviour { //testtest
                     }
             }
             facing = direction;
+		lastDirection = direction;
             //remainingSpeed--; //should turning consume your turn?
             return true;
         }
