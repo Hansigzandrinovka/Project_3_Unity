@@ -7,10 +7,10 @@ public class TileMonoBehavior : MonoBehaviour {
     //public GameObject tileImage;
     int rowPosition;
     int colPosition;
-	public int timeToRevert = 15; //presumably the time remaining before tile is no longer "on fire,frozen,cracked,etc."
-	public Material defaultMaterial; //default material appearance for tile, gets modified when spells cast on tile
-	public bool inList = false; //presumably tracks if tile is in the DungeonManagers tiles-to-update list
-    public static int tileZLayer = 0; //used to make all tiles appear on the same layer
+	public int timeToRevert = 15; ///presumably the time remaining before tile is no longer "on fire,frozen,cracked,etc."
+	public Material defaultMaterial; ///default material appearance for tile, gets modified when spells cast on tile
+	public bool inList = false; ///presumably tracks if tile is in the DungeonManagers tiles-to-update list
+    public static int tileZLayer = 0; ///used to make all tiles appear on the same layer
     //[SerializeField] //SerializeField allows us to make private variables show up in Inspector for testing and editing.
     private TileMonoBehavior below;
     //[SerializeField]
@@ -21,21 +21,21 @@ public class TileMonoBehavior : MonoBehaviour {
     private TileMonoBehavior right;
     // Use this for GameObject initialization
 
-    //Layer Mask values are integer equivalent of binary arrays, so (1000)v2 is (8)v10, represents true for layer 8, false for all other layers
-    public readonly static int tileLayerMask = 1 << 8; //this Layer Mask evaluates on Tiles Layer
-    public readonly static int entitiesLayerMask = 1 << 9; //this Layer Mask evaluates on Entities Layer
+    ///Layer Mask values are integer equivalent of binary arrays, so (1000)v2 is (8)v10, represents true for layer 8, false for all other layers
+    public readonly static int tileLayerMask = 1 << 8; ///this Layer Mask evaluates on Tiles Layer
+    public readonly static int entitiesLayerMask = 1 << 9; ///this Layer Mask evaluates on Entities Layer
 
     public enum TileType { empty, wall, stairs };
     public TileType tileType = TileType.empty;
 
-    //reduces the time left for the tile being affected by a spell
+    ///reduces the time left for the tile being affected by a spell
     public void reduceTime()
 	{
 		this.timeToRevert--;
 	}
 
-        //returns the Tile at location relative to this tile, or null if tile could not be found
-        //DOES NOT physically move anything in a direction
+        ///returns the Tile at location relative to this tile, or null if tile could not be found
+        ///DOES NOT physically move anything in a direction
     public TileMonoBehavior StepInDirection(int colAmount, int rowAmount)
     {
         int x = colAmount;
@@ -73,8 +73,8 @@ public class TileMonoBehavior : MonoBehaviour {
     public TileMonoBehavior getBelow()
     { return below; }
 
-    //returns true if an Entity is capable of walking in this tile
-    //subject to change if entities have movement types, but that is an easy fix
+    ///returns true if an Entity is capable of walking in this tile
+    ///subject to change if entities have movement types, but that is an easy fix
     public bool IsWalkable()
     {
         switch(tileType)
@@ -90,8 +90,8 @@ public class TileMonoBehavior : MonoBehaviour {
         }
     }
 
-    //if an Entity is in this tile, it is occupied, return true
-    //else return false
+    ///if an Entity is in this tile, it is occupied, return true
+    ///else return false
     public bool IsOccupied()
     {
         return occupyingEntity != null;
@@ -101,7 +101,7 @@ public class TileMonoBehavior : MonoBehaviour {
         //Debug.Log("Started");
         transform.position.Set(transform.position.x, transform.position.y, tileZLayer);
 	    defaultMaterial = GetComponent<SpriteRenderer>().material;
-        //get all tiles L,R,U,D relative to this one, and point them together (first acting tile connects both ways, so no need to connect back later, and makes later tiles start faster)
+        ///get all tiles L,R,U,D relative to this one, and point them together (first acting tile connects both ways, so no need to connect back later, and makes later tiles start faster)
         if(right == null) //if tile hasn't been already defined (because we don't want to define the same tile's same value twice)
             //look for a tile right of this
         {
@@ -181,7 +181,7 @@ public class TileMonoBehavior : MonoBehaviour {
         }
     }
 
-    //used after Tile has already been created, connects given Entity to this Tile both ways so that Entity can walk on tile
+    ///used after Tile has already been created, connects given Entity to this Tile both ways so that Entity can walk on tile
     public bool ConnectToEntity(Entity connectedEntity)
     {
         if (occupyingEntity == null) //if entity can't exist on tile because another already exists
@@ -194,7 +194,7 @@ public class TileMonoBehavior : MonoBehaviour {
         return false;
     }
     
-    //cleans up connections this Tile has to other Tiles
+    ///cleans up connections this Tile has to other Tiles
     void DeleteTile()
     {
         below = null;
@@ -204,8 +204,8 @@ public class TileMonoBehavior : MonoBehaviour {
         occupyingEntity = null;
     }
 
-    //initializes this Tile relative to the tile below and left of it
-    //both tiles will be "pointing" (not using pointers) to each other
+    ///initializes this Tile relative to the tile below and left of it
+    ///both tiles will be "pointing" (not using pointers) to each other
     public void InitTile(TileMonoBehavior belowTile, TileMonoBehavior leftTile)
     {
         this.below = belowTile;

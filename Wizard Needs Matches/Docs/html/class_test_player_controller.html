@@ -81,18 +81,25 @@ Inheritance diagram for TestPlayerController:</div>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:ad2d287262b32aaab55fa6cf132af6a7a"><td class="memItemLeft" align="right" valign="top">override bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_test_player_controller.html#ad2d287262b32aaab55fa6cf132af6a7a">GoesFirst</a> ()</td></tr>
+<tr class="memdesc:ad2d287262b32aaab55fa6cf132af6a7a"><td class="mdescLeft">&#160;</td><td class="mdescRight">the amount of additional time player gets to plan because they have higher speed (IE speed 2 gives 30 = 20 + 10*1 seconds)  <a href="#ad2d287262b32aaab55fa6cf132af6a7a">More...</a><br /></td></tr>
 <tr class="separator:ad2d287262b32aaab55fa6cf132af6a7a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a217ce172cbde87eefd153228eb5d814a"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_test_player_controller.html#a217ce172cbde87eefd153228eb5d814a">TrySpendEnergy</a> (int spentEnergy)</td></tr>
+<tr class="memdesc:a217ce172cbde87eefd153228eb5d814a"><td class="mdescLeft">&#160;</td><td class="mdescRight">returns true if Controller was capable of spending energy (which they did spend) else returns false, and energy is unchanged  <a href="#a217ce172cbde87eefd153228eb5d814a">More...</a><br /></td></tr>
 <tr class="separator:a217ce172cbde87eefd153228eb5d814a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a98fc828cec5ca4c89853f710abf07910"><td class="memItemLeft" align="right" valign="top">override void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_test_player_controller.html#a98fc828cec5ca4c89853f710abf07910">StartTurn</a> ()</td></tr>
+<tr class="memdesc:a98fc828cec5ca4c89853f710abf07910"><td class="mdescLeft">&#160;</td><td class="mdescRight">overrides <a class="el" href="class_entity_controller.html#aa6b5df9bafbfa353f78315d8a8aac674">EntityController.StartTurn()</a> to initialize the clock for player input and the player's remaining time  <a href="#a98fc828cec5ca4c89853f710abf07910">More...</a><br /></td></tr>
 <tr class="separator:a98fc828cec5ca4c89853f710abf07910"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa415882995569d0f927e36ce0a3aaa4d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_test_player_controller.html#aa415882995569d0f927e36ce0a3aaa4d">ConfigureGUIConnections</a> (Slider healthSlider, Slider energySlider, Slider timeSlider)</td></tr>
+<tr class="memdesc:aa415882995569d0f927e36ce0a3aaa4d"><td class="mdescLeft">&#160;</td><td class="mdescRight">assumes provided objects are not null used for post-Start() GUI connections (or reconnections?)  <a href="#aa415882995569d0f927e36ce0a3aaa4d">More...</a><br /></td></tr>
 <tr class="separator:aa415882995569d0f927e36ce0a3aaa4d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab6e46373b78b25b26afc593f4c28565e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_test_player_controller.html#ab6e46373b78b25b26afc593f4c28565e">ReceiveMatchPoints</a> (int amountToChange)</td></tr>
+<tr class="memdesc:ab6e46373b78b25b26afc593f4c28565e"><td class="mdescLeft">&#160;</td><td class="mdescRight">used as a Listener to <a class="el" href="class_board.html">Board</a> increases Energy of Controller towards maximum, increases remaining time, and updates display with new energy  <a href="#ab6e46373b78b25b26afc593f4c28565e">More...</a><br /></td></tr>
 <tr class="separator:ab6e46373b78b25b26afc593f4c28565e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a92064975cd165448f3b2d602e4f62d44"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_test_player_controller.html#a92064975cd165448f3b2d602e4f62d44">IncreaseEnergy</a> (int amount, bool overflow)</td></tr>
+<tr class="memdesc:a92064975cd165448f3b2d602e4f62d44"><td class="mdescLeft">&#160;</td><td class="mdescRight">increases energy assumes amount is positive if overflow is true, increases energy beyond maximum, else energy cannot be greater than maximum  <a href="#a92064975cd165448f3b2d602e4f62d44">More...</a><br /></td></tr>
 <tr class="separator:a92064975cd165448f3b2d602e4f62d44"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3c1b642be26a279d5dece0b9dc5b13ea"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_test_player_controller.html#a3c1b642be26a279d5dece0b9dc5b13ea">DecreaseRemainingTime</a> (float amount)</td></tr>
+<tr class="memdesc:a3c1b642be26a279d5dece0b9dc5b13ea"><td class="mdescLeft">&#160;</td><td class="mdescRight">reduces remaining time for Controller if player can act, and updates the time display accordingly there is a possibility of external influences decreasing remaining time, IE ailments that make time move faster  <a href="#a3c1b642be26a279d5dece0b9dc5b13ea">More...</a><br /></td></tr>
 <tr class="separator:a3c1b642be26a279d5dece0b9dc5b13ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a83d8f527055e215c5a2cd7ea3694d97f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_test_player_controller.html#a83d8f527055e215c5a2cd7ea3694d97f">IncreaseRemainingTime</a> (float amount, bool overflow)</td></tr>
 <tr class="separator:a83d8f527055e215c5a2cd7ea3694d97f"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -102,23 +109,30 @@ Public Attributes</h2></td></tr>
 <tr class="memitem:a4f68fefec3c1de0de48efbb9b5bf2801"><td class="memItemLeft" align="right" valign="top">Slider&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_test_player_controller.html#a4f68fefec3c1de0de48efbb9b5bf2801">playerHealthSlider</a></td></tr>
 <tr class="separator:a4f68fefec3c1de0de48efbb9b5bf2801"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a759c1f4065a53a9dc2ecc0935f74afa1"><td class="memItemLeft" align="right" valign="top">Slider&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_test_player_controller.html#a759c1f4065a53a9dc2ecc0935f74afa1">playerEnergySlider</a></td></tr>
+<tr class="memdesc:a759c1f4065a53a9dc2ecc0935f74afa1"><td class="mdescLeft">&#160;</td><td class="mdescRight">the Slider that will provide feedback on Player's current health  <a href="#a759c1f4065a53a9dc2ecc0935f74afa1">More...</a><br /></td></tr>
 <tr class="separator:a759c1f4065a53a9dc2ecc0935f74afa1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a03ec238100a06176a45c5fbc35f0281e"><td class="memItemLeft" align="right" valign="top">Slider&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_test_player_controller.html#a03ec238100a06176a45c5fbc35f0281e">playerTimeSlider</a></td></tr>
+<tr class="memdesc:a03ec238100a06176a45c5fbc35f0281e"><td class="mdescLeft">&#160;</td><td class="mdescRight">the Slider that will provide feedback on Player's current Energy  <a href="#a03ec238100a06176a45c5fbc35f0281e">More...</a><br /></td></tr>
 <tr class="separator:a03ec238100a06176a45c5fbc35f0281e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a889370cb91c24c5431d42eccfa70bd37"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_test_player_controller.html#a889370cb91c24c5431d42eccfa70bd37">inputTime</a> = 2</td></tr>
+<tr class="memdesc:a889370cb91c24c5431d42eccfa70bd37"><td class="mdescLeft">&#160;</td><td class="mdescRight">used to prevent input flooding by slowing user input processing  <a href="#a889370cb91c24c5431d42eccfa70bd37">More...</a><br /></td></tr>
 <tr class="separator:a889370cb91c24c5431d42eccfa70bd37"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a307900deaffd8040ece231113e6a9307"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_test_player_controller.html#a307900deaffd8040ece231113e6a9307">remainingTime</a> = Player_Turn_WaitTime_Base</td></tr>
+<tr class="memdesc:a307900deaffd8040ece231113e6a9307"><td class="mdescLeft">&#160;</td><td class="mdescRight">how many seconds must pass before input can be processed again  <a href="#a307900deaffd8040ece231113e6a9307">More...</a><br /></td></tr>
 <tr class="separator:a307900deaffd8040ece231113e6a9307"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acd774e3e404274b2698018b8137f823e"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_test_player_controller.html#acd774e3e404274b2698018b8137f823e">energy</a> = 150</td></tr>
 <tr class="separator:acd774e3e404274b2698018b8137f823e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abdedcc99193e51c3a9acdaea24ac65dd"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_test_player_controller.html#abdedcc99193e51c3a9acdaea24ac65dd">maxEnergy</a> = 200</td></tr>
+<tr class="memdesc:abdedcc99193e51c3a9acdaea24ac65dd"><td class="mdescLeft">&#160;</td><td class="mdescRight">current energy that player can allocate to actions  <a href="#abdedcc99193e51c3a9acdaea24ac65dd">More...</a><br /></td></tr>
 <tr class="separator:abdedcc99193e51c3a9acdaea24ac65dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
 <tr class="memitem:adeb32fd01c5fd5db0da063d532343f0c"><td class="memItemLeft" align="right" valign="top">override void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_test_player_controller.html#adeb32fd01c5fd5db0da063d532343f0c">Start</a> ()</td></tr>
+<tr class="memdesc:adeb32fd01c5fd5db0da063d532343f0c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Use this for initialization overrides virtual <a class="el" href="class_test_player_controller.html#adeb32fd01c5fd5db0da063d532343f0c" title="Use this for initialization overrides virtual Start() in EntityController. ">Start()</a> in <a class="el" href="class_entity_controller.html">EntityController</a>.  <a href="#adeb32fd01c5fd5db0da063d532343f0c">More...</a><br /></td></tr>
 <tr class="separator:adeb32fd01c5fd5db0da063d532343f0c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4e140a49d9dd3e2cc88557d85c801299"><td class="memItemLeft" align="right" valign="top">override void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_test_player_controller.html#a4e140a49d9dd3e2cc88557d85c801299">OnDestroy</a> ()</td></tr>
+<tr class="memdesc:a4e140a49d9dd3e2cc88557d85c801299"><td class="mdescLeft">&#160;</td><td class="mdescRight">cleans up other references to this Object in Turn Order, etc.  <a href="#a4e140a49d9dd3e2cc88557d85c801299">More...</a><br /></td></tr>
 <tr class="separator:a4e140a49d9dd3e2cc88557d85c801299"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pro_methods_class_entity_controller"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_class_entity_controller')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="class_entity_controller.html">EntityController</a></td></tr>
 <tr class="memitem:a3b8faa14bbb92b3545eadcf94175f461 inherit pro_methods_class_entity_controller"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_entity_controller.html#a3b8faa14bbb92b3545eadcf94175f461">EndTurn</a> ()</td></tr>
@@ -128,6 +142,7 @@ Protected Member Functions</h2></td></tr>
 Additional Inherited Members</h2></td></tr>
 <tr class="inherit_header pro_attribs_class_entity_controller"><td colspan="2" onclick="javascript:toggleInherit('pro_attribs_class_entity_controller')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="class_entity_controller.html">EntityController</a></td></tr>
 <tr class="memitem:a365c6ba61d8cd38a9341b086f4c2030e inherit pro_attribs_class_entity_controller"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_entity.html">Entity</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_entity_controller.html#a365c6ba61d8cd38a9341b086f4c2030e">puppetEntity</a></td></tr>
+<tr class="memdesc:a365c6ba61d8cd38a9341b086f4c2030e inherit pro_attribs_class_entity_controller"><td class="mdescLeft">&#160;</td><td class="mdescRight">is capable of ending its turn and performing actions on its <a class="el" href="class_entity.html">Entity</a> to be subclassed by Player or AI Controllers  <a href="class_entity_controller.html#a365c6ba61d8cd38a9341b086f4c2030e">More...</a><br /></td></tr>
 <tr class="separator:a365c6ba61d8cd38a9341b086f4c2030e inherit pro_attribs_class_entity_controller"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4ff91b94ace677533c1488ea62620169 inherit pro_attribs_class_entity_controller"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_entity_controller.html#a4ff91b94ace677533c1488ea62620169">canAct</a> = false</td></tr>
 <tr class="separator:a4ff91b94ace677533c1488ea62620169 inherit pro_attribs_class_entity_controller"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -165,6 +180,8 @@ Additional Inherited Members</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>assumes provided objects are not null used for post-Start() GUI connections (or reconnections?) </p>
+
 </div>
 </div>
 <a id="a3c1b642be26a279d5dece0b9dc5b13ea"></a>
@@ -182,6 +199,8 @@ Additional Inherited Members</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>reduces remaining time for Controller if player can act, and updates the time display accordingly there is a possibility of external influences decreasing remaining time, IE ailments that make time move faster </p>
 
 </div>
 </div>
@@ -207,6 +226,9 @@ Additional Inherited Members</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>the amount of additional time player gets to plan because they have higher speed (IE speed 2 gives 30 = 20 + 10*1 seconds) </p>
+<p>Players have higher priority when placed into Turn Order </p>
 
 <p>Reimplemented from <a class="el" href="class_entity_controller.html#a8cabd39d7f28c8b4115019fba71318fb">EntityController</a>.</p>
 
@@ -237,6 +259,8 @@ Additional Inherited Members</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>increases energy assumes amount is positive if overflow is true, increases energy beyond maximum, else energy cannot be greater than maximum </p>
 
 </div>
 </div>
@@ -291,6 +315,8 @@ Additional Inherited Members</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>cleans up other references to this Object in Turn Order, etc. </p>
+
 <p>Reimplemented from <a class="el" href="class_entity_controller.html#a9b0d0fe50136f93d1296b48a4762a50f">EntityController</a>.</p>
 
 </div>
@@ -310,6 +336,8 @@ Additional Inherited Members</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>used as a Listener to <a class="el" href="class_board.html">Board</a> increases Energy of Controller towards maximum, increases remaining time, and updates display with new energy </p>
 
 </div>
 </div>
@@ -335,6 +363,8 @@ Additional Inherited Members</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Use this for initialization overrides virtual <a class="el" href="class_test_player_controller.html#adeb32fd01c5fd5db0da063d532343f0c" title="Use this for initialization overrides virtual Start() in EntityController. ">Start()</a> in <a class="el" href="class_entity_controller.html">EntityController</a>. </p>
 
 <p>Reimplemented from <a class="el" href="class_entity_controller.html#a1481e50694b53d7ea4c63b7afc1b2629">EntityController</a>.</p>
 
@@ -363,6 +393,8 @@ Additional Inherited Members</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>overrides <a class="el" href="class_entity_controller.html#aa6b5df9bafbfa353f78315d8a8aac674">EntityController.StartTurn()</a> to initialize the clock for player input and the player's remaining time </p>
+
 <p>Reimplemented from <a class="el" href="class_entity_controller.html#aa6b5df9bafbfa353f78315d8a8aac674">EntityController</a>.</p>
 
 </div>
@@ -382,6 +414,8 @@ Additional Inherited Members</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>returns true if Controller was capable of spending energy (which they did spend) else returns false, and energy is unchanged </p>
 
 </div>
 </div>
@@ -412,6 +446,8 @@ Additional Inherited Members</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>used to prevent input flooding by slowing user input processing </p>
+
 </div>
 </div>
 <a id="abdedcc99193e51c3a9acdaea24ac65dd"></a>
@@ -426,6 +462,8 @@ Additional Inherited Members</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>current energy that player can allocate to actions </p>
+
 </div>
 </div>
 <a id="a759c1f4065a53a9dc2ecc0935f74afa1"></a>
@@ -439,6 +477,8 @@ Additional Inherited Members</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>the Slider that will provide feedback on Player's current health </p>
 
 </div>
 </div>
@@ -468,6 +508,8 @@ Additional Inherited Members</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>the Slider that will provide feedback on Player's current Energy </p>
+
 </div>
 </div>
 <a id="a307900deaffd8040ece231113e6a9307"></a>
@@ -482,15 +524,17 @@ Additional Inherited Members</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>how many seconds must pass before input can be processed again </p>
+
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>D:/School/EECS 448/Projects/project04/branches/GameLogic/Wizard Needs Matches/Assets/Resources/Scripts/<a class="el" href="_test_player_controller_8cs.html">TestPlayerController.cs</a></li>
+<li>D:/School/EECS 448/Projects/project04/trunk/Wizard Needs Matches/Assets/Resources/Scripts/<a class="el" href="_test_player_controller_8cs.html">TestPlayerController.cs</a></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Dec 14 2016 01:17:45 for Wizard Needs Matches by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed Dec 14 2016 12:05:59 for Wizard Needs Matches by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.12
 </small></address>

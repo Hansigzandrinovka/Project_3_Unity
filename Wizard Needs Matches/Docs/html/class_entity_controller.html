@@ -74,7 +74,7 @@ Inheritance diagram for EntityController:</div>
  <div class="center">
   <img src="class_entity_controller.png" usemap="#EntityController_map" alt=""/>
   <map id="EntityController_map" name="EntityController_map">
-<area href="classmonster.html" alt="monster" shape="rect" coords="0,112,137,136"/>
+<area href="classmonster.html" title="Holds all the monster moving decisions. " alt="monster" shape="rect" coords="0,112,137,136"/>
 <area href="class_test_monster_controller.html" alt="TestMonsterController" shape="rect" coords="147,112,284,136"/>
 <area href="class_test_player_controller.html" alt="TestPlayerController" shape="rect" coords="294,112,431,136"/>
 </map>
@@ -83,6 +83,7 @@ Inheritance diagram for EntityController:</div>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a8cabd39d7f28c8b4115019fba71318fb"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_entity_controller.html#a8cabd39d7f28c8b4115019fba71318fb">GoesFirst</a> ()</td></tr>
+<tr class="memdesc:a8cabd39d7f28c8b4115019fba71318fb"><td class="mdescLeft">&#160;</td><td class="mdescRight">tells <a class="el" href="class_dungeon_manager.html">DungeonManager</a> if this Controller has priority when being placed into Turn Order (IE is player)  <a href="#a8cabd39d7f28c8b4115019fba71318fb">More...</a><br /></td></tr>
 <tr class="separator:a8cabd39d7f28c8b4115019fba71318fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa6b5df9bafbfa353f78315d8a8aac674"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_entity_controller.html#aa6b5df9bafbfa353f78315d8a8aac674">StartTurn</a> ()</td></tr>
 <tr class="separator:aa6b5df9bafbfa353f78315d8a8aac674"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -94,11 +95,13 @@ Protected Member Functions</h2></td></tr>
 <tr class="memitem:a1481e50694b53d7ea4c63b7afc1b2629"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_entity_controller.html#a1481e50694b53d7ea4c63b7afc1b2629">Start</a> ()</td></tr>
 <tr class="separator:a1481e50694b53d7ea4c63b7afc1b2629"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9b0d0fe50136f93d1296b48a4762a50f"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_entity_controller.html#a9b0d0fe50136f93d1296b48a4762a50f">OnDestroy</a> ()</td></tr>
+<tr class="memdesc:a9b0d0fe50136f93d1296b48a4762a50f"><td class="mdescLeft">&#160;</td><td class="mdescRight">cleans up other references to this Object in Turn Order, etc.  <a href="#a9b0d0fe50136f93d1296b48a4762a50f">More...</a><br /></td></tr>
 <tr class="separator:a9b0d0fe50136f93d1296b48a4762a50f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
 <tr class="memitem:a365c6ba61d8cd38a9341b086f4c2030e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_entity.html">Entity</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_entity_controller.html#a365c6ba61d8cd38a9341b086f4c2030e">puppetEntity</a></td></tr>
+<tr class="memdesc:a365c6ba61d8cd38a9341b086f4c2030e"><td class="mdescLeft">&#160;</td><td class="mdescRight">is capable of ending its turn and performing actions on its <a class="el" href="class_entity.html">Entity</a> to be subclassed by Player or AI Controllers  <a href="#a365c6ba61d8cd38a9341b086f4c2030e">More...</a><br /></td></tr>
 <tr class="separator:a365c6ba61d8cd38a9341b086f4c2030e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4ff91b94ace677533c1488ea62620169"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_entity_controller.html#a4ff91b94ace677533c1488ea62620169">canAct</a> = false</td></tr>
 <tr class="separator:a4ff91b94ace677533c1488ea62620169"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -152,6 +155,8 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>tells <a class="el" href="class_dungeon_manager.html">DungeonManager</a> if this Controller has priority when being placed into Turn Order (IE is player) </p>
+
 <p>Reimplemented in <a class="el" href="class_test_player_controller.html#ad2d287262b32aaab55fa6cf132af6a7a">TestPlayerController</a>.</p>
 
 </div>
@@ -178,6 +183,8 @@ Protected Attributes</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>cleans up other references to this Object in Turn Order, etc. </p>
 
 <p>Reimplemented in <a class="el" href="class_test_player_controller.html#a4e140a49d9dd3e2cc88557d85c801299">TestPlayerController</a>.</p>
 
@@ -280,15 +287,17 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>is capable of ending its turn and performing actions on its <a class="el" href="class_entity.html">Entity</a> to be subclassed by Player or AI Controllers </p>
+
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>D:/School/EECS 448/Projects/project04/branches/GameLogic/Wizard Needs Matches/Assets/Resources/Scripts/<a class="el" href="_entity_controller_8cs.html">EntityController.cs</a></li>
+<li>D:/School/EECS 448/Projects/project04/trunk/Wizard Needs Matches/Assets/Resources/Scripts/<a class="el" href="_entity_controller_8cs.html">EntityController.cs</a></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Dec 14 2016 01:17:45 for Wizard Needs Matches by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed Dec 14 2016 12:05:59 for Wizard Needs Matches by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.12
 </small></address>

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['xcoord',['XCoord',['../class_gem.html#a151bb94278fb2f61b4535ea3724f1112',1,'Gem']]]
+  ['ycoord',['YCoord',['../class_gem.html#a143d155532d09c28fddc71bc7e8050d8',1,'Gem']]]
 ];

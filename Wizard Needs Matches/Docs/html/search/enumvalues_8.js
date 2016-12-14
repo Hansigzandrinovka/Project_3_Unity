@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['left',['left',['../class_entity.html#ab7da4ca6aebbcc96bd6a6c1526ab59baa811882fecd5c7618d7099ebbd39ea254',1,'Entity']]],
-  ['lightning',['lightning',['../classspell_controller.html#a2d438c0916fc36e8fcf2defae27beeeaa08238953fe0f6dd13f10714ebfbcb9f9',1,'spellController']]]
+  ['stairs',['stairs',['../class_tile_mono_behavior.html#a2adba50a992f43a518f01fb9c7d4070ea3db0e01f42f51905a6772529919099fa',1,'TileMonoBehavior']]]
 ];

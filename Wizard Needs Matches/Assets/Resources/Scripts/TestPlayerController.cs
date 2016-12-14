@@ -4,34 +4,34 @@ using UnityEngine.UI;
 
 public class TestPlayerController : EntityController {
     
-    public Slider playerHealthSlider; //the Slider that will provide feedback on Player's current health
-	public Slider playerEnergySlider; //the Slider that will provide feedback on Player's current Energy
+    public Slider playerHealthSlider; ///the Slider that will provide feedback on Player's current health
+	public Slider playerEnergySlider; ///the Slider that will provide feedback on Player's current Energy
     public Slider playerTimeSlider; //the Slider that will provide feedback on Player's remaining time to take a turn
-    private float clock = 0; //used to prevent input flooding by slowing user input processing
-    public float inputTime = 2; //how many seconds must pass before input can be processed again
+    private float clock = 0; ///used to prevent input flooding by slowing user input processing
+    public float inputTime = 2; ///how many seconds must pass before input can be processed again
     public float remainingTime = Player_Turn_WaitTime_Base;
-	public int energy = 150; //current energy that player can allocate to actions
-	public int maxEnergy = 200; //maximum energy that player can store
+	public int energy = 150; ///current energy that player can allocate to actions
+	public int maxEnergy = 200; ///maximum energy that player can store
     private float maxRemainingTime = Player_Turn_WaitTime_Base;
 
-    //constants for spending Player Energy
-    private static readonly int EnergyCost_Move = 30; //cost in energy to move in any direction
-    private static readonly int EnergyCost_Attack = 60; //cost in energy to make an attack against an adjacent enemy
-    private static int EnergyCost_Cast_Spell_1 = 150; //cost in energy to cast the spell bound to 1 key
+    ///constants for spending Player Energy
+    private static readonly int EnergyCost_Move = 30; ///cost in energy to move in any direction
+    private static readonly int EnergyCost_Attack = 60; ///cost in energy to make an attack against an adjacent enemy
+    private static int EnergyCost_Cast_Spell_1 = 150; ///cost in energy to cast the spell bound to 1 key
     private static int EnergyCost_Cast_Spell_2 = 200;
     private static int EnergyCost_Cast_Spell_3 = 250;
     private static int EnergyCost_Cast_Spell_4 = 280;
 
-    private static readonly float Player_Turn_WaitTime_Base = 20f; //the base time the game will wait for the player to take their turn before making player forfeit their turn
-    private static readonly float Player_Turn_WaitTime_Speed_Increment = 10; //the amount of additional time player gets to plan because they have higher speed (IE speed 2 gives 30 = 20 + 10*1 seconds)
+    private static readonly float Player_Turn_WaitTime_Base = 20f; ///the base time the game will wait for the player to take their turn before making player forfeit their turn
+    private static readonly float Player_Turn_WaitTime_Speed_Increment = 10; ///the amount of additional time player gets to plan because they have higher speed (IE speed 2 gives 30 = 20 + 10*1 seconds)
 
-	public override bool GoesFirst() //Players have higher priority when placed into Turn Order
+	public override bool GoesFirst() ///Players have higher priority when placed into Turn Order
 	{
 		return true;
 	}
 
-    //returns true if Controller was capable of spending energy (which they did spend)
-    //else returns false, and energy is unchanged
+    ///returns true if Controller was capable of spending energy (which they did spend)
+    ///else returns false, and energy is unchanged
     public bool TrySpendEnergy(int spentEnergy)
     {
         if (energy > spentEnergy)
@@ -44,7 +44,7 @@ public class TestPlayerController : EntityController {
             return false;
     }
 
-    //overrides EntityController.StartTurn() to initialize the clock for player input and the player's remaining time
+    ///overrides EntityController.StartTurn() to initialize the clock for player input and the player's remaining time
     public override void StartTurn()
     {
         base.StartTurn();
@@ -52,8 +52,8 @@ public class TestPlayerController : EntityController {
         remainingTime = maxRemainingTime;
     }
 
-    //assumes provided objects are not null
-    //used for post-Start() GUI connections (or reconnections?)
+    ///assumes provided objects are not null
+    ///used for post-Start() GUI connections (or reconnections?)
     public void ConfigureGUIConnections(Slider healthSlider,Slider energySlider,Slider timeSlider)
     {
         playerHealthSlider = healthSlider;
@@ -70,8 +70,8 @@ public class TestPlayerController : EntityController {
         }
     }
 
-    // Use this for initialization
-    //overrides virtual Start() in EntityController
+    /// Use this for initialization
+    ///overrides virtual Start() in EntityController
     protected override void Start () {
 		base.Start ();
         ProceduralComponentConnector.AllocateGUICameraListener(this);
@@ -128,8 +128,8 @@ public class TestPlayerController : EntityController {
         }
 	}
 
-    //called whenever attached Entity's health changes
-    //used to update Player's health display and handle player dying
+    ///called whenever attached Entity's health changes
+    ///used to update Player's health display and handle player dying
     void UpdateDisplayHealth(int newHealth)
     {
         if (playerHealthSlider != null)
@@ -142,19 +142,19 @@ public class TestPlayerController : EntityController {
         }
     }
 
-    //used as a Listener to Board
-    //increases Energy of Controller towards maximum,
-    //increases remaining time,
-    //and updates display with new energy
+    ///used as a Listener to Board
+    ///increases Energy of Controller towards maximum,
+    ///increases remaining time,
+    ///and updates display with new energy
     public void ReceiveMatchPoints(int amountToChange)
     {
         IncreaseEnergy(amountToChange, false);
         if(canAct) //if it is this player's turn, so time is ticking down, so give them more time
             IncreaseRemainingTime(Mathf.Ceil(amountToChange / Board.averageScore),false);
     }
-	//increases energy
-    //assumes amount is positive
-	//if overflow is true, increases energy beyond maximum, else energy cannot be greater than maximum
+	///increases energy
+    ///assumes amount is positive
+	///if overflow is true, increases energy beyond maximum, else energy cannot be greater than maximum
 	public void IncreaseEnergy(int amount, bool overflow)
 	{
 		energy += amount;
@@ -164,9 +164,9 @@ public class TestPlayerController : EntityController {
             playerEnergySlider.value = energy;
     }
 
-    //reduces remaining time for Controller if player can act,
-    //and updates the time display accordingly
-    //there is a possibility of external influences decreasing remaining time, IE ailments that make time move faster
+    ///reduces remaining time for Controller if player can act,
+    ///and updates the time display accordingly
+    ///there is a possibility of external influences decreasing remaining time, IE ailments that make time move faster
     public void DecreaseRemainingTime(float amount)
     {
         remainingTime -= amount;
@@ -182,8 +182,8 @@ public class TestPlayerController : EntityController {
             playerTimeSlider.value = Mathf.Ceil(remainingTime);
     }
 	
-	// Update is called once per frame
-	//if it is Controller's turn, waits for player input to control Entity
+	/// Update is called once per frame
+	///if it is Controller's turn, waits for player input to control Entity
 	void Update () {
         if (clock >= inputTime && canAct) //only evaluates player activity every time increment, but only if player can act
         {

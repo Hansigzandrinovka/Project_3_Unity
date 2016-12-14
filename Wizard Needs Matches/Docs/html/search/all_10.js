@@ -1,12 +1,8 @@
 var searchData=
 [
   ['scoreincreaselistener',['ScoreIncreaseListener',['../class_board.html#ac5ef2597bed76d1ae3ab53cf1c350ae6',1,'Board']]],
-  ['scriptsdirectory',['ScriptsDirectory',['../class_doxygen_config.html#aea53b2e7fc0f47a7f658ce25e65c4a09',1,'DoxygenConfig']]],
-  ['selectedtheme',['SelectedTheme',['../class_doxygen_window.html#aff9bfc8c7ed3f017a61e67025ea7c99a',1,'DoxygenWindow']]],
   ['selector',['selector',['../class_gem.html#ab10025e1dfa34ee00955a1f2cd8c39e4',1,'Gem']]],
-  ['setfinished',['SetFinished',['../class_doxy_thread_safe_output.html#a97e2149569e2bb5e749851daa2781423',1,'DoxyThreadSafeOutput']]],
   ['setscoreincreaselistener',['SetScoreIncreaseListener',['../class_board.html#a9b115064e8f8be1280ae7b8e0dfd7994',1,'Board']]],
-  ['setstarted',['SetStarted',['../class_doxy_thread_safe_output.html#ad08186c77f145bc3cb1ddb50259ef589',1,'DoxyThreadSafeOutput']]],
   ['setuihealthchangelistener',['SetUIHealthChangeListener',['../class_entity.html#a07e92b6ed61d99b549898220123614ed',1,'Entity']]],
   ['speed',['speed',['../class_entity.html#ac24f79991f6047ccfe8a2d3cfc4dbdf3',1,'Entity']]],
   ['spell',['Spell',['../class_entity.html#a334e49747a7a3361c7f7f47fb0eade45',1,'Entity']]],
@@ -24,6 +20,5 @@ var searchData=
   ['stepindirection',['StepInDirection',['../class_tile_mono_behavior.html#aae3371dea87d2c518018512e8185ea4b',1,'TileMonoBehavior']]],
   ['stopspeed',['stopSpeed',['../class_gem.html#a8fc864a5edd2875058438152ffaaefb5',1,'Gem']]],
   ['swapgems',['SwapGems',['../class_board.html#aa0f6c84954b20b30edd6908115abadc0',1,'Board']]],
-  ['swaprate',['swapRate',['../class_board.html#ae8513de6c6efd5f10650fd308b60a66e',1,'Board']]],
-  ['synopsis',['Synopsis',['../class_doxygen_config.html#a2b1926144ba2768c36de32a8d3445567',1,'DoxygenConfig']]]
+  ['swaprate',['swapRate',['../class_board.html#ae8513de6c6efd5f10650fd308b60a66e',1,'Board']]]
 ];

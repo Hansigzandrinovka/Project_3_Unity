@@ -7,12 +7,10 @@ var searchData=
   ['checkfornearbymatches',['CheckForNearbyMatches',['../class_board.html#a9e729e0fa67e3c786806b179644603cf',1,'Board']]],
   ['checkmatch',['CheckMatch',['../class_board.html#a07a342b1de657847d297550a75cf3e34',1,'Board']]],
   ['color',['color',['../class_gem.html#aca2eb37006d075439f49be3331c3072f',1,'Gem']]],
-  ['configuration',['Configuration',['../class_doxygen_window.html#ad1f6043062e30f52cb634b72294a5676a254f642527b45bc260048e30704edb39',1,'DoxygenWindow']]],
   ['configureguiconnections',['ConfigureGUIConnections',['../class_test_player_controller.html#aa415882995569d0f927e36ce0a3aaa4d',1,'TestPlayerController']]],
   ['connecttoentity',['ConnectToEntity',['../class_tile_mono_behavior.html#ae5a04d8a65e8580193a66a6acacb9d3f',1,'TileMonoBehavior']]],
   ['constructmatchlist',['ConstructMatchList',['../class_board.html#a058286681533b0505f2ce9b94748fdd9',1,'Board']]],
   ['creategem',['CreateGem',['../class_gem.html#a81f95e22f502a44ded2af68fd042a253',1,'Gem']]],
-  ['curentoutput',['CurentOutput',['../class_doxygen_window.html#a82b41ae2e3c44b050acc7603031ccd55',1,'DoxygenWindow']]],
   ['currenthealth',['currentHealth',['../class_entity.html#a438bc0d8c93f1f580d282c93e4ef832e',1,'Entity']]],
   ['currentscore',['currentScore',['../class_board.html#a8e5db49fcb910c8e0337a61ea53b3bd4',1,'Board']]]
 ];

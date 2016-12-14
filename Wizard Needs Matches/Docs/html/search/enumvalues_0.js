@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['about',['About',['../class_doxygen_window.html#ad1f6043062e30f52cb634b72294a5676a8f7f4c1ce7a4f933663d10543562b096',1,'DoxygenWindow']]]
+  ['burn',['burn',['../class_entity.html#a494cbb9e52dbe9cff32f63a45066901daa985c9764e0e6d738ff20f2328a0644b',1,'Entity']]]
 ];

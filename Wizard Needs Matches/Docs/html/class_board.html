@@ -82,24 +82,33 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ac5ef2597bed76d1ae3ab53cf1c350ae6"><td class="memItemLeft" align="right" valign="top">delegate void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_board.html#ac5ef2597bed76d1ae3ab53cf1c350ae6">ScoreIncreaseListener</a> (int incrementAmount)</td></tr>
 <tr class="separator:ac5ef2597bed76d1ae3ab53cf1c350ae6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9b115064e8f8be1280ae7b8e0dfd7994"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_board.html#a9b115064e8f8be1280ae7b8e0dfd7994">SetScoreIncreaseListener</a> (<a class="el" href="class_board.html#ac5ef2597bed76d1ae3ab53cf1c350ae6">ScoreIncreaseListener</a> listener)</td></tr>
+<tr class="memdesc:a9b115064e8f8be1280ae7b8e0dfd7994"><td class="mdescLeft">&#160;</td><td class="mdescRight">configures the <a class="el" href="class_board.html">Board</a> to start sending score change messages to the provided listener so that whenever a match is made, the Listener is told how many points were made in the Update when the match is resolved  <a href="#a9b115064e8f8be1280ae7b8e0dfd7994">More...</a><br /></td></tr>
 <tr class="separator:a9b115064e8f8be1280ae7b8e0dfd7994"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae452ee678d40bf895865394927ffa49a"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_board.html#ae452ee678d40bf895865394927ffa49a">DetermineBoardState</a> ()</td></tr>
+<tr class="memdesc:ae452ee678d40bf895865394927ffa49a"><td class="mdescLeft">&#160;</td><td class="mdescRight">returns true if board is not in a stable state because: either gems are above the board, or gems are falling right now  <a href="#ae452ee678d40bf895865394927ffa49a">More...</a><br /></td></tr>
 <tr class="separator:ae452ee678d40bf895865394927ffa49a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a07a342b1de657847d297550a75cf3e34"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_board.html#a07a342b1de657847d297550a75cf3e34">CheckMatch</a> ()</td></tr>
+<tr class="memdesc:a07a342b1de657847d297550a75cf3e34"><td class="mdescLeft">&#160;</td><td class="mdescRight">tests match for two given gems creates two lists, determines if lists contain valid matches in them, makes each list test all gems in them for matches  <a href="#a07a342b1de657847d297550a75cf3e34">More...</a><br /></td></tr>
 <tr class="separator:a07a342b1de657847d297550a75cf3e34"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9e729e0fa67e3c786806b179644603cf"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_board.html#a9e729e0fa67e3c786806b179644603cf">CheckForNearbyMatches</a> (<a class="el" href="class_gem.html">Gem</a> g)</td></tr>
 <tr class="separator:a9e729e0fa67e3c786806b179644603cf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a058286681533b0505f2ce9b94748fdd9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_board.html#a058286681533b0505f2ce9b94748fdd9">ConstructMatchList</a> (string color, <a class="el" href="class_gem.html">Gem</a> gem, int XCoord, int YCoord, ref List&lt; <a class="el" href="class_gem.html">Gem</a> &gt; MatchList)</td></tr>
+<tr class="memdesc:a058286681533b0505f2ce9b94748fdd9"><td class="mdescLeft">&#160;</td><td class="mdescRight">see if current gem in same row/column of given gem to build row/col list of matching gems  <a href="#a058286681533b0505f2ce9b94748fdd9">More...</a><br /></td></tr>
 <tr class="separator:a058286681533b0505f2ce9b94748fdd9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af1d75e628bdb319c9db52dba36c092d3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_board.html#af1d75e628bdb319c9db52dba36c092d3">FixMatchList</a> (<a class="el" href="class_gem.html">Gem</a> gem, List&lt; <a class="el" href="class_gem.html">Gem</a> &gt; ListToFix)</td></tr>
+<tr class="memdesc:af1d75e628bdb319c9db52dba36c092d3"><td class="mdescLeft">&#160;</td><td class="mdescRight">makes Match Lists remove gems that are not in the row/column of the majority of the list  <a href="#af1d75e628bdb319c9db52dba36c092d3">More...</a><br /></td></tr>
 <tr class="separator:af1d75e628bdb319c9db52dba36c092d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4b81343993c2ddc18e1f05435cca7596"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_board.html#a4b81343993c2ddc18e1f05435cca7596">MoveGem</a> (<a class="el" href="class_gem.html">Gem</a> gemToMove, Vector3 toPos, Vector3 fromPos)</td></tr>
+<tr class="memdesc:a4b81343993c2ddc18e1f05435cca7596"><td class="mdescLeft">&#160;</td><td class="mdescRight">Moves gem positively.  <a href="#a4b81343993c2ddc18e1f05435cca7596">More...</a><br /></td></tr>
 <tr class="separator:a4b81343993c2ddc18e1f05435cca7596"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ace738b1f82549489bcb5311b90f2d9fd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_board.html#ace738b1f82549489bcb5311b90f2d9fd">MoveNegGem</a> (<a class="el" href="class_gem.html">Gem</a> gemToMove, Vector3 toPos, Vector3 fromPos)</td></tr>
+<tr class="memdesc:ace738b1f82549489bcb5311b90f2d9fd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Moves gem negatively.  <a href="#ace738b1f82549489bcb5311b90f2d9fd">More...</a><br /></td></tr>
 <tr class="separator:ace738b1f82549489bcb5311b90f2d9fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5a04612216203d5b08a4fd6c67bba603"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_board.html#a5a04612216203d5b08a4fd6c67bba603">TogglePhysics</a> (bool isOn)</td></tr>
+<tr class="memdesc:a5a04612216203d5b08a4fd6c67bba603"><td class="mdescLeft">&#160;</td><td class="mdescRight">Toggles physics.  <a href="#a5a04612216203d5b08a4fd6c67bba603">More...</a><br /></td></tr>
 <tr class="separator:a5a04612216203d5b08a4fd6c67bba603"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa0f6c84954b20b30edd6908115abadc0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_board.html#aa0f6c84954b20b30edd6908115abadc0">SwapGems</a> (<a class="el" href="class_gem.html">Gem</a> currentGem)</td></tr>
+<tr class="memdesc:aa0f6c84954b20b30edd6908115abadc0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Swaps the 2 selected gems.  <a href="#aa0f6c84954b20b30edd6908115abadc0">More...</a><br /></td></tr>
 <tr class="separator:aa0f6c84954b20b30edd6908115abadc0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
@@ -107,12 +116,14 @@ Public Attributes</h2></td></tr>
 <tr class="memitem:a00924a789c90d1d9b498e3f4c2b42d49"><td class="memItemLeft" align="right" valign="top">List&lt; <a class="el" href="class_gem.html">Gem</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_board.html#a00924a789c90d1d9b498e3f4c2b42d49">gems</a> = new List&lt;<a class="el" href="class_gem.html">Gem</a>&gt;()</td></tr>
 <tr class="separator:a00924a789c90d1d9b498e3f4c2b42d49"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5504f7ae1c26765d04412f75f723cb7b"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_board.html#a5504f7ae1c26765d04412f75f723cb7b">GridWidth</a></td></tr>
+<tr class="memdesc:a5504f7ae1c26765d04412f75f723cb7b"><td class="mdescLeft">&#160;</td><td class="mdescRight">holds all active Gems on the board  <a href="#a5504f7ae1c26765d04412f75f723cb7b">More...</a><br /></td></tr>
 <tr class="separator:a5504f7ae1c26765d04412f75f723cb7b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aaaeb4c655f726bf066be04b3654ca88e"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_board.html#aaaeb4c655f726bf066be04b3654ca88e">GridHeight</a></td></tr>
 <tr class="separator:aaaeb4c655f726bf066be04b3654ca88e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a86ccb772a99d876148613a20b609af04"><td class="memItemLeft" align="right" valign="top">GameObject&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_board.html#a86ccb772a99d876148613a20b609af04">gemPrefab</a></td></tr>
 <tr class="separator:a86ccb772a99d876148613a20b609af04"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7f703143ba0a23a01f84c8d8b88fd672"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_gem.html">Gem</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_board.html#a7f703143ba0a23a01f84c8d8b88fd672">lastGem</a></td></tr>
+<tr class="memdesc:a7f703143ba0a23a01f84c8d8b88fd672"><td class="mdescLeft">&#160;</td><td class="mdescRight">the prefab used to create Gems on the board  <a href="#a7f703143ba0a23a01f84c8d8b88fd672">More...</a><br /></td></tr>
 <tr class="separator:a7f703143ba0a23a01f84c8d8b88fd672"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a21d225c924421a3e428a2429c0546f88"><td class="memItemLeft" align="right" valign="top">Vector3&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_board.html#a21d225c924421a3e428a2429c0546f88">gem1Start</a></td></tr>
 <tr class="separator:a21d225c924421a3e428a2429c0546f88"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -129,6 +140,7 @@ Public Attributes</h2></td></tr>
 <tr class="memitem:afbaa30d9ffa04356a48f5fc047505f04"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_board.html#afbaa30d9ffa04356a48f5fc047505f04">AmountToMatch</a> = 3</td></tr>
 <tr class="separator:afbaa30d9ffa04356a48f5fc047505f04"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa3bb234b062a8cf44e00fc905d15adad"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_board.html#aa3bb234b062a8cf44e00fc905d15adad">isMatched</a> = false</td></tr>
+<tr class="memdesc:aa3bb234b062a8cf44e00fc905d15adad"><td class="mdescLeft">&#160;</td><td class="mdescRight">number of gems in a row that are needed to match, ie 3 in a row  <a href="#aa3bb234b062a8cf44e00fc905d15adad">More...</a><br /></td></tr>
 <tr class="separator:aa3bb234b062a8cf44e00fc905d15adad"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8e5db49fcb910c8e0337a61ea53b3bd4"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_board.html#a8e5db49fcb910c8e0337a61ea53b3bd4">currentScore</a> = 0</td></tr>
 <tr class="separator:a8e5db49fcb910c8e0337a61ea53b3bd4"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -136,8 +148,10 @@ Public Attributes</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-attribs"></a>
 Static Public Attributes</h2></td></tr>
 <tr class="memitem:a7ee174c7891526fd778eec16adb72812"><td class="memItemLeft" align="right" valign="top">static readonly int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_board.html#a7ee174c7891526fd778eec16adb72812">averageScore</a> = 20</td></tr>
+<tr class="memdesc:a7ee174c7891526fd778eec16adb72812"><td class="mdescLeft">&#160;</td><td class="mdescRight">represents number of matches taking place before board stabilizes - more combos means more points!  <a href="#a7ee174c7891526fd778eec16adb72812">More...</a><br /></td></tr>
 <tr class="separator:a7ee174c7891526fd778eec16adb72812"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac7d8daf1dfb35bf3e260af500ad29af7"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="class_board.html">Board</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_board.html#ac7d8daf1dfb35bf3e260af500ad29af7">theMatchingBoard</a></td></tr>
+<tr class="memdesc:ac7d8daf1dfb35bf3e260af500ad29af7"><td class="mdescLeft">&#160;</td><td class="mdescRight">the most commonly predicted score value for use in Time incrementing (if you get a big score, you get more time back)  <a href="#ac7d8daf1dfb35bf3e260af500ad29af7">More...</a><br /></td></tr>
 <tr class="separator:ac7d8daf1dfb35bf3e260af500ad29af7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Member Function Documentation</h2>
@@ -173,6 +187,8 @@ Static Public Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>tests match for two given gems creates two lists, determines if lists contain valid matches in them, makes each list test all gems in them for matches </p>
 
 </div>
 </div>
@@ -220,6 +236,8 @@ Static Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>see if current gem in same row/column of given gem to build row/col list of matching gems </p>
+
 </div>
 </div>
 <a id="ae452ee678d40bf895865394927ffa49a"></a>
@@ -236,6 +254,8 @@ Static Public Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>returns true if board is not in a stable state because: either gems are above the board, or gems are falling right now </p>
 
 </div>
 </div>
@@ -264,6 +284,8 @@ Static Public Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>makes Match Lists remove gems that are not in the row/column of the majority of the list </p>
 
 </div>
 </div>
@@ -299,6 +321,8 @@ Static Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Moves gem positively. </p>
+
 </div>
 </div>
 <a id="ace738b1f82549489bcb5311b90f2d9fd"></a>
@@ -332,6 +356,8 @@ Static Public Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Moves gem negatively. </p>
 
 </div>
 </div>
@@ -369,6 +395,8 @@ Static Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>configures the <a class="el" href="class_board.html">Board</a> to start sending score change messages to the provided listener so that whenever a match is made, the Listener is told how many points were made in the Update when the match is resolved </p>
+
 </div>
 </div>
 <a id="aa0f6c84954b20b30edd6908115abadc0"></a>
@@ -387,6 +415,8 @@ Static Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Swaps the 2 selected gems. </p>
+
 </div>
 </div>
 <a id="a5a04612216203d5b08a4fd6c67bba603"></a>
@@ -404,6 +434,8 @@ Static Public Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Toggles physics. </p>
 
 </div>
 </div>
@@ -441,6 +473,8 @@ Static Public Attributes</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>represents number of matches taking place before board stabilizes - more combos means more points! </p>
 
 </div>
 </div>
@@ -540,6 +574,8 @@ Static Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>holds all active Gems on the board </p>
+
 </div>
 </div>
 <a id="aa3bb234b062a8cf44e00fc905d15adad"></a>
@@ -553,6 +589,8 @@ Static Public Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>number of gems in a row that are needed to match, ie 3 in a row </p>
 
 </div>
 </div>
@@ -581,6 +619,8 @@ Static Public Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>the prefab used to create Gems on the board </p>
 
 </div>
 </div>
@@ -646,15 +686,17 @@ Static Public Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>the most commonly predicted score value for use in Time incrementing (if you get a big score, you get more time back) </p>
+
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>D:/School/EECS 448/Projects/project04/branches/GameLogic/Wizard Needs Matches/Assets/Resources/Scripts/<a class="el" href="_board_8cs.html">Board.cs</a></li>
+<li>D:/School/EECS 448/Projects/project04/trunk/Wizard Needs Matches/Assets/Resources/Scripts/<a class="el" href="_board_8cs.html">Board.cs</a></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Dec 14 2016 01:17:45 for Wizard Needs Matches by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed Dec 14 2016 12:05:59 for Wizard Needs Matches by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.12
 </small></address>

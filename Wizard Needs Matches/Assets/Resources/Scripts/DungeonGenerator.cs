@@ -2,33 +2,33 @@
 using System.Collections;
 
 public class DungeonGenerator : MonoBehaviour {
-    //uses a RNG to create dungeon tiles through rooms connected by hallways
+    ///uses a RNG to create dungeon tiles through rooms connected by hallways
 
-    public int testingSeed = -785466603; //the seed for the RNG system to predictably produce random tiles
-    public GameObject stairsTilePrefab; //the tile used to represent the stairs used to reach the next floor
-    public GameObject roomFloorTilePrefab; //the tile used to fill generated rooms
-    public GameObject hallwayFloorTilePrefab; //the tile used to fill hallways between rooms
-    public GameObject tileContainer; //the gameobject that every tile prefab will be a part of
+    public int testingSeed = -785466603; ///the seed for the RNG system to predictably produce random tiles
+    public GameObject stairsTilePrefab; ///the tile used to represent the stairs used to reach the next floor
+    public GameObject roomFloorTilePrefab; ///the tile used to fill generated rooms
+    public GameObject hallwayFloorTilePrefab; ///the tile used to fill hallways between rooms
+    public GameObject tileContainer; ///the gameobject that every tile prefab will be a part of
 
-    public GameObject playerObject; //the gameobject representing the player in the scene
-    public GameObject dungeonController; //the gameobject holding turn regulation: ie entity turn order
-    public GameObject basicMonster; //the gameobject representing a monster the player can encounter in dungeon
+    public GameObject playerObject; ///the gameobject representing the player in the scene
+    public GameObject dungeonController; ///the gameobject holding turn regulation: ie entity turn order
+    public GameObject basicMonster; ///the gameobject representing a monster the player can encounter in dungeon
 
-    public int numberOfRooms = 1; //number of rooms that the generator will attempt to generate on this floor
-    public int minRoomSize = 3; //minimum room size any given room will be (ie 3x3 rooms minimum)
-    public int maxRoomSize = 5; //maximum room size any given room will be (ie 5x5 rooms maximum)
-    public int maxDisplacement = 3; //max distance any two rooms can be from each other
-    public int minDisplacement = 1; //min distance any two rooms can be from each other
-    public bool testingMode = true; //determines if testing seed is used for RNG
-    public int numberOfMonsters = 2; //number of monsters to populate the dungeon with
+    public int numberOfRooms = 1; ///number of rooms that the generator will attempt to generate on this floor
+    public int minRoomSize = 3; ///minimum room size any given room will be (ie 3x3 rooms minimum)
+    public int maxRoomSize = 5; ///maximum room size any given room will be (ie 5x5 rooms maximum)
+    public int maxDisplacement = 3; ///max distance any two rooms can be from each other
+    public int minDisplacement = 1; ///min distance any two rooms can be from each other
+    public bool testingMode = true; ///determines if testing seed is used for RNG
+    public int numberOfMonsters = 4; ///number of monsters to populate the dungeon with
 
-    private int roomCount = 0; //used for counting number of rooms that have been created
-    private Queue createdRoomsQueue; //rooms that have been created, but could be invalid to create bordering rooms around
-    private Stack tappedRoomsStack; //rooms that have been found invalid to create at
+    private int roomCount = 0; ///used for counting number of rooms that have been created
+    private Queue createdRoomsQueue; ///rooms that have been created, but could be invalid to create bordering rooms around
+    private Stack tappedRoomsStack; ///rooms that have been found invalid to create at
 
-	// Use this for initialization
-    //validates that all provided inputs are acceptable,
-    //Logs errors to console and attempts to fix bad input errors
+	/// Use this for initialization
+    ///validates that all provided inputs are acceptable,
+    ///Logs errors to console and attempts to fix bad input errors
 	void Start () {
         if (maxRoomSize == 0)
         {
@@ -83,8 +83,8 @@ public class DungeonGenerator : MonoBehaviour {
             Destroy(this.gameObject);
             return;
         }
-        //hold off on data structure creation until after all validations occur (we don't want to waste processor time on structures that won't be used)
-        createdRoomsQueue = new Queue(numberOfRooms); //we won't have more than the given number of rooms to create in our Queue
+        ///hold off on data structure creation until after all validations occur (we don't want to waste processor time on structures that won't be used)
+        createdRoomsQueue = new Queue(numberOfRooms); ///we won't have more than the given number of rooms to create in our Queue
         tappedRoomsStack = new Stack(numberOfRooms);
         if(testingMode)
             Random.seed = testingSeed; //configure random seed for testing purposes
@@ -92,14 +92,16 @@ public class DungeonGenerator : MonoBehaviour {
 	}
 
 
-    //@precondition: attached object (this) has default rotation (Vector3: 0,0,0)
-    //@params:  roomOrigin -> location in 3d space for room origin (bottom left corner), 
-    //          roomSize -> number of tiles to extend right and up from origin, 
-    //          distanceAway -> distance from old tile that new tile is away, must be POSITIVE, used to populate connecting tiles
-    //          direction -> direction that new tile is relative to old tile
-    //Checks for space occupation in area defined roomSize x roomSize right and up from specified origin position,
-    //then if un-occupied, creates tiles there, afterwards creates hallway in opposite direction
-    //returns a dungeon room representing the location and dimensions of the room, or null if Queue is empty
+    /**
+        @precondition: attached object (this) has default rotation (Vector3: 0,0,0)
+        @params:  roomOrigin -> location in 3d space for room origin (bottom left corner), 
+                  roomSize -> number of tiles to extend right and up from origin, 
+                  distanceAway -> distance from old tile that new tile is away, must be POSITIVE, used to populate connecting tiles
+                  direction -> direction that new tile is relative to old tile
+        Checks for space occupation in area defined roomSize x roomSize right and up from specified origin position,
+        then if un-occupied, creates tiles there, afterwards creates hallway in opposite direction
+        returns a dungeon room representing the location and dimensions of the room, or null if Queue is empty
+    **/
     dungeon_room TryCreateRoom(Vector3 roomOrigin, int roomSize,float distanceAway, Entity.MoveDirection direction)
     {
         int halfSizeOffset = roomSize / 2;
@@ -121,11 +123,12 @@ public class DungeonGenerator : MonoBehaviour {
                 if (tileContainer != null)
                     tile.transform.SetParent(tileContainer.transform);
             }
-        //now create the pathway leading away from this room, we don't care what is in the way, only that we fill in spaces that are unoccupied
-        //switch(direction), for i = 0; i < distanceAway, i++), try to create tile at position relative to center in direction
+        /**now create the pathway leading away from this room, we don't care what is in the way, only that we fill in spaces that are unoccupied
+            switch(direction), for i = 0; i < distanceAway, i++), try to create tile at position relative to center in direction
+            **/
         switch(direction)
         {
-            case Entity.MoveDirection.up://new room is above old room, so work down from new room
+            case Entity.MoveDirection.up:///new room is above old room, so work down from new room
                 {
                     for (int i = 0; i <= distanceAway; i++)
                     {
@@ -142,7 +145,7 @@ public class DungeonGenerator : MonoBehaviour {
                     }
                     break;
                 }
-            case Entity.MoveDirection.left: //new room is left of old room, so work right
+            case Entity.MoveDirection.left: ///new room is left of old room, so work right
                 {
                     int otherHalfSize = roomSize - halfSizeOffset;
                     for (int i = 0; i <= distanceAway; i++)
@@ -160,7 +163,7 @@ public class DungeonGenerator : MonoBehaviour {
                     }
                     break;
                 }
-            case Entity.MoveDirection.down: //new room is beneath old room, so work up
+            case Entity.MoveDirection.down: ///new room is beneath old room, so work up
                 {
                     int otherHalfSize = roomSize - halfSizeOffset;
                     for (int i = 0; i <= distanceAway; i++)
@@ -178,7 +181,7 @@ public class DungeonGenerator : MonoBehaviour {
                     }
                     break;
                 }
-            case Entity.MoveDirection.right: //new room is right of old room, so work left
+            case Entity.MoveDirection.right: ///new room is right of old room, so work left
                 {
                     for (int i = 0; i <= distanceAway; i++)
                     {
@@ -195,12 +198,12 @@ public class DungeonGenerator : MonoBehaviour {
                     break;
                 }
         }
-        //build path from room
+        ///build path from room
         return new dungeon_room(roomOrigin.x, roomOrigin.y, roomSize) ;
     }
 
-    //Can return null!
-    //uses Random.Range to cycle the Queue (Enqueue the Dequeued value), then returns dungeon room at front of queue
+    ///Can return null!
+    ///uses Random.Range to cycle the Queue (Enqueue the Dequeued value), then returns dungeon room at front of queue
     public dungeon_room GetRandomRoomFromQueue()
     {
         int cycleCount = Random.Range(0,createdRoomsQueue.Count - 1); //gets a random room from the Queue
@@ -214,8 +217,8 @@ public class DungeonGenerator : MonoBehaviour {
             return null;
     }
 	
-    //TODO: implement leaving and returning to main menu
-    //handles leaving current scene and returning to main menu, along with any potential cleanup needed
+    ///TODO: implement leaving and returning to main menu
+    ///handles leaving current scene and returning to main menu, along with any potential cleanup needed
     void GracefullyExit()
     {
         Destroy(this.gameObject);
@@ -225,10 +228,11 @@ public class DungeonGenerator : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
-        //on each update, pick a random room from list, try to generate a new room relative to that room
-        //if no room in list (means we have exhausted all rooms to create around, or we have not created first room), give up on creating room
-        //after creating rooms, populate them with a player, a set of stairs, and any relevant entities
-        if(roomCount < numberOfRooms) //create numberOfRooms rooms
+        /**on each update, pick a random room from list, try to generate a new room relative to that room
+            if no room in list (means we have exhausted all rooms to create around, or we have not created first room), give up on creating room
+            after creating rooms, populate them with a player, a set of stairs, and any relevant entities
+        **/
+        if(roomCount < numberOfRooms) ///create numberOfRooms rooms
         {
             if(roomCount == 0) //creating very first room
             {
@@ -261,10 +265,10 @@ public class DungeonGenerator : MonoBehaviour {
 
                 Vector3 newRoomLocation = new Vector3();
                 Vector3 oldRoomLocation = oldRoom.getCoords();
-                Entity.MoveDirection direction = (Entity.MoveDirection)Random.Range(0, 4); //direction can be 0 up, 2 left, 1 down, 3 right
+                Entity.MoveDirection direction = (Entity.MoveDirection)Random.Range(0, 4); ///direction can be 0 up, 2 left, 1 down, 3 right
                 Entity.MoveDirection originalDirection = direction;
 
-                do //try to create room at given direction, if it fails, keep trying with new direction until there are no more directions to pick
+                do ///try to create room at given direction, if it fails, keep trying with new direction until there are no more directions to pick
                 {
                     switch (direction)
                     {
@@ -294,7 +298,7 @@ public class DungeonGenerator : MonoBehaviour {
                                 break;
                             }
                     }
-                    //default case, it tries to initialize room at 0,0,0
+                    ///default case, it tries to initialize room at 0,0,0
                     newRoom = TryCreateRoom(newRoomLocation,roomSize,distance,direction); //try to create the room at specified location
                     if (newRoom != null) //if room creation succeeded, store the room in list for later use
                     {
@@ -311,7 +315,7 @@ public class DungeonGenerator : MonoBehaviour {
                         direction++;
                     }
                 }
-                while (newRoom == null && direction != originalDirection); //stop iterating when we successfully create a room, or when we reach original direction
+                while (newRoom == null && direction != originalDirection); ///stop iterating when we successfully create a room, or when we reach original direction
                 
                 if(newRoom != null) //successfully created room, prepare for creating next room
                 {
@@ -334,10 +338,10 @@ public class DungeonGenerator : MonoBehaviour {
         }
 	}
 
-    //populates random dungeon rooms with stuff, including placing player character, stairs, enemies
+    ///populates random dungeon rooms with stuff, including placing player character, stairs, enemies
     void PopulateDungeon()
     {
-        //create dungeon controller that all entities will reference
+        ///create dungeon controller that all entities will reference
 
         Instantiate(dungeonController, new Vector3(), transform.rotation); //places dungeon controller first to take advantage of automatic turn order tracking
 

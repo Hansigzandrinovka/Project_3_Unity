@@ -6,10 +6,10 @@ using System.Collections.Generic;
 public class Board : MonoBehaviour {
 
 
-    public List<Gem> gems = new List<Gem>(); //holds all active Gems on the board
+    public List<Gem> gems = new List<Gem>(); ///holds all active Gems on the board
     public int GridWidth;
     public int GridHeight;
-    public GameObject gemPrefab; //the prefab used to create Gems on the board
+    public GameObject gemPrefab; ///the prefab used to create Gems on the board
     public Gem lastGem;
     public Vector3 gem1Start, gem1End, gem2Start, gem2End;
     public bool isSwapping = false;
@@ -17,19 +17,19 @@ public class Board : MonoBehaviour {
     public int nextUpdatePayout = 0;
     public float startTime;
     public float swapRate = 2;
-    public int AmountToMatch = 3; //number of gems in a row that are needed to match, ie 3 in a row
+    public int AmountToMatch = 3; ///number of gems in a row that are needed to match, ie 3 in a row
     public bool isMatched = false;
-    public int currentScore = 0; //tracks the score until we move score tracking to EntityControllers
-    private int comboCount = 0; //represents number of matches taking place before board stabilizes - more combos means more points!
+    public int currentScore = 0; ///tracks the score until we move score tracking to EntityControllers
+    private int comboCount = 0; ///represents number of matches taking place before board stabilizes - more combos means more points!
 
-    public static readonly int averageScore = 20; //the most commonly predicted score value for use in Time incrementing (if you get a big score, you get more time back)
+    public static readonly int averageScore = 20; ///the most commonly predicted score value for use in Time incrementing (if you get a big score, you get more time back)
     public static Board theMatchingBoard;
 
-    public delegate void ScoreIncreaseListener(int incrementAmount); //a listener that detects when an update worth of matches has occurred, taking in the amount that score went up from the matches in total
+    public delegate void ScoreIncreaseListener(int incrementAmount); ///a listener that detects when an update worth of matches has occurred, taking in the amount that score went up from the matches in total
 
     private ScoreIncreaseListener player_one_energy_listener;
 
-    void Awake() //ensures this object can be used through static calls rather than through instance calls
+    void Awake() ///ensures this object can be used through static calls rather than through instance calls
     {
         theMatchingBoard = this;
     }
@@ -49,15 +49,19 @@ public class Board : MonoBehaviour {
 	
 }
 
-    //configures the Board to start sending score change messages to the provided listener
-    //so that whenever a match is made, the Listener is told how many points were made in the Update when the match is resolved
+    /**
+    	configures the Board to start sending score change messages to the provided listener
+    	so that whenever a match is made, the Listener is told how many points were made in the Update when the match is resolved
+    **/
     public void SetScoreIncreaseListener(ScoreIncreaseListener listener)
     {
         player_one_energy_listener = listener;
     }
 
-    //handles generation of score/energy numbers based on the number of gems matched in this iteration, ie matching 3 gems gives,
-    //but doesn't give player the score until the next update!
+    /**
+    	handles generation of score/energy numbers based on the number of gems matched in this iteration, ie matching 3 gems gives,
+    	but doesn't give player the score until the next update!
+    **/
     void BuildGemScore(int comboCount, int matchSize)
     {
         if (comboCount < 1)
@@ -167,7 +171,7 @@ public class Board : MonoBehaviour {
 	
 	}
 
-    //returns true if board is not in a stable state because: either gems are above the board, or gems are falling right now
+    ///returns true if board is not in a stable state because: either gems are above the board, or gems are falling right now
 	public bool DetermineBoardState()
 	{
 		for (int i=0; i < gems.Count; i++) {
@@ -179,8 +183,8 @@ public class Board : MonoBehaviour {
 		return false;
 	}
 
-    //tests match for two given gems
-    //creates two lists, determines if lists contain valid matches in them, makes each list test all gems in them for matches
+    ///tests match for two given gems
+    ///creates two lists, determines if lists contain valid matches in them, makes each list test all gems in them for matches
     public void CheckMatch(){
 		List<Gem> gem1List = new List<Gem>();
 		List<Gem> gem2List = new List<Gem>();
@@ -200,7 +204,7 @@ public class Board : MonoBehaviour {
 		FixMatchList ( g , gemList);
 	}
 
-    //see if current gem in same row/column of given gem to build row/col list of matching gems
+    ///see if current gem in same row/column of given gem to build row/col list of matching gems
 	public void ConstructMatchList( string color, Gem gem, int XCoord, int YCoord, ref List<Gem> MatchList ){
 		
 		if( gem == null){ //if somehow we're looking at nonexistent gem
@@ -221,13 +225,13 @@ public class Board : MonoBehaviour {
 						}
 					}
 }
-    //called when the GameObject this is attached to is destroyed
+    ///called when the GameObject this is attached to is destroyed
     void OnDestroy()
     {
         theMatchingBoard = null; //ensures this instance doesn't remain in scope after destruction
     }
 
-    //makes Match Lists remove gems that are not in the row/column of the majority of the list
+    ///makes Match Lists remove gems that are not in the row/column of the majority of the list
 	public void FixMatchList(Gem gem , List<Gem> ListToFix){
 
 		List<Gem> rows = new List<Gem>();
@@ -263,7 +267,7 @@ public class Board : MonoBehaviour {
 
 		}
 
-
+	///Moves gem positively
 	public void MoveGem(Gem gemToMove, Vector3 toPos, Vector3 fromPos){
 		Vector3 center = (fromPos + toPos)* 0.5f;
 		center -= new Vector3(0,0,0.1f);
@@ -274,6 +278,7 @@ public class Board : MonoBehaviour {
 		gemToMove.transform.position += center;
 	}
 
+	///Moves gem negatively
 	public void MoveNegGem(Gem gemToMove, Vector3 toPos, Vector3 fromPos){
 		Vector3 center = (fromPos + toPos)* 0.5f;
 		center -= new Vector3(0,0,-0.1f);
@@ -284,12 +289,14 @@ public class Board : MonoBehaviour {
 		gemToMove.transform.position += center;
 }
 
+	///Toggles physics
 	public void TogglePhysics( bool isOn){
 		for( int i=0 ; i < gems.Count ; i++){
 			gems[i].GetComponent<Rigidbody>().isKinematic = isOn;
 			}
 		}
-	
+		
+	///Swaps the 2 selected gems
 	public void SwapGems(Gem currentGem ){
 		if( lastGem == null ){
 			lastGem  = currentGem;}

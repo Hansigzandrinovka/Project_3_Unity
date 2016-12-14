@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['empty',['empty',['../class_tile_mono_behavior.html#a2adba50a992f43a518f01fb9c7d4070eaa2e4822a98337283e39f7b60acf85ec9',1,'TileMonoBehavior']]]
+  ['ice',['ice',['../classspell_controller.html#a2d438c0916fc36e8fcf2defae27beeeaa7bdff76536f12a7c5ffde207e72cfe3a',1,'spellController']]]
 ];

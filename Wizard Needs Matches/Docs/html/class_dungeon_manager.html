@@ -81,8 +81,10 @@ Inheritance diagram for DungeonManager:</div>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a1065ea37510348a3883091c64b279462"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_dungeon_manager.html#a1065ea37510348a3883091c64b279462">GoToNextLevel</a> ()</td></tr>
+<tr class="memdesc:a1065ea37510348a3883091c64b279462"><td class="mdescLeft">&#160;</td><td class="mdescRight">precondition: menu level uses index 0 or default case in <a class="el" href="class_dungeon_manager.html#ae251f9e7e5faace47e448a7ff6eb0f56" title="depending on the provided index, goes to the level named with that index IE: Level_One,Level_Two,Level_Three, etc. ">GoToLevel()</a> calls GoToLevel with given Level number  <a href="#a1065ea37510348a3883091c64b279462">More...</a><br /></td></tr>
 <tr class="separator:a1065ea37510348a3883091c64b279462"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a726b249d924965d191d5f8fbd49afa04"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_dungeon_manager.html#a726b249d924965d191d5f8fbd49afa04">OnDestroy</a> ()</td></tr>
+<tr class="memdesc:a726b249d924965d191d5f8fbd49afa04"><td class="mdescLeft">&#160;</td><td class="mdescRight">removes static reference to this object to prevent garbage collection cleanup everything about current level to wait for next level to start  <a href="#a726b249d924965d191d5f8fbd49afa04">More...</a><br /></td></tr>
 <tr class="separator:a726b249d924965d191d5f8fbd49afa04"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a79e5df1140d05f4016076dc9c780cb2e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_dungeon_manager.html#a79e5df1140d05f4016076dc9c780cb2e">StartTurn</a> ()</td></tr>
 <tr class="memdesc:a79e5df1140d05f4016076dc9c780cb2e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tries to make first <a class="el" href="class_entity_controller.html">EntityController</a> start its turn if turnOrder is empty, print error to console  <a href="#a79e5df1140d05f4016076dc9c780cb2e">More...</a><br /></td></tr>
@@ -93,18 +95,25 @@ Static Public Member Functions</h2></td></tr>
 <tr class="memitem:ae9551209fc52ca54685470bfcd370dca"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_dungeon_manager.html#ae9551209fc52ca54685470bfcd370dca">IsGameStarted</a> ()</td></tr>
 <tr class="separator:ae9551209fc52ca54685470bfcd370dca"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae251f9e7e5faace47e448a7ff6eb0f56"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_dungeon_manager.html#ae251f9e7e5faace47e448a7ff6eb0f56">GoToLevel</a> (int index)</td></tr>
+<tr class="memdesc:ae251f9e7e5faace47e448a7ff6eb0f56"><td class="mdescLeft">&#160;</td><td class="mdescRight">depending on the provided index, goes to the level named with that index IE: Level_One,Level_Two,Level_Three, etc.  <a href="#ae251f9e7e5faace47e448a7ff6eb0f56">More...</a><br /></td></tr>
 <tr class="separator:ae251f9e7e5faace47e448a7ff6eb0f56"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1b5b654776a7621ae078964f4b953b97"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_dungeon_manager.html#a1b5b654776a7621ae078964f4b953b97">AddToTileList</a> (<a class="el" href="class_tile_mono_behavior.html">TileMonoBehavior</a> tile)</td></tr>
+<tr class="memdesc:a1b5b654776a7621ae078964f4b953b97"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes list of changed tiles and adds tiles to list when called.  <a href="#a1b5b654776a7621ae078964f4b953b97">More...</a><br /></td></tr>
 <tr class="separator:a1b5b654776a7621ae078964f4b953b97"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a11cb7aa60a3646841e27a6ce777655d4"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_dungeon_manager.html#a11cb7aa60a3646841e27a6ce777655d4">RemoveTiles</a> ()</td></tr>
+<tr class="memdesc:a11cb7aa60a3646841e27a6ce777655d4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reduces each tile's time in the list and removes tiles with no time left.  <a href="#a11cb7aa60a3646841e27a6ce777655d4">More...</a><br /></td></tr>
 <tr class="separator:a11cb7aa60a3646841e27a6ce777655d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a07a6e085a7710a013c4fb904e72c5e2e"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_dungeon_manager.html#a07a6e085a7710a013c4fb904e72c5e2e">AddToTurnOrder</a> (<a class="el" href="class_entity_controller.html">EntityController</a> controllerToAdd)</td></tr>
+<tr class="memdesc:a07a6e085a7710a013c4fb904e72c5e2e"><td class="mdescLeft">&#160;</td><td class="mdescRight">initializes Queue and adds a Controller to it used to make an <a class="el" href="class_entity_controller.html">EntityController</a> begin following TurnOrder conventions non-player entities will be added to the back of turn order, players will be added to front  <a href="#a07a6e085a7710a013c4fb904e72c5e2e">More...</a><br /></td></tr>
 <tr class="separator:a07a6e085a7710a013c4fb904e72c5e2e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acb0d5ad6f4027b49fd452eb1c39865cc"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_dungeon_manager.html#acb0d5ad6f4027b49fd452eb1c39865cc">RemoveFromTurnOrder</a> (<a class="el" href="class_entity_controller.html">EntityController</a> controller)</td></tr>
+<tr class="memdesc:acb0d5ad6f4027b49fd452eb1c39865cc"><td class="mdescLeft">&#160;</td><td class="mdescRight">precondition: if <a class="el" href="class_entity_controller.html">EntityController</a> is at front of list, it is <a class="el" href="class_entity_controller.html">EntityController</a>'s turn currently removes given <a class="el" href="class_entity_controller.html">EntityController</a> from turn order if able, taking it out of this class's scope also ends <a class="el" href="class_entity_controller.html">EntityController</a>'s turn if it is currently their turn  <a href="#acb0d5ad6f4027b49fd452eb1c39865cc">More...</a><br /></td></tr>
 <tr class="separator:acb0d5ad6f4027b49fd452eb1c39865cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7ac36763eca9a245a96df7febb51d38c"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_dungeon_manager.html#a7ac36763eca9a245a96df7febb51d38c">EndTurn</a> ()</td></tr>
+<tr class="memdesc:a7ac36763eca9a245a96df7febb51d38c"><td class="mdescLeft">&#160;</td><td class="mdescRight">precondition: turnOrder is a Queue of EntityControllers, no other objects exist in Queue ends current controller's turn and starts next controller's turn  <a href="#a7ac36763eca9a245a96df7febb51d38c">More...</a><br /></td></tr>
 <tr class="separator:a7ac36763eca9a245a96df7febb51d38c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5b11962ecec0590466c18cda7983e5d4"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_dungeon_manager.html#a5b11962ecec0590466c18cda7983e5d4">EmptyTurnOrder</a> ()</td></tr>
+<tr class="memdesc:a5b11962ecec0590466c18cda7983e5d4"><td class="mdescLeft">&#160;</td><td class="mdescRight">empties all objects in TurnOrder, dereferencing them  <a href="#a5b11962ecec0590466c18cda7983e5d4">More...</a><br /></td></tr>
 <tr class="separator:a5b11962ecec0590466c18cda7983e5d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
@@ -112,6 +121,7 @@ Public Attributes</h2></td></tr>
 <tr class="memitem:a18501b08183dbe204b8f282c05ddd558"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_dungeon_manager.html#a18501b08183dbe204b8f282c05ddd558">startDelay</a> = 2</td></tr>
 <tr class="separator:a18501b08183dbe204b8f282c05ddd558"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae0618d93c675668eb1c40469329675b4"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_dungeon_manager.html#ae0618d93c675668eb1c40469329675b4">feedback_game_started</a> = false</td></tr>
+<tr class="memdesc:ae0618d93c675668eb1c40469329675b4"><td class="mdescLeft">&#160;</td><td class="mdescRight">allows any entity to quickly and easily access turn order, level changing, etc.  <a href="#ae0618d93c675668eb1c40469329675b4">More...</a><br /></td></tr>
 <tr class="separator:ae0618d93c675668eb1c40469329675b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-attribs"></a>
@@ -119,8 +129,10 @@ Static Public Attributes</h2></td></tr>
 <tr class="memitem:a9731007db2faa4d73e67e92ae4b40fd1"><td class="memItemLeft" align="right" valign="top">static LinkedList&lt; <a class="el" href="class_entity_controller.html">EntityController</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_dungeon_manager.html#a9731007db2faa4d73e67e92ae4b40fd1">turnOrder</a></td></tr>
 <tr class="separator:a9731007db2faa4d73e67e92ae4b40fd1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afd700693cf245e4b1e1347c57a70e55c"><td class="memItemLeft" align="right" valign="top">static List&lt; <a class="el" href="class_tile_mono_behavior.html">TileMonoBehavior</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_dungeon_manager.html#afd700693cf245e4b1e1347c57a70e55c">oddTiles</a></td></tr>
+<tr class="memdesc:afd700693cf245e4b1e1347c57a70e55c"><td class="mdescLeft">&#160;</td><td class="mdescRight">when a controller finishes acting, it tells <a class="el" href="class_dungeon_manager.html">DungeonManager</a> that its turn is finished, and <a class="el" href="class_dungeon_manager.html">DungeonManager</a> grabs next actor in Queue and calls its StartTurn method  <a href="#afd700693cf245e4b1e1347c57a70e55c">More...</a><br /></td></tr>
 <tr class="separator:afd700693cf245e4b1e1347c57a70e55c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aeed79258dbd6beee2a30e52a4fdd91e9"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="class_dungeon_manager.html">DungeonManager</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_dungeon_manager.html#aeed79258dbd6beee2a30e52a4fdd91e9">theManager</a></td></tr>
+<tr class="memdesc:aeed79258dbd6beee2a30e52a4fdd91e9"><td class="mdescLeft">&#160;</td><td class="mdescRight">time in seconds before Turn Order goes into effect  <a href="#aeed79258dbd6beee2a30e52a4fdd91e9">More...</a><br /></td></tr>
 <tr class="separator:aeed79258dbd6beee2a30e52a4fdd91e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Member Function Documentation</h2>
@@ -148,6 +160,8 @@ Static Public Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Initializes list of changed tiles and adds tiles to list when called. </p>
+
 </div>
 </div>
 <a id="a07a6e085a7710a013c4fb904e72c5e2e"></a>
@@ -174,6 +188,8 @@ Static Public Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>initializes Queue and adds a Controller to it used to make an <a class="el" href="class_entity_controller.html">EntityController</a> begin following TurnOrder conventions non-player entities will be added to the back of turn order, players will be added to front </p>
+
 </div>
 </div>
 <a id="a5b11962ecec0590466c18cda7983e5d4"></a>
@@ -199,6 +215,8 @@ Static Public Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>empties all objects in TurnOrder, dereferencing them </p>
+
 </div>
 </div>
 <a id="a7ac36763eca9a245a96df7febb51d38c"></a>
@@ -223,6 +241,8 @@ Static Public Attributes</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>precondition: turnOrder is a Queue of EntityControllers, no other objects exist in Queue ends current controller's turn and starts next controller's turn </p>
 
 </div>
 </div>
@@ -250,6 +270,9 @@ Static Public Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>depending on the provided index, goes to the level named with that index IE: Level_One,Level_Two,Level_Three, etc. </p>
+<p>defaults to loading Level_One if out of bounds </p>
+
 </div>
 </div>
 <a id="a1065ea37510348a3883091c64b279462"></a>
@@ -266,6 +289,8 @@ Static Public Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>precondition: menu level uses index 0 or default case in <a class="el" href="class_dungeon_manager.html#ae251f9e7e5faace47e448a7ff6eb0f56" title="depending on the provided index, goes to the level named with that index IE: Level_One,Level_Two,Level_Three, etc. ">GoToLevel()</a> calls GoToLevel with given Level number </p>
 
 </div>
 </div>
@@ -309,6 +334,8 @@ Static Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>removes static reference to this object to prevent garbage collection cleanup everything about current level to wait for next level to start </p>
+
 </div>
 </div>
 <a id="acb0d5ad6f4027b49fd452eb1c39865cc"></a>
@@ -335,6 +362,8 @@ Static Public Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>precondition: if <a class="el" href="class_entity_controller.html">EntityController</a> is at front of list, it is <a class="el" href="class_entity_controller.html">EntityController</a>'s turn currently removes given <a class="el" href="class_entity_controller.html">EntityController</a> from turn order if able, taking it out of this class's scope also ends <a class="el" href="class_entity_controller.html">EntityController</a>'s turn if it is currently their turn </p>
+
 </div>
 </div>
 <a id="a11cb7aa60a3646841e27a6ce777655d4"></a>
@@ -359,6 +388,8 @@ Static Public Attributes</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Reduces each tile's time in the list and removes tiles with no time left. </p>
 
 </div>
 </div>
@@ -394,6 +425,8 @@ Static Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>allows any entity to quickly and easily access turn order, level changing, etc. </p>
+
 </div>
 </div>
 <a id="afd700693cf245e4b1e1347c57a70e55c"></a>
@@ -415,6 +448,8 @@ Static Public Attributes</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>when a controller finishes acting, it tells <a class="el" href="class_dungeon_manager.html">DungeonManager</a> that its turn is finished, and <a class="el" href="class_dungeon_manager.html">DungeonManager</a> grabs next actor in Queue and calls its StartTurn method </p>
 
 </div>
 </div>
@@ -452,6 +487,8 @@ Static Public Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>time in seconds before Turn Order goes into effect </p>
+
 </div>
 </div>
 <a id="a9731007db2faa4d73e67e92ae4b40fd1"></a>
@@ -477,12 +514,12 @@ Static Public Attributes</h2></td></tr>
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>D:/School/EECS 448/Projects/project04/branches/GameLogic/Wizard Needs Matches/Assets/Resources/Scripts/<a class="el" href="_dungeon_manager_8cs.html">DungeonManager.cs</a></li>
+<li>D:/School/EECS 448/Projects/project04/trunk/Wizard Needs Matches/Assets/Resources/Scripts/<a class="el" href="_dungeon_manager_8cs.html">DungeonManager.cs</a></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Dec 14 2016 01:17:45 for Wizard Needs Matches by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed Dec 14 2016 12:05:59 for Wizard Needs Matches by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.12
 </small></address>

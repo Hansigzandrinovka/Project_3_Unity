@@ -84,11 +84,13 @@ Public Types</h2></td></tr>
 <a class="el" href="class_entity.html#ab7da4ca6aebbcc96bd6a6c1526ab59baa74e8333ad11685ff3bdae589c8f6e34d">MoveDirection.down</a> = 1, 
 <a class="el" href="class_entity.html#ab7da4ca6aebbcc96bd6a6c1526ab59baa811882fecd5c7618d7099ebbd39ea254">MoveDirection.left</a> = 2, 
 <a class="el" href="class_entity.html#ab7da4ca6aebbcc96bd6a6c1526ab59baa7c4f29407893c334a6cb7a87bf045c0d">MoveDirection.right</a> = 3
- }</td></tr>
+ }<tr class="memdesc:ab7da4ca6aebbcc96bd6a6c1526ab59ba"><td class="mdescLeft">&#160;</td><td class="mdescRight">speed with which a projectile travels through the dungeon  <a href="class_entity.html#ab7da4ca6aebbcc96bd6a6c1526ab59ba">More...</a><br /></td></tr>
+</td></tr>
 <tr class="separator:ab7da4ca6aebbcc96bd6a6c1526ab59ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a494cbb9e52dbe9cff32f63a45066901d"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_entity.html#a494cbb9e52dbe9cff32f63a45066901d">DamageType</a> { <a class="el" href="class_entity.html#a494cbb9e52dbe9cff32f63a45066901da2ce38df400a5238edd7392aebf7cebe8">DamageType.poking</a>, 
 <a class="el" href="class_entity.html#a494cbb9e52dbe9cff32f63a45066901daa985c9764e0e6d738ff20f2328a0644b">DamageType.burn</a>
- }</td></tr>
+ }<tr class="memdesc:a494cbb9e52dbe9cff32f63a45066901d"><td class="mdescLeft">&#160;</td><td class="mdescRight">the direction player wishes to move for the purpose of Move function  <a href="class_entity.html#a494cbb9e52dbe9cff32f63a45066901d">More...</a><br /></td></tr>
+</td></tr>
 <tr class="separator:a494cbb9e52dbe9cff32f63a45066901d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
@@ -98,45 +100,61 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a8e8b8d948e070d8b223375a5a58029a4"><td class="memItemLeft" align="right" valign="top">delegate void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_entity.html#a8e8b8d948e070d8b223375a5a58029a4">TurnReadyListener</a> ()</td></tr>
 <tr class="separator:a8e8b8d948e070d8b223375a5a58029a4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a38985eb127db7177b924f32615f44209"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_entity.html#a38985eb127db7177b924f32615f44209">Start</a> ()</td></tr>
+<tr class="memdesc:a38985eb127db7177b924f32615f44209"><td class="mdescLeft">&#160;</td><td class="mdescRight">the types of damage that an entity can take for the purpose of the TakeDamage function  <a href="#a38985eb127db7177b924f32615f44209">More...</a><br /></td></tr>
 <tr class="separator:a38985eb127db7177b924f32615f44209"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3ffc65797bd56ad0ffa1767d46fd759a"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_entity.html#a3ffc65797bd56ad0ffa1767d46fd759a">GetRemainingSpeed</a> ()</td></tr>
+<tr class="memdesc:a3ffc65797bd56ad0ffa1767d46fd759a"><td class="mdescLeft">&#160;</td><td class="mdescRight">returns remainingSpeed  <a href="#a3ffc65797bd56ad0ffa1767d46fd759a">More...</a><br /></td></tr>
 <tr class="separator:a3ffc65797bd56ad0ffa1767d46fd759a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a07e92b6ed61d99b549898220123614ed"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_entity.html#a07e92b6ed61d99b549898220123614ed">SetUIHealthChangeListener</a> (<a class="el" href="class_entity.html#a89b93797e83eabc71be430c115ddc921">HealthChangeListener</a> x)</td></tr>
+<tr class="memdesc:a07e92b6ed61d99b549898220123614ed"><td class="mdescLeft">&#160;</td><td class="mdescRight">configures this <a class="el" href="class_entity.html">Entity</a>'s HealthChangeListener to be the method provided, so that the provided method will be called whenever this <a class="el" href="class_entity.html">Entity</a>'s health changes  <a href="#a07e92b6ed61d99b549898220123614ed">More...</a><br /></td></tr>
 <tr class="separator:a07e92b6ed61d99b549898220123614ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a14f5e4d8a6a65433d43b99bca8aa5f7c"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_entity.html#a14f5e4d8a6a65433d43b99bca8aa5f7c">OnRefresh</a> ()</td></tr>
+<tr class="memdesc:a14f5e4d8a6a65433d43b99bca8aa5f7c"><td class="mdescLeft">&#160;</td><td class="mdescRight">refresh updates anything that happens at the beginning of the turn for an <a class="el" href="class_entity.html">Entity</a>: ie remaining speed = speed, remainingDelay&ndash;, switch sprite to "Awake" state, etc.  <a href="#a14f5e4d8a6a65433d43b99bca8aa5f7c">More...</a><br /></td></tr>
 <tr class="separator:a14f5e4d8a6a65433d43b99bca8aa5f7c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a796eebcbbcaecfd99fdcc986a553593c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_entity.html#a796eebcbbcaecfd99fdcc986a553593c">OnDeplete</a> ()</td></tr>
+<tr class="memdesc:a796eebcbbcaecfd99fdcc986a553593c"><td class="mdescLeft">&#160;</td><td class="mdescRight">updates anything that happens at the end of an <a class="el" href="class_entity.html">Entity</a>'s turn: (including when they are unable to act) ie remaining speed = 0, switch sprite to "Asleep" state, deal "Standing in Fire" damage, decrease remaining time on "Shield" buff  <a href="#a796eebcbbcaecfd99fdcc986a553593c">More...</a><br /></td></tr>
 <tr class="separator:a796eebcbbcaecfd99fdcc986a553593c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7df6ef9178c809aef923594dd3de7c7f"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_entity.html#a7df6ef9178c809aef923594dd3de7c7f">CastSpell</a> (int spellIndex)</td></tr>
+<tr class="memdesc:a7df6ef9178c809aef923594dd3de7c7f"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="class_entity.html">Entity</a> attempts to cast a spell if it knows it, if not, it doesn't do anything.  <a href="#a7df6ef9178c809aef923594dd3de7c7f">More...</a><br /></td></tr>
 <tr class="separator:a7df6ef9178c809aef923594dd3de7c7f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acfcb31b2b1aa05466d3cc25149a000da"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_entity.html#acfcb31b2b1aa05466d3cc25149a000da">TakeDamage</a> (int amount, <a class="el" href="class_entity.html#a494cbb9e52dbe9cff32f63a45066901d">DamageType</a> type)</td></tr>
 <tr class="separator:acfcb31b2b1aa05466d3cc25149a000da"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab02913ff74bc4d0e3193d5d3242ca1a0"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_entity.html#ab02913ff74bc4d0e3193d5d3242ca1a0">WillAttack</a> (<a class="el" href="class_entity.html#ab7da4ca6aebbcc96bd6a6c1526ab59ba">MoveDirection</a> givenDirection)</td></tr>
+<tr class="memdesc:ab02913ff74bc4d0e3193d5d3242ca1a0"><td class="mdescLeft">&#160;</td><td class="mdescRight">returns true if this entity moving in given direction would initiate an attack instead of shifting spaces returns false otherwise  <a href="#ab02913ff74bc4d0e3193d5d3242ca1a0">More...</a><br /></td></tr>
 <tr class="separator:ab02913ff74bc4d0e3193d5d3242ca1a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a401d39b16b8fedae1e5aa36b390b5cee"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_entity.html#a401d39b16b8fedae1e5aa36b390b5cee">Move</a> (<a class="el" href="class_entity.html#ab7da4ca6aebbcc96bd6a6c1526ab59ba">MoveDirection</a> givenDirection)</td></tr>
+<tr class="memdesc:a401d39b16b8fedae1e5aa36b390b5cee"><td class="mdescLeft">&#160;</td><td class="mdescRight">tries to move this entity in direction, returns false on fail if an <a class="el" href="class_entity.html">Entity</a> is already in the tile, this <a class="el" href="class_entity.html">Entity</a> will attempt to attack it rather than move fail can be because out of movement, or because not this entity's turn  <a href="#a401d39b16b8fedae1e5aa36b390b5cee">More...</a><br /></td></tr>
 <tr class="separator:a401d39b16b8fedae1e5aa36b390b5cee"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adb81048c8e6e13d22025b2a881cad9dc"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_entity.html#adb81048c8e6e13d22025b2a881cad9dc">Rotate</a> (<a class="el" href="class_entity.html#ab7da4ca6aebbcc96bd6a6c1526ab59ba">MoveDirection</a> direction)</td></tr>
+<tr class="memdesc:adb81048c8e6e13d22025b2a881cad9dc"><td class="mdescLeft">&#160;</td><td class="mdescRight">attempts to rotate <a class="el" href="class_entity.html">Entity</a> to face a new direction specified as input rotates <a class="el" href="class_entity.html">Entity</a> by turning the Facing sprite and updating facing direction returns true if command was successful, false if unable to (ie not enough move)  <a href="#adb81048c8e6e13d22025b2a881cad9dc">More...</a><br /></td></tr>
 <tr class="separator:adb81048c8e6e13d22025b2a881cad9dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad1fa5d48c8186a46078a64e71762889a"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_entity.html#ad1fa5d48c8186a46078a64e71762889a">Rotate</a> (bool turnLeft)</td></tr>
+<tr class="memdesc:ad1fa5d48c8186a46078a64e71762889a"><td class="mdescLeft">&#160;</td><td class="mdescRight">mimics Rotate(direction) where next direction is determined by current direction and turnLeft if turnLeft is true, next direction is counterclockwise of current direction, else is clockwise  <a href="#ad1fa5d48c8186a46078a64e71762889a">More...</a><br /></td></tr>
 <tr class="separator:ad1fa5d48c8186a46078a64e71762889a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4c0acc281ca8af71e7b904bb76973536"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_entity.html#a4c0acc281ca8af71e7b904bb76973536">goToTile</a> (<a class="el" href="class_tile_mono_behavior.html">TileMonoBehavior</a> newTile)</td></tr>
+<tr class="memdesc:a4c0acc281ca8af71e7b904bb76973536"><td class="mdescLeft">&#160;</td><td class="mdescRight">precondition: newTile does not have an occupying <a class="el" href="class_entity.html">Entity</a>, or occupying <a class="el" href="class_entity.html">Entity</a> must be garbage collected moves this Enity to the specified Tile and begins tracking it assumes it is already possible for <a class="el" href="class_entity.html">Entity</a> to move to designated Tile (tile is walkable, not occupied)  <a href="#a4c0acc281ca8af71e7b904bb76973536">More...</a><br /></td></tr>
 <tr class="separator:a4c0acc281ca8af71e7b904bb76973536"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afb10403e14873605974a9d61f6cc5001"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_entity.html#afb10403e14873605974a9d61f6cc5001">Die</a> ()</td></tr>
+<tr class="memdesc:afb10403e14873605974a9d61f6cc5001"><td class="mdescLeft">&#160;</td><td class="mdescRight">handles any needed Death mechanics (remove buffs,debuffs,drop money, etc.)  <a href="#afb10403e14873605974a9d61f6cc5001">More...</a><br /></td></tr>
 <tr class="separator:afb10403e14873605974a9d61f6cc5001"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
 <tr class="memitem:af0b1eb2e2922353832f654e6d07bae97"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_entity.html#af0b1eb2e2922353832f654e6d07bae97">maxHealth</a> = 10</td></tr>
+<tr class="memdesc:af0b1eb2e2922353832f654e6d07bae97"><td class="mdescLeft">&#160;</td><td class="mdescRight">the listener associated with Turn Order and deciding what to do, Controllers will  <a href="#af0b1eb2e2922353832f654e6d07bae97">More...</a><br /></td></tr>
 <tr class="separator:af0b1eb2e2922353832f654e6d07bae97"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a438bc0d8c93f1f580d282c93e4ef832e"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_entity.html#a438bc0d8c93f1f580d282c93e4ef832e">currentHealth</a> = 7</td></tr>
 <tr class="separator:a438bc0d8c93f1f580d282c93e4ef832e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac24f79991f6047ccfe8a2d3cfc4dbdf3"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_entity.html#ac24f79991f6047ccfe8a2d3cfc4dbdf3">speed</a> = 1</td></tr>
 <tr class="separator:ac24f79991f6047ccfe8a2d3cfc4dbdf3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a37189fffb5380810d6948f75cee0a653"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_entity.html#a37189fffb5380810d6948f75cee0a653">delay</a> = 0</td></tr>
+<tr class="memdesc:a37189fffb5380810d6948f75cee0a653"><td class="mdescLeft">&#160;</td><td class="mdescRight">number of remaining actions entity can take  <a href="#a37189fffb5380810d6948f75cee0a653">More...</a><br /></td></tr>
 <tr class="separator:a37189fffb5380810d6948f75cee0a653"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af0e041d013498c1f65b0187e52af1f6c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_tile_mono_behavior.html">TileMonoBehavior</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_entity.html#af0e041d013498c1f65b0187e52af1f6c">occupyingTile</a></td></tr>
+<tr class="memdesc:af0e041d013498c1f65b0187e52af1f6c"><td class="mdescLeft">&#160;</td><td class="mdescRight">number of remaining turns before next action  <a href="#af0e041d013498c1f65b0187e52af1f6c">More...</a><br /></td></tr>
 <tr class="separator:af0e041d013498c1f65b0187e52af1f6c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9cab2e3639b830abaf4b6172ea80ff7e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_entity.html#ab7da4ca6aebbcc96bd6a6c1526ab59ba">MoveDirection</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_entity.html#a9cab2e3639b830abaf4b6172ea80ff7e">facing</a> = <a class="el" href="class_entity.html#ab7da4ca6aebbcc96bd6a6c1526ab59baa46c48bec0d282018b9d167eef7711b2c">MoveDirection.up</a></td></tr>
+<tr class="memdesc:a9cab2e3639b830abaf4b6172ea80ff7e"><td class="mdescLeft">&#160;</td><td class="mdescRight">the tile this entity stands on, and its entry point into moving around on the board  <a href="#a9cab2e3639b830abaf4b6172ea80ff7e">More...</a><br /></td></tr>
 <tr class="separator:a9cab2e3639b830abaf4b6172ea80ff7e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2c69049d65cb8b242cc808c52c0a9f47"><td class="memItemLeft" align="right" valign="top">GameObject&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_entity.html#a2c69049d65cb8b242cc808c52c0a9f47">spriteForFacing</a></td></tr>
 <tr class="separator:a2c69049d65cb8b242cc808c52c0a9f47"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -147,13 +165,16 @@ Public Attributes</h2></td></tr>
 <tr class="memitem:a334e49747a7a3361c7f7f47fb0eade45"><td class="memItemLeft" align="right" valign="top">GameObject&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_entity.html#a334e49747a7a3361c7f7f47fb0eade45">Spell</a></td></tr>
 <tr class="separator:a334e49747a7a3361c7f7f47fb0eade45"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3d2728593e156968bdecf8b34a6454a6"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_entity.html#a3d2728593e156968bdecf8b34a6454a6">castSpeed</a> = 1</td></tr>
+<tr class="memdesc:a3d2728593e156968bdecf8b34a6454a6"><td class="mdescLeft">&#160;</td><td class="mdescRight">the prefab associated with casting a particular spell  <a href="#a3d2728593e156968bdecf8b34a6454a6">More...</a><br /></td></tr>
 <tr class="separator:a3d2728593e156968bdecf8b34a6454a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
 <tr class="memitem:afc630962bfbf025c4d0107551b6d952a"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_entity.html#afc630962bfbf025c4d0107551b6d952a">remainingSpeed</a> = 1</td></tr>
+<tr class="memdesc:afc630962bfbf025c4d0107551b6d952a"><td class="mdescLeft">&#160;</td><td class="mdescRight">number of actions entity can perform on a given turn  <a href="#afc630962bfbf025c4d0107551b6d952a">More...</a><br /></td></tr>
 <tr class="separator:afc630962bfbf025c4d0107551b6d952a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a87fb327066ab913832b41b481420024a"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_entity.html#a87fb327066ab913832b41b481420024a">remainingDelay</a></td></tr>
+<tr class="memdesc:a87fb327066ab913832b41b481420024a"><td class="mdescLeft">&#160;</td><td class="mdescRight">number of turns entity must forfeit after an action before resuming action  <a href="#a87fb327066ab913832b41b481420024a">More...</a><br /></td></tr>
 <tr class="separator:a87fb327066ab913832b41b481420024a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Member Enumeration Documentation</h2>
@@ -176,6 +197,8 @@ Protected Attributes</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>the direction player wishes to move for the purpose of Move function </p>
 <table class="fieldtable">
 <tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a494cbb9e52dbe9cff32f63a45066901da2ce38df400a5238edd7392aebf7cebe8"></a>poking&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="a494cbb9e52dbe9cff32f63a45066901daa985c9764e0e6d738ff20f2328a0644b"></a>burn&#160;</td><td class="fielddoc"></td></tr>
@@ -202,6 +225,8 @@ Protected Attributes</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>speed with which a projectile travels through the dungeon </p>
 <table class="fieldtable">
 <tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ab7da4ca6aebbcc96bd6a6c1526ab59baa46c48bec0d282018b9d167eef7711b2c"></a>up&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="ab7da4ca6aebbcc96bd6a6c1526ab59baa74e8333ad11685ff3bdae589c8f6e34d"></a>down&#160;</td><td class="fielddoc"></td></tr>
@@ -236,6 +261,8 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p><a class="el" href="class_entity.html">Entity</a> attempts to cast a spell if it knows it, if not, it doesn't do anything. </p>
+
 </div>
 </div>
 <a id="afb10403e14873605974a9d61f6cc5001"></a>
@@ -252,6 +279,8 @@ Protected Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>handles any needed Death mechanics (remove buffs,debuffs,drop money, etc.) </p>
 
 </div>
 </div>
@@ -270,6 +299,8 @@ Protected Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>returns remainingSpeed </p>
+
 </div>
 </div>
 <a id="a4c0acc281ca8af71e7b904bb76973536"></a>
@@ -287,6 +318,8 @@ Protected Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>precondition: newTile does not have an occupying <a class="el" href="class_entity.html">Entity</a>, or occupying <a class="el" href="class_entity.html">Entity</a> must be garbage collected moves this Enity to the specified Tile and begins tracking it assumes it is already possible for <a class="el" href="class_entity.html">Entity</a> to move to designated Tile (tile is walkable, not occupied) </p>
 
 </div>
 </div>
@@ -332,6 +365,8 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>tries to move this entity in direction, returns false on fail if an <a class="el" href="class_entity.html">Entity</a> is already in the tile, this <a class="el" href="class_entity.html">Entity</a> will attempt to attack it rather than move fail can be because out of movement, or because not this entity's turn </p>
+
 </div>
 </div>
 <a id="a796eebcbbcaecfd99fdcc986a553593c"></a>
@@ -349,6 +384,8 @@ Protected Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>updates anything that happens at the end of an <a class="el" href="class_entity.html">Entity</a>'s turn: (including when they are unable to act) ie remaining speed = 0, switch sprite to "Asleep" state, deal "Standing in Fire" damage, decrease remaining time on "Shield" buff </p>
+
 </div>
 </div>
 <a id="a14f5e4d8a6a65433d43b99bca8aa5f7c"></a>
@@ -365,6 +402,9 @@ Protected Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>refresh updates anything that happens at the beginning of the turn for an <a class="el" href="class_entity.html">Entity</a>: ie remaining speed = speed, remainingDelay&ndash;, switch sprite to "Awake" state, etc. </p>
+<p>returns false if <a class="el" href="class_entity.html">Entity</a> cannot act this turn, ie remainingDelay &gt;= 1, <a class="el" href="class_entity.html">Entity</a> is Frozen or otherwise incapable of action </p>
 
 </div>
 </div>
@@ -392,6 +432,8 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>attempts to rotate <a class="el" href="class_entity.html">Entity</a> to face a new direction specified as input rotates <a class="el" href="class_entity.html">Entity</a> by turning the Facing sprite and updating facing direction returns true if command was successful, false if unable to (ie not enough move) </p>
+
 </div>
 </div>
 <a id="ad1fa5d48c8186a46078a64e71762889a"></a>
@@ -418,6 +460,8 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>mimics Rotate(direction) where next direction is determined by current direction and turnLeft if turnLeft is true, next direction is counterclockwise of current direction, else is clockwise </p>
+
 </div>
 </div>
 <a id="a07e92b6ed61d99b549898220123614ed"></a>
@@ -435,6 +479,8 @@ Protected Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>configures this <a class="el" href="class_entity.html">Entity</a>'s HealthChangeListener to be the method provided, so that the provided method will be called whenever this <a class="el" href="class_entity.html">Entity</a>'s health changes </p>
 
 </div>
 </div>
@@ -460,6 +506,9 @@ Protected Attributes</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>the types of damage that an entity can take for the purpose of the TakeDamage function </p>
+<p>On Start, <a class="el" href="class_entity.html">Entity</a> attempts to bind itself to the Tile underneath it on fail, <a class="el" href="class_entity.html">Entity</a> destroys itself </p>
 
 </div>
 </div>
@@ -532,6 +581,8 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>returns true if this entity moving in given direction would initiate an attack instead of shifting spaces returns false otherwise </p>
+
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>
@@ -560,6 +611,8 @@ Protected Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>the prefab associated with casting a particular spell </p>
 
 </div>
 </div>
@@ -603,6 +656,8 @@ Protected Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>number of remaining actions entity can take </p>
+
 </div>
 </div>
 <a id="a9cab2e3639b830abaf4b6172ea80ff7e"></a>
@@ -616,6 +671,8 @@ Protected Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>the tile this entity stands on, and its entry point into moving around on the board </p>
 
 </div>
 </div>
@@ -631,6 +688,8 @@ Protected Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>the listener associated with Turn Order and deciding what to do, Controllers will </p>
+
 </div>
 </div>
 <a id="af0e041d013498c1f65b0187e52af1f6c"></a>
@@ -644,6 +703,8 @@ Protected Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>number of remaining turns before next action </p>
 
 </div>
 </div>
@@ -667,6 +728,8 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>number of turns entity must forfeit after an action before resuming action </p>
+
 </div>
 </div>
 <a id="afc630962bfbf025c4d0107551b6d952a"></a>
@@ -688,6 +751,8 @@ Protected Attributes</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>number of actions entity can perform on a given turn </p>
 
 </div>
 </div>
@@ -734,12 +799,12 @@ Protected Attributes</h2></td></tr>
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>D:/School/EECS 448/Projects/project04/branches/GameLogic/Wizard Needs Matches/Assets/Resources/Scripts/<a class="el" href="_entity_8cs.html">Entity.cs</a></li>
+<li>D:/School/EECS 448/Projects/project04/trunk/Wizard Needs Matches/Assets/Resources/Scripts/<a class="el" href="_entity_8cs.html">Entity.cs</a></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Dec 14 2016 01:17:45 for Wizard Needs Matches by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed Dec 14 2016 12:05:59 for Wizard Needs Matches by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.12
 </small></address>

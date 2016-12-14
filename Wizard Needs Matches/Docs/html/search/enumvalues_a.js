@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['regular',['regular',['../classspell_controller.html#a2d438c0916fc36e8fcf2defae27beeeaaaf37d08ae228a87dc6b265fd1019c97d',1,'spellController']]],
-  ['right',['right',['../class_entity.html#ab7da4ca6aebbcc96bd6a6c1526ab59baa7c4f29407893c334a6cb7a87bf045c0d',1,'Entity']]]
+  ['wall',['wall',['../class_tile_mono_behavior.html#a2adba50a992f43a518f01fb9c7d4070ea2d86bdac01a3315b95794ffa7360edc3',1,'TileMonoBehavior']]]
 ];

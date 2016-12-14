@@ -1,14 +1,16 @@
 using UnityEngine;
 using System.Collections;
-
+/**
+ * Holds all the monster moving decisions
+ **/
 public class monster : EntityController
 {
 	
 	private float clock = 0;
 	private static readonly float initialInputTime = .5f; ///<the total that inputTime is a fraction of>
 	public static float inputTime = 1; ///<tracks how much time each monster takes to perform its turn>
-	public static int numMonsters = 0; ///<tracks number of instances of this class in existence, reduces input time so that really large amounts of monsters won't eat up wait time as bad>
-	enum EntVecVal { distX, distY, distG, entDir, prevX, prevY, upDatePos };///< Distance to player in X, Y, and Grid, and direction>
+	public static int numMonsters = 0; ///<tracks number of instances of this class in existence, reduces input time so that really large amounts of monsters wont eat up wait time as bad>
+	enum EntVecVal { distX, distY, distG, entDir, prevX, prevY, upDatePos };/// Distance to player in X, Y, and Grid, and direction
 	/**
 	 * Compass layout to help decide where player is (16 directions)
 	 **/
@@ -59,7 +61,8 @@ public class monster : EntityController
 		clock = 0;
 	}
 	
-	// Update is called once per frame
+	/// Every update get the distance to the player. If within monster sense, move intelligently.
+	/// If not, wander or get forced into stillness
 	void Update ()
 	{
 		if ((clock >= inputTime) && canAct)
@@ -88,7 +91,9 @@ public class monster : EntityController
 			clock += Time.deltaTime;
 		}
 	}
-
+	/// <summary>
+	/// Raises the destroy event and deletes the dead monster
+	/// </summary>
 	void OnDestroy()
 	{
         base.OnDestroy();

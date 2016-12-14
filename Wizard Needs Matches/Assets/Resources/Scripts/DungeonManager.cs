@@ -6,14 +6,14 @@ public class DungeonManager : MonoBehaviour {
 
     //public GameObject[] tileset; //holds Prefabs used to tile room
     public static LinkedList<EntityController> turnOrder; //holds all EntityControllers that can act
-    //when a controller finishes acting, it tells DungeonManager that its turn is finished, and DungeonManager grabs next actor in Queue and calls its StartTurn method
+    ///when a controller finishes acting, it tells DungeonManager that its turn is finished, and DungeonManager grabs next actor in Queue and calls its StartTurn method
     //private static int typicalListCapacity = 20;
 	
-	public static List<TileMonoBehavior> oddTiles; //Contains tiles which have been affected by spells
-    private static int levelNumber = 0; //the initial index to set current level to
+	public static List<TileMonoBehavior> oddTiles; ///Contains tiles which have been affected by spells
+    private static int levelNumber = 0; ///the initial index to set current level to
     private static bool gameStarted = false;
-	public int startDelay = 2; //time in seconds before Turn Order goes into effect
-    public static DungeonManager theManager; //allows any entity to quickly and easily access turn order, level changing, etc.
+	public int startDelay = 2; ///time in seconds before Turn Order goes into effect
+    public static DungeonManager theManager; ///allows any entity to quickly and easily access turn order, level changing, etc.
 
     public bool feedback_game_started = false;
 
@@ -33,8 +33,8 @@ public class DungeonManager : MonoBehaviour {
 //        Debug.Log("Level Number is " + levelNumber);
     }
 
-    //depending on the provided index, goes to the level named with that index IE: Level_One,Level_Two,Level_Three, etc.
-    //defaults to loading Level_One if out of bounds
+    ///depending on the provided index, goes to the level named with that index IE: Level_One,Level_Two,Level_Three, etc.
+    ///defaults to loading Level_One if out of bounds
     public static void GoToLevel(int index)
     {
         Debug.Log("Changing Levels");
@@ -63,15 +63,15 @@ public class DungeonManager : MonoBehaviour {
         }
     }
 
-    //precondition: menu level uses index 0 or default case in GoToLevel()
-    //calls GoToLevel with given Level number
+    ///precondition: menu level uses index 0 or default case in GoToLevel()
+    ///calls GoToLevel with given Level number
     public void GoToNextLevel()
     {
         GoToLevel(levelNumber + 1);
     }
 
-    //removes static reference to this object to prevent garbage collection
-    //cleanup everything about current level to wait for next level to start
+    ///removes static reference to this object to prevent garbage collection
+    ///cleanup everything about current level to wait for next level to start
     public void OnDestroy()
     {
         theManager = null;
@@ -86,7 +86,7 @@ public class DungeonManager : MonoBehaviour {
         }*/
     }
 
-    //Initializes list of changed tiles and adds tiles to list when called
+    ///Initializes list of changed tiles and adds tiles to list when called
     public static void AddToTileList(TileMonoBehavior tile)
 	{
 		Debug.Log("Adding tiles");
@@ -96,7 +96,7 @@ public class DungeonManager : MonoBehaviour {
 		}
 		oddTiles.Add(tile);
 	}
-	//Reduces each tile's time in the list and removes tiles with no time left
+	///Reduces each tile's time in the list and removes tiles with no time left
 	public static void RemoveTiles()
 	{
 		foreach(TileMonoBehavior tile in oddTiles)
@@ -105,7 +105,7 @@ public class DungeonManager : MonoBehaviour {
 		}
 		oddTiles.RemoveAll(getRevertingTiles);
 	}
-	//Changes tile back to default material if needed and returns reverting tiles back to RemoveAll function
+	///Changes tile back to default material if needed and returns reverting tiles back to RemoveAll function
 	private static bool getRevertingTiles(TileMonoBehavior tile)
 	{
 		if(tile.timeToRevert == 0)
@@ -116,9 +116,10 @@ public class DungeonManager : MonoBehaviour {
 		return(tile.timeToRevert == 0);
 	}
 
-    //initializes Queue and adds a Controller to it
-    //used to make an EntityController begin following TurnOrder conventions
-    //non-player entities will be added to the back of turn order, players will be added to front
+    /**initializes Queue and adds a Controller to it
+        used to make an EntityController begin following TurnOrder conventions
+        non-player entities will be added to the back of turn order, players will be added to front
+    **/
     public static void AddToTurnOrder(EntityController controllerToAdd)
     {
         //TODO: fancy Turn Order Logic
@@ -131,9 +132,11 @@ public class DungeonManager : MonoBehaviour {
 			turnOrder.AddLast(controllerToAdd);
     }
 
-    //precondition: if EntityController is at front of list, it is EntityController's turn currently
-	//removes given EntityController from turn order if able, taking it out of this class's scope
-    //also ends EntityController's turn if it is currently their turn
+    /**
+        precondition: if EntityController is at front of list, it is EntityController's turn currently
+	   removes given EntityController from turn order if able, taking it out of this class's scope
+        also ends EntityController's turn if it is currently their turn
+    **/
 	public static void RemoveFromTurnOrder(EntityController controller)
 	{
         
@@ -151,8 +154,10 @@ public class DungeonManager : MonoBehaviour {
         Debug.Log("Remaining entities: " + turnOrder.Count);
 	}
 
-    //precondition: turnOrder is a Queue of EntityControllers, no other objects exist in Queue
-    //ends current controller's turn and starts next controller's turn
+    /**
+        precondition: turnOrder is a Queue of EntityControllers, no other objects exist in Queue
+        ends current controller's turn and starts next controller's turn
+    **/
     public static void EndTurn()
     {
         if (turnOrder == null || turnOrder.Count == 0) //can't end turn for empty turn order (possible case when closing up everything for level transition)
@@ -174,7 +179,7 @@ public class DungeonManager : MonoBehaviour {
         }
     }
 
-    //empties all objects in TurnOrder, dereferencing them
+    ///empties all objects in TurnOrder, dereferencing them
     public static void EmptyTurnOrder()
     {
 		Debug.Log ("Emptying Turn Order");

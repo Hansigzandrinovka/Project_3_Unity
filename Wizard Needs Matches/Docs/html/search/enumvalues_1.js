@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['burn',['burn',['../class_entity.html#a494cbb9e52dbe9cff32f63a45066901daa985c9764e0e6d738ff20f2328a0644b',1,'Entity']]]
+  ['down',['down',['../class_entity.html#ab7da4ca6aebbcc96bd6a6c1526ab59baa74e8333ad11685ff3bdae589c8f6e34d',1,'Entity']]]
 ];

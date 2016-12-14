@@ -67,18 +67,24 @@ $(function() {
 <div class="title">ProceduralComponentConnector Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>holds references to everything that cannot be easily connected together before runtime because one or both components are generated at runtime (procedural generation) IE: Player GUI and Player character  
+ <a href="class_procedural_component_connector.html#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
 <tr class="memitem:a9a892ba50ee2b36bab21056436568012"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_procedural_component_connector.html#a9a892ba50ee2b36bab21056436568012">AllocatePlayerGUILink</a> (Slider health, Slider time, Slider energy)</td></tr>
+<tr class="memdesc:a9a892ba50ee2b36bab21056436568012"><td class="mdescLeft">&#160;</td><td class="mdescRight">the canvas that needs player information to render correctly  <a href="#a9a892ba50ee2b36bab21056436568012">More...</a><br /></td></tr>
 <tr class="separator:a9a892ba50ee2b36bab21056436568012"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad37ecc062bed9ad608efb4f9fbbb648f"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_procedural_component_connector.html#ad37ecc062bed9ad608efb4f9fbbb648f">AllocateGUICameraListener</a> (Canvas dungeonCanvas)</td></tr>
 <tr class="separator:ad37ecc062bed9ad608efb4f9fbbb648f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3049325c9ad7c65adbacb257012572d1"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_procedural_component_connector.html#a3049325c9ad7c65adbacb257012572d1">AllocateGUICameraListener</a> (<a class="el" href="class_test_player_controller.html">TestPlayerController</a> player)</td></tr>
 <tr class="separator:a3049325c9ad7c65adbacb257012572d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad83bcd3ece1f40fc126a9f2c58b169a5"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_procedural_component_connector.html#ad83bcd3ece1f40fc126a9f2c58b169a5">AllocatePlayerGUILink</a> (<a class="el" href="class_test_player_controller.html">TestPlayerController</a> player)</td></tr>
+<tr class="memdesc:ad83bcd3ece1f40fc126a9f2c58b169a5"><td class="mdescLeft">&#160;</td><td class="mdescRight">precondition: player != null stores PlayerController to link with eventual Sliders, or links PlayerController with Sliders if they are available  <a href="#ad83bcd3ece1f40fc126a9f2c58b169a5">More...</a><br /></td></tr>
 <tr class="separator:ad83bcd3ece1f40fc126a9f2c58b169a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a21a79149df230dbde32ac40d2e6c512d"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_procedural_component_connector.html#a21a79149df230dbde32ac40d2e6c512d">DeAllocate</a> ()</td></tr>
+<tr class="memdesc:a21a79149df230dbde32ac40d2e6c512d"><td class="mdescLeft">&#160;</td><td class="mdescRight">sets every component in the Connector to null, to allow garbage collecting of referenced objects  <a href="#a21a79149df230dbde32ac40d2e6c512d">More...</a><br /></td></tr>
 <tr class="separator:a21a79149df230dbde32ac40d2e6c512d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-attribs"></a>
@@ -86,7 +92,9 @@ Static Public Attributes</h2></td></tr>
 <tr class="memitem:a554823a85cabd79631e047204f4390c6"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_procedural_component_connector.html#a554823a85cabd79631e047204f4390c6">isUsed</a></td></tr>
 <tr class="separator:a554823a85cabd79631e047204f4390c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Member Function Documentation</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>holds references to everything that cannot be easily connected together before runtime because one or both components are generated at runtime (procedural generation) IE: Player GUI and Player character </p>
+</div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="ad37ecc062bed9ad608efb4f9fbbb648f"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ad37ecc062bed9ad608efb4f9fbbb648f">&sect;&nbsp;</a></span>AllocateGUICameraListener() <span class="overload">[1/2]</span></h2>
 
@@ -179,6 +187,9 @@ Static Public Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>the canvas that needs player information to render correctly </p>
+<p>precondition: health,time,energy != null </p>
+
 </div>
 </div>
 <a id="ad83bcd3ece1f40fc126a9f2c58b169a5"></a>
@@ -205,6 +216,8 @@ Static Public Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>precondition: player != null stores PlayerController to link with eventual Sliders, or links PlayerController with Sliders if they are available </p>
+
 </div>
 </div>
 <a id="a21a79149df230dbde32ac40d2e6c512d"></a>
@@ -229,6 +242,8 @@ Static Public Attributes</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>sets every component in the Connector to null, to allow garbage collecting of referenced objects </p>
 
 </div>
 </div>
@@ -256,12 +271,12 @@ Static Public Attributes</h2></td></tr>
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>D:/School/EECS 448/Projects/project04/branches/GameLogic/Wizard Needs Matches/Assets/Resources/Scripts/<a class="el" href="_procedural_component_connector_8cs.html">ProceduralComponentConnector.cs</a></li>
+<li>D:/School/EECS 448/Projects/project04/trunk/Wizard Needs Matches/Assets/Resources/Scripts/<a class="el" href="_procedural_component_connector_8cs.html">ProceduralComponentConnector.cs</a></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Dec 14 2016 01:17:45 for Wizard Needs Matches by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed Dec 14 2016 12:05:59 for Wizard Needs Matches by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.12
 </small></address>

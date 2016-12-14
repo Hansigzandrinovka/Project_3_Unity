@@ -2,15 +2,15 @@
 using System.Collections;
 
 public class EntityController : MonoBehaviour {
-    //is capable of ending its turn and performing actions on its Entity
-    //to be subclassed by Player or AI Controllers
+    ///is capable of ending its turn and performing actions on its Entity
+    ///to be subclassed by Player or AI Controllers
 
 
     protected Entity puppetEntity;
     protected bool canAct = false;
 	//public int initiative = 1;
 	
-	//tells DungeonManager if this Controller has priority when being placed into Turn Order (IE is player)
+	///tells DungeonManager if this Controller has priority when being placed into Turn Order (IE is player)
 	public virtual bool GoesFirst()
 	{
 		return false;
@@ -49,7 +49,7 @@ public class EntityController : MonoBehaviour {
 			enabled = false;
 		}
     }
-	//cleans up other references to this Object in Turn Order, etc.
+	///cleans up other references to this Object in Turn Order, etc.
 	virtual protected void OnDestroy()
 	{
 		canAct = false;

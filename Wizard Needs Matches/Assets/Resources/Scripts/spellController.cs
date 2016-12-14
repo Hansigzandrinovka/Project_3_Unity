@@ -4,7 +4,7 @@ using System.Collections;
 public class spellController : MonoBehaviour {
 	
 	public int damageCaused = 10;
-	public TileMonoBehavior occupyingTile; //the tile this entity stands on, and its entry point into moving around on the board
+	public TileMonoBehavior occupyingTile; ///the tile this entity stands on, and its entry point into moving around on the board
 	public enum spellType
 	{
 		regular,
@@ -20,10 +20,10 @@ public class spellController : MonoBehaviour {
 		defaultMaterial = GetComponent<SpriteRenderer>().material;
 	}
 	
-	// Update is called once per frame
-	//Change color of spell based on type
-	//Gets the tile beneath the spell and changes tile material based on spell type
-	//Spell is destroyed after hitting enemy or going off the board
+	/// Update is called once per frame
+	///Change color of spell based on type
+	///Gets the tile beneath the spell and changes tile material based on spell type
+	///Spell is destroyed after hitting enemy or going off the board
 	void Update () {
 		if(type == spellType.regular){
 			GetComponent<SpriteRenderer>().color = Color.white;
