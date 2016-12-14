@@ -1,0 +1,91 @@
+Initialize engine version: 5.1.0f3 (ec70b008569d)
+GfxDevice: creating device client; threaded=1
+Direct3D:
+    Version:  Direct3D 11.0 [level 11.0]
+    Renderer: Radeon (TM) RX 480 Graphics (ID=0x67df)
+    Vendor:   ATI
+    VRAM:     4044 MB
+Begin MonoManager ReloadAssembly
+Platform assembly: D:\School\EECS 448\Projects\project04\trunk\Wizard Needs Matches\LatestBuild\WizardNeedsMatches_Data\Managed\UnityEngine.dll (this message is harmless)
+Loading D:\School\EECS 448\Projects\project04\trunk\Wizard Needs Matches\LatestBuild\WizardNeedsMatches_Data\Managed\UnityEngine.dll into Unity Child Domain
+Platform assembly: D:\School\EECS 448\Projects\project04\trunk\Wizard Needs Matches\LatestBuild\WizardNeedsMatches_Data\Managed\Assembly-CSharp.dll (this message is harmless)
+Loading D:\School\EECS 448\Projects\project04\trunk\Wizard Needs Matches\LatestBuild\WizardNeedsMatches_Data\Managed\Assembly-CSharp.dll into Unity Child Domain
+Platform assembly: D:\School\EECS 448\Projects\project04\trunk\Wizard Needs Matches\LatestBuild\WizardNeedsMatches_Data\Managed\UnityEngine.UI.dll (this message is harmless)
+Loading D:\School\EECS 448\Projects\project04\trunk\Wizard Needs Matches\LatestBuild\WizardNeedsMatches_Data\Managed\UnityEngine.UI.dll into Unity Child Domain
+Platform assembly: D:\School\EECS 448\Projects\project04\trunk\Wizard Needs Matches\LatestBuild\WizardNeedsMatches_Data\Managed\UnityEngine.Networking.dll (this message is harmless)
+Loading D:\School\EECS 448\Projects\project04\trunk\Wizard Needs Matches\LatestBuild\WizardNeedsMatches_Data\Managed\UnityEngine.Networking.dll into Unity Child Domain
+Platform assembly: D:\School\EECS 448\Projects\project04\trunk\Wizard Needs Matches\LatestBuild\WizardNeedsMatches_Data\Managed\UnityEngine.Analytics.dll (this message is harmless)
+Loading D:\School\EECS 448\Projects\project04\trunk\Wizard Needs Matches\LatestBuild\WizardNeedsMatches_Data\Managed\UnityEngine.Analytics.dll into Unity Child Domain
+- Completed reload, in  0.071 seconds
+desktop: 1920x1200 60Hz; virtual: 1920x1200 at 0,0
+<RI> Initializing input.
+<RI> Input initialized.
+<RI> Initialized touch support.
+Platform assembly: D:\School\EECS 448\Projects\project04\trunk\Wizard Needs Matches\LatestBuild\WizardNeedsMatches_Data\Managed\System.Core.dll (this message is harmless)
+Platform assembly: D:\School\EECS 448\Projects\project04\trunk\Wizard Needs Matches\LatestBuild\WizardNeedsMatches_Data\Managed\System.dll (this message is harmless)
+Unloading 3 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 5.109767 ms
+
+Unloading 2 unused Assets to reduce memory usage. Loaded Objects now: 1070.
+Total: 0.531007 ms (FindLiveObjects: 0.066649 ms CreateObjectMapping: 0.032049 ms MarkObjects: 0.414462 ms  DeleteObjects: 0.010197 ms)
+
+Removing a Controller from Turn Order
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+Remaining entities: 6
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+Removing a Controller from Turn Order
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+Remaining entities: 5
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+Removing a Controller from Turn Order
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+Remaining entities: 4
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+Removing a Controller from Turn Order
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+Remaining entities: 3
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+Removing a Controller from Turn Order
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+Remaining entities: 2
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+Removing a Controller from Turn Order
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+Remaining entities: 1
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+Starting turn for monster (2) (monster)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+Removing a Controller from Turn Order
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+Remaining entities: 0
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
