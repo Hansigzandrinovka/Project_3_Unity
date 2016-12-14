@@ -1,0 +1,20 @@
+fileFormatVersion: 2
+guid: 17ced33c116279a469881fd3d31842ec
+timeCreated: 1480518852
+licenseType: Free
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences:
+  - stairsTilePrefab: {fileID: 169764, guid: 817ae418c4f30e74aa929e27bb35a26a, type: 2}
+  - roomFloorTilePrefab: {fileID: 144284, guid: 71280324e8ac7c346a0a1d0a026b3fb0,
+      type: 2}
+  - hallwayFloorTilePrefab: {fileID: 144284, guid: 71280324e8ac7c346a0a1d0a026b3fb0,
+      type: 2}
+  - tileContainer: {instanceID: 0}
+  - playerObject: {fileID: 135020, guid: 0fa4bcf5271f59d46be9e57fc23a11b5, type: 2}
+  - dungeonController: {fileID: 140880, guid: b20319d837ea61d44bb7546c36a15c4a, type: 2}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
