@@ -538,21 +538,21 @@ public class monster : EntityController
 							           " moving S, 2nd choice");
 							updatePrevTile(pos, zero, south);
 						}
-					}
-					else //Retread and hope for better path
-					{
-						if(puppetEntity.Move(Entity.MoveDirection.left))
+						else //Retread and hope for better path
 						{
-							Debug.Log ("PC is: E at " +
-						           entVec[(int)EntVecVal.distG] +
-						           " moving W, 3rd choice");
-							updatePrevTile(pos, west, zero);
-						}
-						else // Reset AI
-						{
-							Debug.Log("AI Reset: E");
-							EndTurn ();
-							updatePrevTile(pos, zero, zero);
+							if(puppetEntity.Move(Entity.MoveDirection.left))
+							{
+								Debug.Log ("PC is: E at " +
+								           entVec[(int)EntVecVal.distG] +
+								           " moving W, 3rd choice");
+								updatePrevTile(pos, west, zero);
+							}
+							else // Reset AI
+							{
+								Debug.Log("AI Reset: E");
+								EndTurn ();
+								updatePrevTile(pos, zero, zero);
+							}
 						}
 					}
 					break;
@@ -719,21 +719,21 @@ public class monster : EntityController
 							           " moving S, 2nd choice");
 							updatePrevTile(pos, zero, south);
 						}
-					}
-					else //Retread and hope for better path
-					{
-						if(puppetEntity.Move(Entity.MoveDirection.right))
+						else //Retread and hope for better path
 						{
-							Debug.Log ("PC is: W at " +
-							           entVec[(int)EntVecVal.distG] +
-							           " moving E, 3rd choice");
-							updatePrevTile(pos, east, zero);
-						}
-						else // Reset AI
-						{
-							Debug.Log("AI Reset: W");
-							EndTurn ();
-							updatePrevTile(pos, zero, zero);
+							if(puppetEntity.Move(Entity.MoveDirection.right))
+							{
+								Debug.Log ("PC is: W at " +
+								           entVec[(int)EntVecVal.distG] +
+								           " moving E, 3rd choice");
+								updatePrevTile(pos, east, zero);
+							}
+							else // Reset AI
+							{
+								Debug.Log("AI Reset: W");
+								EndTurn ();
+								updatePrevTile(pos, zero, zero);
+							}
 						}
 					}
 					break;
@@ -907,21 +907,21 @@ public class monster : EntityController
 							           " moving W, 2nd choice");
 							updatePrevTile(pos, west, zero);
 						}
-					}
-					else //Retread and hope for better path
-					{
-						if(puppetEntity.Move(Entity.MoveDirection.down))
+						else //Retread and hope for better path
 						{
-							Debug.Log ("PC is: N at " +
-							           entVec[(int)EntVecVal.distG] +
-							           " moving S, 3rd choice");
-							updatePrevTile(pos, zero, south);
-						}
-						else // Reset AI
-						{
-							Debug.Log("AI Reset: N");
-							EndTurn ();
-							updatePrevTile(pos, zero, zero);
+							if(puppetEntity.Move(Entity.MoveDirection.down))
+							{
+								Debug.Log ("PC is: N at " +
+								           entVec[(int)EntVecVal.distG] +
+								           " moving S, 3rd choice");
+								updatePrevTile(pos, zero, south);
+							}
+							else // Reset AI
+							{
+								Debug.Log("AI Reset: N");
+								EndTurn ();
+								updatePrevTile(pos, zero, zero);
+							}
 						}
 					}
 					break;
@@ -1089,21 +1089,21 @@ public class monster : EntityController
 							           " moving W, 2nd choice");
 							updatePrevTile(pos, west, zero);
 						}
-					}
-					else //Retread and hope for better path
-					{
-						if(puppetEntity.Move(Entity.MoveDirection.up))
+						else //Retread and hope for better path
 						{
-							Debug.Log ("PC is: S at " +
-							           entVec[(int)EntVecVal.distG] +
-							           " moving N, 3rd choice");
-							updatePrevTile(pos, zero, north);
-						}
-						else // Reset AI
-						{
-							Debug.Log("AI Reset: S");
-							EndTurn ();
-							updatePrevTile(pos, zero, zero);
+							if(puppetEntity.Move(Entity.MoveDirection.up))
+							{
+								Debug.Log ("PC is: S at " +
+								           entVec[(int)EntVecVal.distG] +
+								           " moving N, 3rd choice");
+								updatePrevTile(pos, zero, north);
+							}
+							else // Reset AI
+							{
+								Debug.Log("AI Reset: S");
+								EndTurn ();
+								updatePrevTile(pos, zero, zero);
+							}
 						}
 					}
 					break;
