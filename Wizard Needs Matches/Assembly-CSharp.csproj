@@ -64,6 +64,7 @@
      <Compile Include="Assets\Resources\Scripts\TileMonoBehavior.cs" />
      <Compile Include="Assets\Resources\Scripts\custom_objects\dungeon_room.cs" />
      <Compile Include="Assets\Resources\Scripts\monster.cs" />
+     <Compile Include="Assets\Resources\Scripts\musicPlayer.cs" />
      <Compile Include="Assets\Resources\Scripts\spellController.cs" />
      <Compile Include="Assets\Resources\Scripts\testing\pan_camera_simple.cs" />
      <None Include="Assets\Editor\Doxygen\Resources\BaseDoxyfile.txt" />
