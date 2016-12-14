@@ -37,9 +37,9 @@ public class monster : EntityController
 	 **/
 	int [] entVec = new int[7];
 	/** How far a monster can react to a player (grid distance)
-	 * Overide as needed, default is radius 8 (height/width of board)
+	 * Overide as needed, default is radius 6 to allow wandering
 	 **/
-	protected int monstSenseDist = 8;
+	public int monstSenseDist = 6;
 	
 	// to know where player is
 	GameObject player;
@@ -338,7 +338,7 @@ public class monster : EntityController
 	                            bool monsterSensedPC)
 	{
 		// range for which monsters do not act
-		int noMoveRange =  (int)(1.25 * monstSenseDist);
+		int noMoveRange =  (int)(1.5 * monstSenseDist);
 
 		// Monster randomly walks
 		if (monsterSensedPC == false)
