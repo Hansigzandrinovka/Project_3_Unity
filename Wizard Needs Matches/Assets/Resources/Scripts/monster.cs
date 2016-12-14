@@ -456,11 +456,19 @@ public class monster : EntityController
 					}
 					else //Retread and hope for better path
 					{
-						puppetEntity.Move(Entity.MoveDirection.left);					
-						Debug.Log ("PC is: ENE at " +
-						           entVec[(int)EntVecVal.distG] +
-						           " moving W, 4th choice");
-						updatePrevTile(pos, west, zero);
+						if(puppetEntity.Move(Entity.MoveDirection.left))
+						{
+							Debug.Log ("PC is: ENE at " +
+							           entVec[(int)EntVecVal.distG] +
+							           " moving W, 4th choice");
+							updatePrevTile(pos, west, zero);
+						}
+						else // Reset AI
+						{
+							Debug.Log("AI Reset: ENE");
+							EndTurn ();
+							updatePrevTile(pos, zero, zero);
+						}
 					}
 					break;
 				}
@@ -533,11 +541,19 @@ public class monster : EntityController
 					}
 					else //Retread and hope for better path
 					{
-						puppetEntity.Move(Entity.MoveDirection.left);					
-						Debug.Log ("PC is: E at " +
+						if(puppetEntity.Move(Entity.MoveDirection.left))
+						{
+							Debug.Log ("PC is: E at " +
 						           entVec[(int)EntVecVal.distG] +
 						           " moving W, 3rd choice");
-						updatePrevTile(pos, west, zero);
+							updatePrevTile(pos, west, zero);
+						}
+						else // Reset AI
+						{
+							Debug.Log("AI Reset: E");
+							EndTurn ();
+							updatePrevTile(pos, zero, zero);
+						}
 					}
 					break;
 				}
@@ -572,11 +588,19 @@ public class monster : EntityController
 					}
 					else //Retread and hope for better path
 					{
-						puppetEntity.Move(Entity.MoveDirection.left);					
-						Debug.Log ("PC is: ESE at " +
-						           entVec[(int)EntVecVal.distG] +
-						           " moving W, 4th choice");
-						updatePrevTile(pos, west, zero);
+						if(puppetEntity.Move(Entity.MoveDirection.left))
+						{
+							Debug.Log ("PC is: ESE at " +
+							           entVec[(int)EntVecVal.distG] +
+							           " moving W, 4th choice");
+							updatePrevTile(pos, west, zero);
+						}
+						else // Reset AI
+						{
+							Debug.Log("AI Reset: ESE");
+							EndTurn ();
+							updatePrevTile(pos, zero, zero);
+						}
 					}
 					break;
 				}				
@@ -612,11 +636,20 @@ public class monster : EntityController
 					}
 					else //Retread and hope for better path
 					{
-						puppetEntity.Move(Entity.MoveDirection.right);					
-						Debug.Log ("PC is: WSW at " +
-						           entVec[(int)EntVecVal.distG] +
-						           " moving E, 4th choice");
-						updatePrevTile(pos, east, zero);
+						if(puppetEntity.Move(Entity.MoveDirection.right))
+						{
+							puppetEntity.Move(Entity.MoveDirection.right);					
+							Debug.Log ("PC is: WSW at " +
+							           entVec[(int)EntVecVal.distG] +
+							           " moving E, 4th choice");
+							updatePrevTile(pos, east, zero);
+						}
+						else // Reset AI
+						{
+							Debug.Log("AI Reset: WSW");
+							EndTurn ();
+							updatePrevTile(pos, zero, zero);
+						}
 					}
 					break;
 				}
@@ -689,11 +722,19 @@ public class monster : EntityController
 					}
 					else //Retread and hope for better path
 					{
-						puppetEntity.Move(Entity.MoveDirection.right);					
-						Debug.Log ("PC is: W at " +
-						           entVec[(int)EntVecVal.distG] +
-						           " moving E, 3rd choice");
-						updatePrevTile(pos, east, zero);
+						if(puppetEntity.Move(Entity.MoveDirection.right))
+						{
+							Debug.Log ("PC is: W at " +
+							           entVec[(int)EntVecVal.distG] +
+							           " moving E, 3rd choice");
+							updatePrevTile(pos, east, zero);
+						}
+						else // Reset AI
+						{
+							Debug.Log("AI Reset: W");
+							EndTurn ();
+							updatePrevTile(pos, zero, zero);
+						}
 					}
 					break;
 				}
@@ -706,14 +747,14 @@ public class monster : EntityController
 					if ((!(isMonsterRevisiting(pos, west, zero)))  &&
 					    (puppetEntity.Move(Entity.MoveDirection.left)))
 					{
-						Debug.Log ("PC is: WSW at " +
+						Debug.Log ("PC is: WNW at " +
 						           entVec[(int)EntVecVal.distG] + " moving W");
 						updatePrevTile(pos, west, zero);
 					}					
 					else if ((!(isMonsterRevisiting(pos, zero, north)))  &&
 					         (puppetEntity.Move(Entity.MoveDirection.up)))
 					{
-						Debug.Log ("PC is: WSW at " +
+						Debug.Log ("PC is: WNW at " +
 						           entVec[(int)EntVecVal.distG] +
 						           " moving N, 2nd choice");
 						updatePrevTile(pos, zero, north);
@@ -721,18 +762,26 @@ public class monster : EntityController
 					else if ((!(isMonsterRevisiting(pos, zero, south))) &&
 					         (puppetEntity.Move(Entity.MoveDirection.down)))
 					{
-						Debug.Log ("PC is: WSW at " +
+						Debug.Log ("PC is: WNW at " +
 						           entVec[(int)EntVecVal.distG] +
 						           " moving S, 3nd choice");
 						updatePrevTile(pos, zero, south);
 					}
 					else //Retread and hope for better path
 					{
-						puppetEntity.Move(Entity.MoveDirection.right);					
-						Debug.Log ("PC is: WSW at " +
-						           entVec[(int)EntVecVal.distG] +
-						           " moving E, 4th choice");
-						updatePrevTile(pos, east, zero);
+						if(puppetEntity.Move(Entity.MoveDirection.right))
+						{
+							Debug.Log ("PC is: WNW at " +
+							           entVec[(int)EntVecVal.distG] +
+							           " moving E, 4th choice");
+							updatePrevTile(pos, east, zero);
+						}
+						else // Reset AI
+						{
+							Debug.Log("AI Reset: WNW");
+							EndTurn ();
+							updatePrevTile(pos, zero, zero);
+						}
 					}
 					break;
 				}
@@ -776,11 +825,19 @@ public class monster : EntityController
 					}
 					else //Retread and hope for better path
 					{
-						puppetEntity.Move(Entity.MoveDirection.right);					
-						Debug.Log ("PC is: NNW at " +
-						           entVec[(int)EntVecVal.distG] +
-						           " moving E, 4th choice");
-						updatePrevTile(pos, east, zero);
+						if(puppetEntity.Move(Entity.MoveDirection.right))
+						{
+							Debug.Log ("PC is: NNW at " +
+							           entVec[(int)EntVecVal.distG] +
+							           " moving E, 4th choice");
+							updatePrevTile(pos, east, zero);
+						}
+						else // Reset AI
+						{
+							Debug.Log("AI Reset: NNW");
+							EndTurn ();
+							updatePrevTile(pos, zero, zero);
+						}
 					}
 					break;
 				}
@@ -853,11 +910,19 @@ public class monster : EntityController
 					}
 					else //Retread and hope for better path
 					{
-						puppetEntity.Move(Entity.MoveDirection.down);					
-						Debug.Log ("PC is: N at " +
-						           entVec[(int)EntVecVal.distG] +
-						           " moving S, 3rd choice");
-						updatePrevTile(pos, zero, south);
+						if(puppetEntity.Move(Entity.MoveDirection.down))
+						{
+							Debug.Log ("PC is: N at " +
+							           entVec[(int)EntVecVal.distG] +
+							           " moving S, 3rd choice");
+							updatePrevTile(pos, zero, south);
+						}
+						else // Reset AI
+						{
+							Debug.Log("AI Reset: N");
+							EndTurn ();
+							updatePrevTile(pos, zero, zero);
+						}
 					}
 					break;
 				}
@@ -893,11 +958,19 @@ public class monster : EntityController
 					}
 					else //Retread and hope for better path
 					{
-						puppetEntity.Move(Entity.MoveDirection.left);					
-						Debug.Log ("PC is: NNE at " +
-						           entVec[(int)EntVecVal.distG] +
-						           " moving W, 4th choice");
-						updatePrevTile(pos, west, zero);
+						if(puppetEntity.Move(Entity.MoveDirection.left))
+						{
+							Debug.Log ("PC is: NNE at " +
+							           entVec[(int)EntVecVal.distG] +
+							           " moving W, 4th choice");
+							updatePrevTile(pos, west, zero);
+						}
+						else // Reset AI
+						{
+							Debug.Log("AI Reset: NNE");
+							EndTurn ();
+							updatePrevTile(pos, zero, zero);
+						}
 					}
 					break;
 				}				
@@ -934,11 +1007,19 @@ public class monster : EntityController
 					}
 					else //Retread and hope for better path
 					{
-						puppetEntity.Move(Entity.MoveDirection.right);					
-						Debug.Log ("PC is: SSW at " +
-						           entVec[(int)EntVecVal.distG] +
-						           " moving E, 4th choice");
-						updatePrevTile(pos, east, zero);
+						if(puppetEntity.Move(Entity.MoveDirection.right))
+						{
+							Debug.Log ("PC is: SSW at " +
+							           entVec[(int)EntVecVal.distG] +
+							           " moving E, 4th choice");
+							updatePrevTile(pos, east, zero);
+						}
+						else // Reset AI
+						{
+							Debug.Log("AI Reset: SSW");
+							EndTurn ();
+							updatePrevTile(pos, zero, zero);
+						}
 					}
 					break;
 				}
@@ -1011,11 +1092,19 @@ public class monster : EntityController
 					}
 					else //Retread and hope for better path
 					{
-						puppetEntity.Move(Entity.MoveDirection.up);					
-						Debug.Log ("PC is: S at " +
-						           entVec[(int)EntVecVal.distG] +
-						           " moving N, 3rd choice");
-						updatePrevTile(pos, zero, north);
+						if(puppetEntity.Move(Entity.MoveDirection.up))
+						{
+							Debug.Log ("PC is: S at " +
+							           entVec[(int)EntVecVal.distG] +
+							           " moving N, 3rd choice");
+							updatePrevTile(pos, zero, north);
+						}
+						else // Reset AI
+						{
+							Debug.Log("AI Reset: S");
+							EndTurn ();
+							updatePrevTile(pos, zero, zero);
+						}
 					}
 					break;
 				}
@@ -1051,11 +1140,19 @@ public class monster : EntityController
 					}
 					else //Retread and hope for better path
 					{
-						puppetEntity.Move(Entity.MoveDirection.left);					
-						Debug.Log ("PC is: SSE at " +
-						           entVec[(int)EntVecVal.distG] +
-						           " moving W, 4th choice");
-						updatePrevTile(pos, west, zero);
+						if(puppetEntity.Move(Entity.MoveDirection.left))
+						{
+							Debug.Log ("PC is: SSE at " +
+							           entVec[(int)EntVecVal.distG] +
+							           " moving W, 4th choice");
+							updatePrevTile(pos, west, zero);
+						}
+						else // Reset AI
+						{
+							Debug.Log("AI Reset: SSE");
+							EndTurn ();
+							updatePrevTile(pos, zero, zero);
+						}
 					}
 					break;
 				}
