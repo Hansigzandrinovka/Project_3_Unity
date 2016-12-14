@@ -5,12 +5,13 @@ public class monster : EntityController
 {
 	
 	private float clock = 0;
-	private static readonly float initialInputTime = .5f; //the total that inputTime is a fraction of
-	public static float inputTime = 1; //tracks how much time each monster takes to perform its turn
-	public static int numMonsters = 0; //tracks number of instances of this class in existence, reduces input time so that really large amounts of monsters won't eat up wait time as bad
-	// Distance to player in X, Y, and Grid, and direction
-	enum EntVecVal { distX, distY, distG, entDir, prevX, prevY, upDatePos };
-	// Compass layout to help decide where player is (16 directions)
+	private static readonly float initialInputTime = .5f; ///<the total that inputTime is a fraction of>
+	public static float inputTime = 1; ///<tracks how much time each monster takes to perform its turn>
+	public static int numMonsters = 0; ///<tracks number of instances of this class in existence, reduces input time so that really large amounts of monsters won't eat up wait time as bad>
+	enum EntVecVal { distX, distY, distG, entDir, prevX, prevY, upDatePos };///< Distance to player in X, Y, and Grid, and direction>
+	/**
+	 * Compass layout to help decide where player is (16 directions)
+	 **/
 	enum Bearing {
 		//Straight up to before straight right
 		N, NNE, NE, ENE,
@@ -22,18 +23,20 @@ public class monster : EntityController
 		W, WNW, NW, NNW
 	};
 
-	//configures UpdateInputTime depending on the number of active monsters in the dungeon
-	private void UpdateInputTime()
+	private void UpdateInputTime() /// configures UpdateInputTime depending on the number of active monsters in the dungeon
 	{
 		if (numMonsters >= 1) {
 			inputTime = (initialInputTime / numMonsters) + (numMonsters - 1) * .05f;
 		}
 	}
 	
-	// relative dist and dir array, and old location, and update flag
+	/**
+	 * relative dist and dir array, and old location, and update flag
+	 **/
 	int [] entVec = new int[7];
-	// How far a monster can react to a player (grid distance)
-	// Overide as needed, default is radius 8 (height/width of board)
+	/** How far a monster can react to a player (grid distance)
+	 * Overide as needed, default is radius 8 (height/width of board)
+	 **/
 	protected int monstSenseDist = 8;
 	
 	// to know where player is
@@ -61,9 +64,9 @@ public class monster : EntityController
 	{
 		if ((clock >= inputTime) && canAct)
 		{
-			// Compares player direction and distance to self
+			/// Compares player direction and distance to self
 			getGridDistAndDirecTo(player, entVec);					
-			// Compares if player is within range of monster sense
+			/// Compares if player is within range of monster sense
 			if (canMonstSensePC(monstSenseDist, entVec))
 			{
 				// Monster moves anti-player
@@ -92,10 +95,10 @@ public class monster : EntityController
 		numMonsters --;
 	}
 	
-	/* Entity finds the distance of target from itself by subtracting
+	/** Entity finds the distance of target from itself by subtracting
 	   target's x and y by own x and y respectively, then sums the
 	   differences together
-	*/
+	**/
 	protected void getGridDistAndDirecTo(GameObject target, int[] pos)
 	{
 		// PREP *****************************************************
@@ -129,7 +132,7 @@ public class monster : EntityController
 		 *        pos[(int)EntVecVal.distG]);
 		 */
 		// DIRECTION ***********************************************************
-		/*
+		/**
 		 * horizontal: targX < selfX, targX = selfX, targX > selfX
 		 * 
 		 * vertical:	targY > selfY
@@ -139,7 +142,7 @@ public class monster : EntityController
 		 * diagonals: distX < distY,
 		 *					distX == distY,
 		 * 							distX > dist
-		*/
+		**/
 		
 		// Quadrant 1 (North and East)
 		if (targX > selfX)		// East of self				
@@ -264,9 +267,9 @@ public class monster : EntityController
 		}
 	}
 
-	/*
+	/**
 	 * Monster checks if PC is within monster sense range
-	 */
+	 **/
 	protected bool canMonstSensePC(int monstSenseDist, int[] pos)
 	{
 		// default is monster is out of range, or behind a wall
@@ -285,7 +288,7 @@ public class monster : EntityController
 		return monstSensedPC;
 	}
 
-	// Checks if monster is going back to the same square as last turn
+	/// Checks if monster is going back to the same square as last turn
 	protected bool isMonsterRevisiting( int[] pos, int moveX, int moveY)
 	{
 		bool monsterRevisting = false;
@@ -310,7 +313,9 @@ public class monster : EntityController
 		return monsterRevisting;
 	}
 
-	// Updates monster's last tile
+	/**
+	 * Updates monster's last tile
+	 **/ 
 	protected void updatePrevTile(int[] pos, int movedX, int movedY)
 	{
 		// adds the inverse of the direction moved to current position
@@ -321,8 +326,9 @@ public class monster : EntityController
 			Mathf.RoundToInt(transform.position.y + (-1 * movedY));
 	}
 
-	// Monster moves randomly (PC not sensed) or
-	// takes intelligent action (PC sensed)
+	/** Monster moves randomly (PC not sensed) or
+	 	takes intelligent action (PC sensed)
+	 **/
 	protected void monsterMoves(int monstSenseDist, int[] pos,
 	                            bool monsterSensedPC)
 	{

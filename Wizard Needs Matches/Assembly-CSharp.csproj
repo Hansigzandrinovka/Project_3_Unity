@@ -66,6 +66,8 @@
      <Compile Include="Assets\Resources\Scripts\monster.cs" />
      <Compile Include="Assets\Resources\Scripts\spellController.cs" />
      <Compile Include="Assets\Resources\Scripts\testing\pan_camera_simple.cs" />
+     <None Include="Assets\Editor\Doxygen\Resources\BaseDoxyfile.txt" />
+     <None Include="Assets\Editor\Doxygen\ReadMe.txt" />
  <Reference Include="UnityEngine.UI">
  <HintPath>D:/Unity510f/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
