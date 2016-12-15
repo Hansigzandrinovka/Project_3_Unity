@@ -36,6 +36,7 @@ public class Entity : MonoBehaviour { //testtest
     {
         if(occupyingTile == null)
         {
+//            Debug.Log("Checking space beneath this entity at " + transform.position.x + "," + transform.position.y);
             Vector2 topRightLoc = new Vector2(transform.position.x + 0.25f, transform.position.y + 0.25f);
             Vector2 botLeftLoc = new Vector2(transform.position.x - 0.25f, transform.position.y - 0.25f);
             Collider2D collider = Physics2D.OverlapArea(topRightLoc, botLeftLoc, TileMonoBehavior.tileLayerMask);
@@ -46,9 +47,15 @@ public class Entity : MonoBehaviour { //testtest
                 {
                     if (!belowTile.ConnectToEntity(this)) //if could not connect entity to a tile, we should garbage collect entity because it can't interract with game at all
                     {
+                        Debug.Log("ALERT! Found Tile Layer Object at " + transform.position.x + "," + transform.position.y + " that lacks TileMonoBehavior script!");
                         Destroy(this.gameObject);
                     }
                 }
+            }
+            else
+            {
+                Debug.Log("Could not find Tile for this entity to stand on, destroying this");
+                Destroy(this.gameObject);
             }
         }
     }
