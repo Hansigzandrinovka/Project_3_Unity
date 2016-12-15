@@ -310,8 +310,6 @@ public class spellTest : MonoBehaviour
                         {
                             if (testingMode < 5)
                                 testingMode++;
-                            else
-                                DungeonManager.GoToLevel(0);
                             return;
                         }
                 }
