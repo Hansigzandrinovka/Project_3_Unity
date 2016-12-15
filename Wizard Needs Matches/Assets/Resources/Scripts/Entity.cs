@@ -10,7 +10,7 @@ public class Entity : MonoBehaviour { //testtest
         in this case, I can store a delegate variable as a listener for when this Entity's health changes (as part of TakeDamage()), and whatever method is in the delegate will be called
     **/
     private HealthChangeListener uiHealthChangeListener; ///the listener associated with the UI, that will notify UI displays for health to update properly
-	private MoveDirection lastDirection;
+	public MoveDirection lastDirection;
 
     public delegate void TurnReadyListener(); ///the listener associated with Turn Order and deciding what to do, Controllers will 
     public int maxHealth = 10;
@@ -230,7 +230,6 @@ public class Entity : MonoBehaviour { //testtest
     ///fail can be because out of movement, or because not this entity's turn
     public virtual bool Move(MoveDirection givenDirection)
     {
-	    lastDirection = givenDirection;
         if (remainingSpeed == 0 || remainingDelay > 0)
         {
             Debug.Log("Entity speed is depleted, can't move");
@@ -320,6 +319,7 @@ public class Entity : MonoBehaviour { //testtest
                     }
             }
             facing = direction;
+		lastDirection = direction;
             //remainingSpeed--; //should turning consume your turn?
             return true;
         }
@@ -412,6 +412,7 @@ public class Entity : MonoBehaviour { //testtest
 				    {
                         Debug.Log(targetTile.occupyingEntity + " takes " + damageAmount + " " + attackType + " damage from the shoved " + this);
 					    targetTile.occupyingEntity.TakeDamage(damageAmount,attackType);
+					    break;
 				    }
 			    }
 			    else
@@ -419,7 +420,7 @@ public class Entity : MonoBehaviour { //testtest
 				    break;
 			    }
 		    }
-		    Debug.Log("Finished sliding");
+		    //Debug.Log("Finished sliding");
 	    }						  
     }
 	
